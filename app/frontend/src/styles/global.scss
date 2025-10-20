@@ -1,0 +1,16 @@
+// variables start
+$black: #222831;
+$charcoal: #393E46;
+$blue: #00ADB5;
+$gray: #EEEEEE;
+// variables end
+// mixins start
+@mixin transition($property, $delay, $ease) {
+    transition: $property $delay $ease;
+    -webkit-transition: $property $delay $ease;
+    -moz-transition: $property $delay $ease;
+    -ms-transition: $property $delay $ease;
+    -o-transition: $property $delay $ease;
+}
+// mixins end
+// components start
