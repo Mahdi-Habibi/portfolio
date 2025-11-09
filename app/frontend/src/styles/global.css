@@ -1,1 +1,11 @@
-/*# sourceMappingURL=global.css.map */
+* {
+  transition: 0.3s all ease-in-out;
+  -webkit-transition: 0.3s all ease-in-out;
+  -moz-transition: 0.3s all ease-in-out;
+  -ms-transition: 0.3s all ease-in-out;
+  -o-transition: 0.3s all ease-in-out;
+}
+
+button {
+  background-color: #1A56DB;
+}/*# sourceMappingURL=global.css.map */
