@@ -37,7 +37,7 @@ export default function Projects() {
                     >
                         <div className="flex items-center justify-between">
                             <h3 className="text-xl font-semibold text-white">{project.title}</h3>
-                            <span className="rounded-full bg-cyan-400/20 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-cyan-100">
+                            <span className="rounded-full bg-cyan-400/20 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-cyan-100 text-center">
                                 {project.result}
                             </span>
                         </div>
