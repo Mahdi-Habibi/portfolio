@@ -1,60 +1,39 @@
 import React from "react";
 import '../../styles/global.css';
 
-const projects = [
-    {
-        title: "Job-Seeking Platform",
-        description: "Full-stack portal with authentication, CRUD job listings, and responsive UI for candidates and employers.",
-        stack: ["PHP", "Bootstrap", "NoSQL"],
-        result: "Production-ready features and optimized data model",
-    },
-    {
-        title: "Python/Django Teaching Track",
-        description: "Project-based curriculum covering RESTful APIs, React frontends, and deployment for 50+ students.",
-        stack: ["Django", "React", "REST", "GitHub"],
-        result: "Avg. 4.8/5 student satisfaction",
-    },
-    {
-        title: "ML/DL Translation Project",
-        description: "Translated advanced machine learning and deep learning resources to Persian to expand accessibility.",
-        stack: ["Localization", "Technical Writing", "Version Control"],
-        result: "Enabled broader research access",
-    },
-];
-
-export default function Projects() {
+export default function Projects({ content }) {
     return (
         <section id="projects" className="space-y-6">
             <div className="flex items-center gap-3">
-                <span className="h-px w-10 bg-gradient-to-r from-cyan-400 to-transparent" />
-                <p className="text-xs uppercase tracking-[0.32em] text-cyan-200">Projects</p>
+                <span className="h-px w-10 bg-[rgba(227,227,227,0.5)]" />
+                <p className="text-xs uppercase tracking-[0.32em] text-[var(--color-muted)]">{content.title}</p>
             </div>
             <div className="grid gap-5 md:grid-cols-3">
-                {projects.map((project) => (
+                {content.cards.map((project) => (
                     <article
                         key={project.title}
-                        className="group flex flex-col rounded-2xl border border-white/10 bg-white/5 p-5 shadow-2xl shadow-black/20 transition hover:-translate-y-1 hover:border-cyan-300/60 hover:bg-white/10"
+                        className="group flex flex-col rounded-2xl border border-[var(--color-border)] bg-[rgba(27,60,83,0.82)] p-5 shadow-2xl shadow-black/25 transition hover:-translate-y-1 hover:bg-[rgba(27,60,83,0.94)]"
                     >
-                        <div className="flex items-center justify-between">
-                            <h3 className="text-xl font-semibold text-white">{project.title}</h3>
-                            <span className="rounded-full bg-cyan-400/20 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-cyan-100 text-center">
+                        <div className="flex items-center justify-between gap-2">
+                            <h3 className="text-xl font-semibold text-[var(--color-text)]">{project.title}</h3>
+                            <span className="rounded-full bg-[rgba(69,104,130,0.25)] px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-[var(--color-text)] text-center">
                                 {project.result}
                             </span>
                         </div>
-                        <p className="mt-3 text-sm text-slate-300">{project.description}</p>
+                        <p className="mt-3 text-sm text-[var(--color-muted)]">{project.description}</p>
                         <div className="mt-4 flex flex-wrap gap-2">
-                            {project.stack.map((item) => (
+                            {project.stack?.map((item) => (
                                 <span
                                     key={item}
-                                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-slate-200"
+                                    className="rounded-full border border-[var(--color-border)] bg-[rgba(69,104,130,0.18)] px-3 py-1 text-xs font-semibold text-[var(--color-text)]"
                                 >
                                     {item}
                                 </span>
                             ))}
                         </div>
-                        <div className="mt-5 flex items-center gap-2 text-sm font-semibold text-cyan-200">
-                            <span>Request a walkthrough</span>
-                            <span aria-hidden className="transition group-hover:translate-x-1">→</span>
+                        <div className="mt-5 flex items-center gap-2 text-sm font-semibold text-[var(--color-text)]">
+                            <span>{content.cta}</span>
+                            <span aria-hidden className="transition group-hover:translate-x-1">&#8250;</span>
                         </div>
                     </article>
                 ))}
