@@ -1,26 +1,39 @@
 import React from "react";
+import { motion } from "framer-motion";
 import '../../styles/global.css';
+import SectionHeader from "../ui/SectionHeader";
 
 export default function Education({ content }) {
     return (
-        <section id="education" className="space-y-6">
-            <div className="flex items-center gap-3">
-                <span className="h-px w-10 bg-[rgba(227,227,227,0.5)]" />
-                <p className="text-xs uppercase tracking-[0.32em] text-[var(--color-muted)]">{content.title}</p>
-            </div>
-            <div className="grid gap-4 md:grid-cols-2">
-                {content.items.map((item) => (
-                    <article
+        <motion.section
+            id="education"
+            className="space-y-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+        >
+            <SectionHeader label={content.title} index="04" />
+
+            <div className="grid gap-5 md:grid-cols-2">
+                {content.items.map((item, i) => (
+                    <motion.article
                         key={item.school}
-                        className="rounded-2xl border border-[var(--color-border)] bg-[rgba(27,60,83,0.82)] p-5 shadow-2xl shadow-black/25"
+                        className="glass-panel glass-panel-hover neon-border rounded-xl p-6"
+                        initial={{ opacity: 0, y: 12 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4, delay: i * 0.08 }}
                     >
-                        <h3 className="text-lg font-semibold text-[var(--color-text)]">{item.school}</h3>
-                        <p className="text-sm text-[var(--color-muted)]">{item.degree}</p>
-                        <p className="mt-2 text-xs uppercase tracking-[0.2em] text-[var(--color-muted)]">{item.period}</p>
-                        <p className="mt-3 text-sm text-[var(--color-text)]">{item.note}</p>
-                    </article>
+                        <h3 className="font-display text-lg font-bold text-[var(--color-text)]">{item.school}</h3>
+                        <p className="mt-1 text-sm text-[var(--color-accent)]">{item.degree}</p>
+                        <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-muted)]">
+                            {item.period}
+                        </p>
+                        <p className="mt-3 text-sm leading-relaxed text-[var(--color-muted)]">{item.note}</p>
+                    </motion.article>
                 ))}
             </div>
-        </section>
+        </motion.section>
     );
 }
