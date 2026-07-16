@@ -30,13 +30,13 @@ export default function Header({ links, ctaText, language, languages, onLanguage
         <header
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
                 scrolled
-                    ? "border-b border-[var(--color-border)] bg-[var(--color-base)]/90 backdrop-blur-xl shadow-lg"
+                    ? "header-scrolled border-b border-[var(--color-border)] bg-[var(--color-base)]/92 backdrop-blur-xl shadow-lg"
                     : "bg-transparent"
             }`}
         >
             <div className="container-portfolio flex h-16 items-center justify-between md:h-20">
-                <a href="#home" className="flex items-center gap-3">
-                    <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--color-accent)] font-display text-sm font-bold text-[var(--color-base)]">
+                <a href="#home" className="group flex items-center gap-3">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--gradient-brand)] font-display text-sm font-bold text-[var(--color-on-accent)] shadow-[var(--shadow-warm)] transition-transform duration-300 group-hover:scale-105">
                         MH
                     </span>
                     <span className="hidden font-display text-sm font-semibold tracking-wide text-[var(--color-text)] sm:block">

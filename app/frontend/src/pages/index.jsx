@@ -32,15 +32,20 @@ export default function IndexPage() {
     useEffect(() => {
         document.documentElement.lang = language;
         document.documentElement.dir = language === 'fa' ? 'rtl' : 'ltr';
-    }, [language]);
+        document.title = t.siteTitle || 'Mahdi Habibi | Full-Stack Developer';
+    }, [language, t.siteTitle]);
 
     useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
+        const meta = document.getElementById('theme-color-meta');
+        if (meta) {
+            meta.setAttribute('content', theme === 'light' ? '#FFF9F0' : '#5B2A4A');
+        }
     }, [theme]);
 
     return (
-        <div className="relative min-h-screen bg-[var(--color-base)] text-[var(--color-text)]">
+        <div className="page-enter relative min-h-screen bg-[var(--color-base)] text-[var(--color-text)]">
             <TechBackground />
 
             <Header

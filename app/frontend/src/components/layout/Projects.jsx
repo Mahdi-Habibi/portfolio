@@ -19,8 +19,9 @@ export default function Projects({ content }) {
                     {content.cards.map((project) => (
                         <motion.article
                             key={project.title}
-                            className="group flex flex-col rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 transition-all duration-300 hover:border-[var(--color-border-strong)] hover:shadow-[var(--shadow-neon)]"
-                            variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
+                        className="group flex flex-col rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 transition-all duration-300 hover:border-[var(--color-border-strong)] hover:shadow-[var(--shadow-warm)]"
+                        variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}
+                        whileHover={{ y: -6, transition: { duration: 0.25 } }}
                         >
                             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--color-soft)] font-display text-lg font-bold text-[var(--color-accent)]">
                                 {project.title.charAt(0)}

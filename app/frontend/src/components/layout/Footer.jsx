@@ -10,7 +10,7 @@ export default function Footer({ links, location }) {
                 <div className="grid gap-10 md:grid-cols-3">
                     <div className="space-y-3">
                         <div className="flex items-center gap-3">
-                            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--color-accent)] font-display text-sm font-bold text-[var(--color-base)]">
+                            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--gradient-brand)] font-display text-sm font-bold text-[var(--color-on-accent)]">
                                 MH
                             </span>
                             <span className="font-display text-lg font-bold text-[var(--color-text)]">Mahdi Habibi</span>

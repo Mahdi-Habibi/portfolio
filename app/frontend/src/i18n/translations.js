@@ -6,6 +6,7 @@ export const languages = [
 
 export const translations = {
     en: {
+        siteTitle: "Mahdi Habibi | Full-Stack Developer",
         languageLabel: "Language",
         navLabel: "Navigation",
         nav: [
@@ -171,6 +172,7 @@ export const translations = {
         },
     },
     fa: {
+        siteTitle: "مهدی حبیبی | توسعه‌دهنده فول‌استک",
         languageLabel: "زبان",
         navLabel: "مسیرها",
         nav: [
@@ -336,6 +338,7 @@ export const translations = {
         },
     },
     es: {
+        siteTitle: "Mahdi Habibi | Desarrollador Full-Stack",
         languageLabel: "Idioma",
         navLabel: "Navegación",
         nav: [
