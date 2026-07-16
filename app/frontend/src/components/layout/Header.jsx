@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import '../../styles/global.css';
 
@@ -14,25 +14,26 @@ function NavLink({ href, label, onClick }) {
     );
 }
 
-export default function Header({ links, ctaText, language, languages, onLanguageChange, theme, onThemeToggle }) {
+export default function Header({
+    links,
+    ctaText,
+    language,
+    languages,
+    onLanguageChange,
+    theme,
+    onThemeToggle,
+    visible = true,
+}) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [scrolled, setScrolled] = useState(false);
-
-    useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 20);
-        window.addEventListener("scroll", onScroll, { passive: true });
-        return () => window.removeEventListener("scroll", onScroll);
-    }, []);
-
     const closeMenu = () => setIsMenuOpen(false);
+    const isHeaderVisible = visible || isMenuOpen;
 
     return (
-        <header
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-                scrolled
-                    ? "header-scrolled border-b border-[var(--color-border)] bg-[var(--color-base)]/92 backdrop-blur-xl shadow-lg"
-                    : "bg-transparent"
-            }`}
+        <motion.header
+            className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--color-border)] bg-[var(--color-base)]/92 backdrop-blur-xl shadow-lg header-scrolled"
+            initial={false}
+            animate={{ y: isHeaderVisible ? 0 : "-100%" }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
             <div className="container-portfolio flex h-16 items-center justify-between md:h-20">
                 <a href="#home" className="group flex items-center gap-3">
@@ -59,7 +60,7 @@ export default function Header({ links, ctaText, language, languages, onLanguage
                                 onClick={() => onLanguageChange(lang.code)}
                                 className={`rounded-md px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-wider transition-all ${
                                     lang.code === language
-                                        ? "bg-[var(--color-accent)] text-[var(--color-base)]"
+                                        ? "bg-[var(--color-accent)] text-[var(--color-on-accent)]"
                                         : "text-[var(--color-muted)] hover:text-[var(--color-text)]"
                                 }`}
                             >
@@ -139,6 +140,6 @@ export default function Header({ links, ctaText, language, languages, onLanguage
                     </motion.div>
                 )}
             </AnimatePresence>
-        </header>
+        </motion.header>
     );
 }

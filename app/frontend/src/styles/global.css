@@ -445,6 +445,15 @@ a {
   outline-offset: 2px;
 }
 
+.scroll-top-btn {
+  cursor: pointer;
+}
+
+.scroll-top-btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation: none !important;

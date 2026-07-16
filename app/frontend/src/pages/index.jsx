@@ -1,9 +1,11 @@
 import React, { useEffect, useState, Suspense, lazy } from 'react';
 import '../styles/global.css';
 import TechBackground from '../components/ui/TechBackground';
+import ScrollToTop from '../components/ui/ScrollToTop';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import Hero from '../components/layout/Hero';
+import { useScrollBehavior } from '../hooks/useScrollBehavior';
 const About = lazy(() => import('../components/layout/About'));
 const Projects = lazy(() => import('../components/layout/Projects'));
 const Experience = lazy(() => import('../components/layout/Experience'));
@@ -28,6 +30,7 @@ export default function IndexPage() {
         return 'dark';
     });
     const t = translations[language] || translations.en;
+    const { navVisible, scrollTopVisible } = useScrollBehavior();
 
     useEffect(() => {
         document.documentElement.lang = language;
@@ -56,7 +59,10 @@ export default function IndexPage() {
                 onLanguageChange={setLanguage}
                 theme={theme}
                 onThemeToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                visible={navVisible}
             />
+
+            <ScrollToTop visible={scrollTopVisible} />
 
             <main role="main">
                 <Hero content={t.hero} />
