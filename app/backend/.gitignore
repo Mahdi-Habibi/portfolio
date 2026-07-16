@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+pip-log.txt
+pip-delete-this-directory.txt
+env/
+venv/
+.venv/
+build/
+dist/*
+!dist/index.html
+!dist/assets/**
+*.sqlite3

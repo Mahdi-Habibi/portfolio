@@ -1,13 +1,6 @@
 :root {
-  font-family: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
   line-height: 1.6;
-  --color-base: #1B3C53;
-  --color-surface: #234C6A;
-  --color-accent: #456882;
-  --color-text: #E3E3E3;
-  --color-muted: rgba(227, 227, 227, 0.78);
-  --color-border: rgba(227, 227, 227, 0.22);
-  --color-soft: rgba(69, 104, 130, 0.35);
   background-color: var(--color-base);
   color: var(--color-text);
   text-rendering: optimizeLegibility;

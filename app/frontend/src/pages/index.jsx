@@ -1,16 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense, lazy } from 'react';
 import '../styles/global.css';
+import TechBackground from '../components/ui/TechBackground';
 import SideBar from '../components/layout/SideBar';
 import Hero from '../components/layout/Hero';
-import About from '../components/layout/About';
-import Projects from '../components/layout/Projects';
-import Experience from '../components/layout/Experience';
-import Education from '../components/layout/Education';
-import Contact from '../components/layout/Contact';
+const About = lazy(() => import('../components/layout/About'));
+const Projects = lazy(() => import('../components/layout/Projects'));
+const Experience = lazy(() => import('../components/layout/Experience'));
+const Education = lazy(() => import('../components/layout/Education'));
+const Contact = lazy(() => import('../components/layout/Contact'));
 import { languages, translations } from '../i18n/translations';
+
+function SectionLoader() {
+    return (
+        <div role="status" aria-live="polite" className="flex items-center gap-3 py-8">
+            <span className="status-dot" />
+            <span className="font-mono text-xs tracking-widest text-[var(--color-muted)]">Loading module…</span>
+        </div>
+    );
+}
 
 export default function IndexPage() {
     const [language, setLanguage] = useState('en');
+    const [theme, setTheme] = useState(() => {
+        if (typeof window !== 'undefined') {
+            return localStorage.getItem('theme') || 'dark';
+        }
+        return 'dark';
+    });
     const t = translations[language] || translations.en;
 
     useEffect(() => {
@@ -18,17 +34,27 @@ export default function IndexPage() {
         document.documentElement.dir = language === 'fa' ? 'rtl' : 'ltr';
     }, [language]);
 
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+    }, [theme]);
+
     return (
         <div className="relative min-h-screen bg-[var(--color-base)] text-[var(--color-text)]">
-            <div className="pointer-events-none fixed inset-0 -z-10">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(69,104,130,0.25),transparent_32%),radial-gradient(circle_at_82%_8%,rgba(35,76,106,0.26),transparent_30%),linear-gradient(135deg,rgba(227,227,227,0.04),rgba(227,227,227,0))]" />
-            </div>
+            <TechBackground />
 
             <SideBar links={t.nav} summary={t.sidebar.summary} ctaText={t.sidebar.cta} navLabel={t.navLabel} />
-            <main className="px-4 py-10 sm:px-6 md:pl-80 lg:pl-[20rem] lg:pr-10">
-                <div className="mx-auto max-w-5xl space-y-10">
-                    <div className="sticky top-0 z-20 -mx-2 mb-6 flex flex-wrap items-center gap-3 rounded-2xl border border-[var(--color-border)] bg-[rgba(27,60,83,0.9)] px-4 py-3 shadow-md shadow-black/30 backdrop-blur">
-                        <p className="text-xs uppercase tracking-[0.24em] text-[var(--color-muted)]">{t.languageLabel}</p>
+
+            <main className="px-4 py-10 sm:px-6 md:pl-80 lg:pl-[20rem] lg:pr-10" role="main">
+                <div className="mx-auto max-w-5xl space-y-12">
+                    {/* HUD control bar */}
+                    <div className="glass-panel sticky top-0 z-20 -mx-2 mb-2 flex flex-wrap items-center gap-4 rounded-xl px-5 py-3">
+                        <div className="flex items-center gap-2">
+                            <span className="status-dot" style={{ width: 6, height: 6 }} />
+                            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--color-muted)]">
+                                {t.languageLabel}
+                            </p>
+                        </div>
                         <div className="flex flex-wrap gap-2">
                             {languages.map((lang) => {
                                 const isActive = lang.code === language;
@@ -37,10 +63,10 @@ export default function IndexPage() {
                                         key={lang.code}
                                         type="button"
                                         onClick={() => setLanguage(lang.code)}
-                                        className={`rounded-full border px-3 py-1 text-xs font-semibold transition ${
+                                        className={`rounded-md px-3 py-1 font-mono text-xs font-medium tracking-wider transition-all duration-300 ${
                                             isActive
-                                                ? "border-[var(--color-text)] bg-[var(--color-text)] text-[var(--color-base)]"
-                                                : "border-[var(--color-border)] text-[var(--color-text)] hover:bg-[rgba(227,227,227,0.08)]"
+                                                ? "bg-[var(--color-accent)] text-[var(--color-base)] shadow-[0_0_12px_var(--color-glow-cyan)]"
+                                                : "border border-[var(--color-border)] text-[var(--color-muted)] hover:border-[var(--color-border-strong)] hover:text-[var(--color-text)]"
                                         }`}
                                     >
                                         {lang.label}
@@ -48,14 +74,36 @@ export default function IndexPage() {
                                 );
                             })}
                         </div>
+                        <div className="ml-auto flex items-center gap-2">
+                            <button
+                                type="button"
+                                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                                aria-pressed={theme === 'light'}
+                                aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+                                className="chip cursor-pointer transition-all duration-300 hover:border-[var(--color-border-strong)] hover:shadow-[0_0_12px_var(--color-glow-cyan)]"
+                            >
+                                {theme === 'dark' ? '◐ DARK' : '◑ LIGHT'}
+                            </button>
+                        </div>
                     </div>
 
                     <Hero content={t.hero} />
-                    <About content={t.about} />
-                    <Projects content={t.projects} />
-                    <Experience content={t.experience} />
-                    <Education content={t.education} />
-                    <Contact content={t.contact} />
+
+                    <Suspense fallback={<SectionLoader />}>
+                        <About content={t.about} />
+                    </Suspense>
+                    <Suspense fallback={<SectionLoader />}>
+                        <Projects content={t.projects} />
+                    </Suspense>
+                    <Suspense fallback={<SectionLoader />}>
+                        <Experience content={t.experience} />
+                    </Suspense>
+                    <Suspense fallback={<SectionLoader />}>
+                        <Education content={t.education} />
+                    </Suspense>
+                    <Suspense fallback={<SectionLoader />}>
+                        <Contact content={t.contact} />
+                    </Suspense>
                 </div>
             </main>
         </div>

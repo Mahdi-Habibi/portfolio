@@ -6,13 +6,16 @@ export default function SideLink({ href, label, icon, onClick }) {
         <a
             href={href}
             onClick={onClick}
-            className="group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[var(--color-text)] hover:bg-[rgba(227,227,227,0.06)] hover:text-[var(--color-text)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+            className="group relative flex items-center gap-3 rounded-lg px-3 py-2.5 font-display text-sm font-medium tracking-wide text-[var(--color-muted)] transition-all duration-300 hover:bg-[var(--color-soft)] hover:text-[var(--color-text)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
         >
-            <span className="flex h-8 w-8 items-center justify-center rounded-md border border-[var(--color-border)] bg-[rgba(69,104,130,0.18)] text-xs uppercase tracking-[0.14em] text-[var(--color-text)]">
+            <span className="absolute left-0 top-1/2 h-0 w-0.5 -translate-y-1/2 rounded-full bg-[var(--color-accent)] opacity-0 shadow-[0_0_8px_var(--color-glow-cyan)] transition-all duration-300 group-hover:h-3/4 group-hover:opacity-100" />
+            <span className="flex h-8 w-8 items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-soft)] font-mono text-[10px] uppercase tracking-wider text-[var(--color-accent)] transition-colors duration-300 group-hover:border-[var(--color-border-strong)] group-hover:shadow-[0_0_12px_var(--color-glow-cyan)]">
                 {icon || '·'}
             </span>
-            <span className="tracking-wide">{label}</span>
-            <span className="ml-auto h-px w-6 origin-left scale-x-0 bg-gradient-to-r from-transparent via-[rgba(227,227,227,0.7)] to-[rgba(227,227,227,0.24)] transition duration-300 group-hover:scale-x-100" />
+            <span>{label}</span>
+            <span className="ml-auto font-mono text-[10px] tracking-widest text-[var(--color-accent)] opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                &#8250;
+            </span>
         </a>
     );
 }

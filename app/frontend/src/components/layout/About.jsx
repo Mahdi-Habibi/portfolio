@@ -1,48 +1,51 @@
 import React from "react";
+import { motion } from "framer-motion";
 import '../../styles/global.css';
+import SectionHeader from "../ui/SectionHeader";
 
 export default function About({ content }) {
     return (
-        <section
+        <motion.section
             id="about"
-            className="space-y-6 rounded-3xl border border-[var(--color-border)] bg-[rgba(27,60,83,0.78)] px-6 py-8 shadow-2xl shadow-black/35 sm:px-10"
+            className="glass-panel neon-border space-y-8 rounded-2xl px-6 py-10 sm:px-10"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
         >
-            <div className="flex items-center gap-3">
-                <span className="h-px w-10 bg-[rgba(227,227,227,0.5)]" />
-                <p className="text-xs uppercase tracking-[0.32em] text-[var(--color-muted)]">{content.titleLabel || "About"}</p>
-            </div>
-            <div className="grid gap-8 md:grid-cols-[1.1fr_1fr]">
-                <div className="space-y-4">
-                    <h2 className="text-3xl font-semibold text-[var(--color-text)]">{content.title}</h2>
-                    <p className="text-[var(--color-muted)]">{content.body}</p>
-                    <div className="space-y-2">
+            <SectionHeader label={content.titleLabel || "About"} index="01" />
+
+            <div className="grid gap-10 md:grid-cols-[1.1fr_1fr]">
+                <div className="space-y-5">
+                    <h2 className="font-display text-3xl font-bold text-[var(--color-text)]">{content.title}</h2>
+                    <p className="leading-relaxed text-[var(--color-muted)]">{content.body}</p>
+                    <div className="space-y-3">
                         {content.focusAreas.map((item) => (
                             <div key={item} className="flex gap-3 text-sm text-[var(--color-text)]">
-                                <span className="mt-1 h-2 w-2 rounded-full bg-[var(--color-text)]" />
+                                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)] shadow-[0_0_6px_var(--color-glow-cyan)]" />
                                 <p className="leading-relaxed">{item}</p>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <div className="space-y-4 rounded-2xl border border-[var(--color-border)] bg-[rgba(35,76,106,0.55)] p-5">
-                    <p className="text-sm uppercase tracking-[0.2em] text-[var(--color-muted)]">{content.toolbeltTitle}</p>
+                <div className="glass-panel space-y-5 rounded-xl p-6">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--color-accent)]">
+                        {content.toolbeltTitle}
+                    </p>
                     <div className="flex flex-wrap gap-2">
                         {content.toolbelt.map((tool) => (
-                            <span
-                                key={tool}
-                                className="rounded-full border border-[var(--color-border)] bg-[rgba(69,104,130,0.16)] px-3 py-1 text-xs font-semibold text-[var(--color-text)]"
-                            >
-                                {tool}
-                            </span>
+                            <span key={tool} className="chip">{tool}</span>
                         ))}
                     </div>
-                    <div className="rounded-xl border border-[var(--color-border)] bg-[rgba(69,104,130,0.18)] p-4 text-sm text-[var(--color-text)]">
-                        <p className="font-semibold text-[var(--color-text)]">{content.recentWinTitle}</p>
-                        <p className="mt-1 text-[var(--color-muted)]">{content.recentWinText}</p>
+                    <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-soft)] p-4">
+                        <p className="font-display text-sm font-semibold text-[var(--color-accent)]">
+                            {content.recentWinTitle}
+                        </p>
+                        <p className="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">{content.recentWinText}</p>
                     </div>
                 </div>
             </div>
-        </section>
+        </motion.section>
     );
 }
