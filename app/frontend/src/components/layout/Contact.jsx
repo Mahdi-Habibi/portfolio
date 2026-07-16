@@ -5,48 +5,37 @@ import SectionHeader from "../ui/SectionHeader";
 
 export default function Contact({ content }) {
     return (
-        <motion.section
-            id="contact"
-            className="neon-border relative overflow-hidden rounded-2xl px-6 py-12 sm:px-10"
-            style={{
-                background: "var(--gradient-surface)",
-                border: "1px solid var(--color-border)",
-                boxShadow: "var(--shadow-neon), var(--shadow-card)",
-            }}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-        >
-            <div
-                className="pointer-events-none absolute inset-0 opacity-40"
-                style={{
-                    background: "radial-gradient(ellipse at 0% 50%, var(--color-glow-cyan) 0%, transparent 50%), radial-gradient(ellipse at 100% 50%, var(--color-glow-purple) 0%, transparent 50%)",
-                }}
-            />
+        <section id="contact" className="section section-alt">
+            <div className="container-portfolio">
+                <SectionHeader label={content.title} subtitle={content.heading} />
 
-            <div className="relative space-y-6">
-                <SectionHeader label={content.title} index="05" />
-                <h2 className="font-display text-3xl font-bold md:text-4xl">
-                    <span className="text-gradient">{content.heading}</span>
-                </h2>
-                <p className="max-w-2xl leading-relaxed text-[var(--color-muted)]">{content.body}</p>
-                <div className="flex flex-wrap gap-3">
-                    {content.links.map((link) => (
-                        <a
-                            key={link.label}
-                            href={link.href}
-                            className="btn-cyber btn-cyber-ghost"
-                        >
-                            {link.label}
-                            <span aria-hidden>&#8250;</span>
-                        </a>
-                    ))}
-                </div>
-                <p className="font-mono text-xs tracking-wider text-[var(--color-muted)]">
-                    <span className="text-[var(--color-accent)]">//</span> {content.location}
-                </p>
+                <motion.div
+                    className="mx-auto max-w-2xl text-center"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <p className="text-lg leading-relaxed text-[var(--color-muted)]">{content.body}</p>
+
+                    <div className="mt-8 flex flex-wrap justify-center gap-4">
+                        {content.links.map((link) => (
+                            <a
+                                key={link.label}
+                                href={link.href}
+                                className="btn-cyber btn-cyber-primary"
+                            >
+                                {link.label}
+                                <span aria-hidden>&#8250;</span>
+                            </a>
+                        ))}
+                    </div>
+
+                    <p className="mt-8 font-mono text-sm text-[var(--color-muted)]">
+                        📍 {content.location}
+                    </p>
+                </motion.div>
             </div>
-        </motion.section>
+        </section>
     );
 }

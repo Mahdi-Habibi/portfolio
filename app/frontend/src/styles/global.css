@@ -221,6 +221,46 @@ a {
   box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
 }
 
+/* Standard portfolio layout */
+.container-portfolio {
+  width: 100%;
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-portfolio {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-portfolio {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.section {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+.section-alt {
+  background-color: var(--color-surface);
+}
+
 /* Section header line */
 .section-line {
   height: 1px;
