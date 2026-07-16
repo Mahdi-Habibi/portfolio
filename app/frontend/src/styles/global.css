@@ -16,6 +16,31 @@
   -webkit-font-smoothing: antialiased;
 }
 
+/* Light theme */
+:root[data-theme='light'] {
+  --color-base: #F6F8FA;
+  --color-surface: #FFFFFF;
+  --color-accent: #1B3C53;
+  --color-text: #0A1220;
+  --color-muted: rgba(10, 18, 32, 0.68);
+  --color-border: rgba(10, 18, 32, 0.12);
+  --color-soft: rgba(27, 60, 83, 0.12);
+  background-color: var(--color-base);
+  color: var(--color-text);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    --color-base: #F6F8FA;
+    --color-surface: #FFFFFF;
+    --color-accent: #1B3C53;
+    --color-text: #0A1220;
+    --color-muted: rgba(10, 18, 32, 0.68);
+    --color-border: rgba(10, 18, 32, 0.12);
+    --color-soft: rgba(27, 60, 83, 0.12);
+  }
+}
+
 * {
   box-sizing: border-box;
 }
@@ -39,4 +64,13 @@ a {
 ::selection {
   background: rgba(69, 104, 130, 0.35);
   color: var(--color-text);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }

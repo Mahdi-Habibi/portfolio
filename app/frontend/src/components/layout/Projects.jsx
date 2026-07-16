@@ -1,18 +1,20 @@
 import React from "react";
+import { motion } from "framer-motion";
 import '../../styles/global.css';
 
 export default function Projects({ content }) {
     return (
-        <section id="projects" className="space-y-6">
+        <motion.section id="projects" className="space-y-6" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
             <div className="flex items-center gap-3">
                 <span className="h-px w-10 bg-[rgba(227,227,227,0.5)]" />
                 <p className="text-xs uppercase tracking-[0.32em] text-[var(--color-muted)]">{content.title}</p>
             </div>
-            <div className="grid gap-5 md:grid-cols-3">
+            <motion.div className="grid gap-5 md:grid-cols-3" initial="hidden" whileInView="show" viewport={{ once: true }} variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 } } }}>
                 {content.cards.map((project) => (
-                    <article
+                    <motion.article
                         key={project.title}
                         className="group flex flex-col rounded-2xl border border-[var(--color-border)] bg-[rgba(27,60,83,0.82)] p-5 shadow-2xl shadow-black/25 transition hover:-translate-y-1 hover:bg-[rgba(27,60,83,0.94)]"
+                        variants={{ hidden: { opacity: 0, y: 10, scale: 0.98 }, show: { opacity: 1, y: 0, scale: 1 } }}
                     >
                         <div className="flex items-center justify-between gap-2">
                             <h3 className="text-xl font-semibold text-[var(--color-text)]">{project.title}</h3>
@@ -35,9 +37,9 @@ export default function Projects({ content }) {
                             <span>{content.cta}</span>
                             <span aria-hidden className="transition group-hover:translate-x-1">&#8250;</span>
                         </div>
-                    </article>
+                    </motion.article>
                 ))}
-            </div>
-        </section>
+            </motion.div>
+        </motion.section>
     );
 }
