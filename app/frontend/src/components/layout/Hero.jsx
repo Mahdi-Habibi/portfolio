@@ -41,7 +41,12 @@ export default function Hero({ content }) {
                                 {content.primary}
                                 <span aria-hidden>&#8250;</span>
                             </a>
-                            <a href="#contact" className="btn-cyber btn-cyber-ghost">
+                            <a
+                                href={content.secondaryHref || "#contact"}
+                                className="btn-cyber btn-cyber-ghost"
+                                target={content.secondaryHref ? "_blank" : undefined}
+                                rel={content.secondaryHref ? "noopener noreferrer" : undefined}
+                            >
                                 {content.secondary}
                             </a>
                         </FadeIn>
@@ -62,7 +67,7 @@ export default function Hero({ content }) {
                                 <div className="relative flex h-full w-full flex-col items-center justify-center rounded-2xl bg-[var(--color-base)]/60 backdrop-blur-sm">
                                     <span className="font-display text-6xl font-bold text-gradient sm:text-7xl">MH</span>
                                     <span className="mt-2 font-mono text-[10px] uppercase tracking-[0.35em] text-[var(--color-accent)]">
-                                        Full-Stack Dev
+                                        React & Django
                                     </span>
                                 </div>
                             </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import '../../styles/global.css';
 
-export default function Footer({ links, location }) {
+export default function Footer({ links, location, summary, contactLinks, labels }) {
     const year = new Date().getFullYear();
 
     return (
@@ -13,16 +13,16 @@ export default function Footer({ links, location }) {
                             <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--gradient-brand)] font-display text-sm font-bold text-[var(--color-on-accent)]">
                                 MH
                             </span>
-                            <span className="font-display text-lg font-bold text-[var(--color-text)]">Mahdi Habibi</span>
+                            <span className="font-display text-lg font-bold text-[var(--color-text)]">Mahdi Habibi Nazarlu</span>
                         </div>
                         <p className="max-w-xs text-sm leading-relaxed text-[var(--color-muted)]">
-                            Full-stack developer specializing in React & Django.
+                            {summary}
                         </p>
                     </div>
 
                     <div>
                         <p className="mb-4 font-display text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-accent)]">
-                            Navigation
+                            {labels?.navigation || "Navigation"}
                         </p>
                         <ul className="space-y-2">
                             {links.map((link) => (
@@ -40,19 +40,21 @@ export default function Footer({ links, location }) {
 
                     <div>
                         <p className="mb-4 font-display text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-accent)]">
-                            Contact
+                            {labels?.contact || "Contact"}
                         </p>
                         <ul className="space-y-2 text-sm text-[var(--color-muted)]">
-                            <li>
-                                <a href="mailto:info.mahdihabibi@gmail.com" className="transition hover:text-[var(--color-accent)]">
-                                    info.mahdihabibi@gmail.com
-                                </a>
-                            </li>
-                            <li>
-                                <a href="tel:+989029216735" className="transition hover:text-[var(--color-accent)]">
-                                    +98 902 921 6735
-                                </a>
-                            </li>
+                            {contactLinks?.map((link) => (
+                                <li key={link.href}>
+                                    <a
+                                        href={link.href}
+                                        className="transition hover:text-[var(--color-accent)]"
+                                        target={link.href.startsWith("http") ? "_blank" : undefined}
+                                        rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                                    >
+                                        {link.label}
+                                    </a>
+                                </li>
+                            ))}
                             <li>{location}</li>
                         </ul>
                     </div>

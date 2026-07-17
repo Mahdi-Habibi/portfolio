@@ -84,7 +84,13 @@ export default function IndexPage() {
                 </Suspense>
             </main>
 
-            <Footer links={t.nav} location={t.hero.location} />
+            <Footer
+                links={t.nav}
+                location={t.hero.location}
+                summary={t.footer?.summary || t.sidebar.summary}
+                contactLinks={t.contact.links}
+                labels={t.footer}
+            />
         </div>
     );
 }
