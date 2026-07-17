@@ -1,18 +1,49 @@
-# React + Vite
+# Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite portfolio SPA with Tailwind CSS 4 and Framer Motion.
 
-Currently, two official plugins are available:
+## Scripts
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start Vite dev server with HMR |
+| `npm run build` | Production build → `../backend/dist` |
+| `npm run preview` | Preview production build locally |
+| `npm run lint` | Run ESLint |
 
-## React Compiler
+## Key directories
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+```
+src/
+├── components/
+│   ├── layout/     # Header, Footer, Hero, About, Projects, …
+│   └── ui/         # Aurora, SpotlightCard, TiltCard, Marquee, …
+├── hooks/          # useScrollBehavior
+├── i18n/           # translations.js (en / fa / es)
+├── lib/            # cn() helper
+├── pages/          # IndexPage
+└── styles/         # global.css (palette, motion utilities)
+```
 
-Note: This will impact Vite dev & build performances.
+## Design system
 
-## Expanding the ESLint configuration
+Brand colors (CSS variables in `styles/global.css`):
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Token | Hex |
+|-------|-----|
+| Amber gold | `#F0A72E` |
+| Deep plum | `#5B2A4A` |
+| Bright gold | `#F6B43D` |
+| Soft cream | `#F1D36F` |
+
+Dark mode is default; light mode via `data-theme="light"`.
+
+## Content
+
+All copy lives in `src/i18n/translations.js`. Update that file to change experience, projects, skills, or contact links in all languages.
+
+## Build notes
+
+- Default Vite `base` is `/static/` for Django serving.
+- GitHub Pages overrides `--base "/portfolio/"` and `--outDir dist` in CI.
+- React Compiler is enabled via `babel-plugin-react-compiler`.
