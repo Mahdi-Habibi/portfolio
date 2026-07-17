@@ -5,12 +5,12 @@ export default function SectionHeader({ label, subtitle }) {
     return (
         <motion.div
             className="mb-12 text-center md:mb-16"
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
-            <p className="font-mono text-xs uppercase tracking-[0.3em] text-[var(--color-accent)]">
+            <p className="font-mono text-xs uppercase tracking-[0.35em] text-[var(--color-accent)]">
                 {label}
             </p>
             {subtitle && (
@@ -18,7 +18,13 @@ export default function SectionHeader({ label, subtitle }) {
                     {subtitle}
                 </h2>
             )}
-            <div className="mx-auto mt-4 h-1 w-12 rounded-full bg-[var(--gradient-cyber)]" style={{ background: "var(--gradient-cyber)" }} />
+            <motion.div
+                className="section-line mx-auto mt-5"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.15 }}
+            />
         </motion.div>
     );
 }

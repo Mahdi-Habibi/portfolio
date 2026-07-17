@@ -2,6 +2,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import '../../styles/global.css';
 import SectionHeader from "../ui/SectionHeader";
+import SpotlightCard from "../ui/SpotlightCard";
+import FadeIn from "../ui/FadeIn";
 
 export default function About({ content }) {
     return (
@@ -9,50 +11,44 @@ export default function About({ content }) {
             <div className="container-portfolio">
                 <SectionHeader label={content.titleLabel || "About"} subtitle={content.title} />
 
-                <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-                    <motion.div
-                        className="space-y-6"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5 }}
-                    >
+                <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">
+                    <FadeIn className="space-y-6">
                         <p className="text-lg leading-relaxed text-[var(--color-muted)]">{content.body}</p>
                         <ul className="space-y-4">
                             {content.focusAreas.map((item) => (
-                                <li key={item} className="flex gap-3 text-[var(--color-text)]">
-                                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]" />
+                                <motion.li
+                                    key={item}
+                                    className="flex gap-3 text-[var(--color-text)]"
+                                    whileHover={{ x: 4 }}
+                                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                                >
+                                    <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[var(--color-accent)] shadow-[0_0_8px_var(--color-glow-gold)]" />
                                     <span className="leading-relaxed">{item}</span>
-                                </li>
+                                </motion.li>
                             ))}
                         </ul>
-                    </motion.div>
+                    </FadeIn>
 
-                    <motion.div
-                        className="space-y-8"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.1 }}
-                    >
-                        <div>
-                            <h3 className="mb-4 font-display text-sm font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+                    <FadeIn delay={0.15}>
+                        <SpotlightCard className="p-6 sm:p-8">
+                            <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-[var(--color-accent)]">
                                 {content.toolbeltTitle}
                             </h3>
-                            <div className="flex flex-wrap gap-2">
+                            <div className="mt-4 flex flex-wrap gap-2">
                                 {content.toolbelt.map((tool) => (
                                     <span key={tool} className="chip">{tool}</span>
                                 ))}
                             </div>
-                        </div>
-
-                        <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
-                            <h3 className="font-display font-semibold text-[var(--color-accent)]">
-                                {content.recentWinTitle}
-                            </h3>
-                            <p className="mt-3 leading-relaxed text-[var(--color-muted)]">{content.recentWinText}</p>
-                        </div>
-                    </motion.div>
+                            <div className="mt-6 rounded-xl border border-[var(--color-border)] bg-[var(--color-base)]/40 p-5">
+                                <h4 className="font-display font-semibold text-[var(--color-accent)]">
+                                    {content.recentWinTitle}
+                                </h4>
+                                <p className="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">
+                                    {content.recentWinText}
+                                </p>
+                            </div>
+                        </SpotlightCard>
+                    </FadeIn>
                 </div>
             </div>
         </section>

@@ -1,6 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
 import '../../styles/global.css';
+import TextReveal from "../ui/TextReveal";
+import BorderBeam from "../ui/BorderBeam";
+import FadeIn from "../ui/FadeIn";
 
 export default function Hero({ content }) {
     const [name, tagline] = content.title.includes(" - ")
@@ -8,56 +11,32 @@ export default function Hero({ content }) {
         : [content.title, ""];
 
     return (
-        <section id="home" className="section min-h-[90vh] flex items-center pt-20">
+        <section id="home" className="section min-h-[92vh] flex items-center pt-20">
             <div className="container-portfolio w-full">
-                <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-                    <motion.div
-                        initial={{ opacity: 0, x: -32 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                        <motion.p
-                            className="font-mono text-sm uppercase tracking-[0.3em] text-[var(--color-accent)]"
-                            initial={{ opacity: 0, y: 12 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 }}
-                        >
-                            {content.kicker}
-                        </motion.p>
-                        <motion.h1
-                            className="font-display mt-4 text-4xl font-bold leading-tight text-[var(--color-text)] sm:text-5xl lg:text-6xl"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2, duration: 0.6 }}
-                        >
-                            Hi, I'm{" "}
-                            <span className="text-gradient">{name.trim()}</span>
-                        </motion.h1>
-                        {tagline && (
-                            <motion.p
-                                className="mt-3 font-display text-xl font-medium text-[var(--color-muted)] sm:text-2xl"
-                                initial={{ opacity: 0, y: 16 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.35 }}
-                            >
-                                {tagline.trim()}
-                            </motion.p>
-                        )}
-                        <motion.p
-                            className="mt-6 max-w-xl text-base leading-relaxed text-[var(--color-muted)] sm:text-lg"
-                            initial={{ opacity: 0, y: 16 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.45 }}
-                        >
-                            {content.subtitle}
-                        </motion.p>
+                <div className="grid items-center gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+                    <div>
+                        <FadeIn delay={0}>
+                            <p className="font-mono text-sm uppercase tracking-[0.35em] text-[var(--color-accent)]">
+                                {content.kicker}
+                            </p>
+                        </FadeIn>
 
-                        <motion.div
-                            className="mt-8 flex flex-wrap items-center gap-4"
-                            initial={{ opacity: 0, y: 16 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.55 }}
-                        >
+                        <h1 className="font-display mt-5 text-4xl font-bold leading-[1.08] text-[var(--color-text)] sm:text-5xl lg:text-[3.4rem]">
+                            <span className="block text-[var(--color-muted)] text-2xl sm:text-3xl font-medium mb-2">Hi, I'm</span>
+                            <TextReveal text={name.trim()} className="text-gradient" delay={0.1} />
+                        </h1>
+
+                        {tagline && (
+                            <FadeIn delay={0.2} className="mt-4 font-display text-lg font-medium text-[var(--color-muted)] sm:text-xl">
+                                {tagline.trim()}
+                            </FadeIn>
+                        )}
+
+                        <FadeIn delay={0.3} className="mt-6 max-w-xl text-base leading-relaxed text-[var(--color-muted)] sm:text-lg">
+                            {content.subtitle}
+                        </FadeIn>
+
+                        <FadeIn delay={0.4} className="mt-8 flex flex-wrap items-center gap-4">
                             <a href="#projects" className="btn-cyber btn-cyber-primary">
                                 {content.primary}
                                 <span aria-hidden>&#8250;</span>
@@ -65,52 +44,46 @@ export default function Hero({ content }) {
                             <a href="#contact" className="btn-cyber btn-cyber-ghost">
                                 {content.secondary}
                             </a>
-                        </motion.div>
+                        </FadeIn>
 
-                        <motion.p
-                            className="mt-6 font-mono text-xs text-[var(--color-muted)]"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.65 }}
-                        >
+                        <FadeIn delay={0.5} className="mt-6 font-mono text-xs text-[var(--color-muted)]">
                             📍 {content.location}
-                        </motion.p>
-                    </motion.div>
+                        </FadeIn>
+                    </div>
 
-                    <motion.div
-                        className="flex flex-col items-center gap-8"
-                        initial={{ opacity: 0, scale: 0.92 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                        <div className="relative flex h-52 w-52 items-center justify-center sm:h-60 sm:w-60">
+                    <FadeIn delay={0.15} className="flex flex-col items-center gap-8">
+                        <div className="relative flex h-56 w-56 items-center justify-center sm:h-64 sm:w-64">
                             <div
-                                className="absolute -inset-6 rounded-full opacity-50 blur-3xl animate-float"
+                                className="absolute -inset-8 rounded-full opacity-40 blur-3xl animate-float"
                                 style={{ background: "var(--gradient-brand)" }}
                             />
-                            <div className="absolute inset-0 rounded-full border-2 border-dashed border-[var(--color-accent)] opacity-30 avatar-ring" />
-                            <div className="absolute inset-3 rounded-full border border-[var(--color-border-strong)] opacity-60 avatar-ring-inner" />
-                            <div className="relative flex h-44 w-44 items-center justify-center rounded-full border-2 border-[var(--color-border-strong)] bg-[var(--color-surface)] shadow-[var(--shadow-warm)] sm:h-48 sm:w-48">
-                                <span className="font-display text-5xl font-bold text-gradient sm:text-6xl">MH</span>
+                            <div className="relative flex h-full w-full items-center justify-center rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-2 shadow-[var(--shadow-card)]">
+                                <BorderBeam size={140} duration={6} />
+                                <div className="relative flex h-full w-full flex-col items-center justify-center rounded-2xl bg-[var(--color-base)]/60 backdrop-blur-sm">
+                                    <span className="font-display text-6xl font-bold text-gradient sm:text-7xl">MH</span>
+                                    <span className="mt-2 font-mono text-[10px] uppercase tracking-[0.35em] text-[var(--color-accent)]">
+                                        Full-Stack Dev
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
-                        <div className="grid w-full max-w-sm grid-cols-3 gap-4">
+                        <div className="grid w-full max-w-md grid-cols-3 gap-3">
                             {content.stats.map((stat, i) => (
                                 <motion.div
                                     key={stat.label}
-                                    className="glass-panel-hover reveal-card rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-4 text-center"
+                                    className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)]/80 px-3 py-4 text-center backdrop-blur-sm"
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.5 + i * 0.1, type: "spring", stiffness: 120 }}
-                                    whileHover={{ y: -4, scale: 1.03 }}
+                                    transition={{ delay: 0.55 + i * 0.1, type: "spring", stiffness: 140 }}
+                                    whileHover={{ y: -4, boxShadow: "var(--shadow-warm)" }}
                                 >
                                     <p className="font-display text-2xl font-bold text-gradient">{stat.value}</p>
                                     <p className="mt-1 text-[10px] uppercase tracking-wider text-[var(--color-muted)]">{stat.label}</p>
                                 </motion.div>
                             ))}
                         </div>
-                    </motion.div>
+                    </FadeIn>
                 </div>
             </div>
         </section>

@@ -7,9 +7,10 @@ function NavLink({ href, label, onClick }) {
         <a
             href={href}
             onClick={onClick}
-            className="font-display text-sm font-medium tracking-wide text-[var(--color-muted)] transition-colors duration-200 hover:text-[var(--color-accent)]"
+            className="group relative font-display text-sm font-medium tracking-wide text-[var(--color-muted)] transition-colors duration-200 hover:text-[var(--color-accent)]"
         >
             {label}
+            <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-[var(--gradient-brand)] transition-all duration-300 group-hover:w-full" />
         </a>
     );
 }
@@ -32,7 +33,7 @@ export default function Header({
         <motion.header
             className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--color-border)] bg-[var(--color-base)]/92 backdrop-blur-xl shadow-lg header-scrolled"
             initial={false}
-            animate={{ y: isHeaderVisible ? 0 : "-100%" }}
+            animate={{ y: isHeaderVisible ? 0 : -120 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
             <div className="container-portfolio flex h-16 items-center justify-between md:h-20">

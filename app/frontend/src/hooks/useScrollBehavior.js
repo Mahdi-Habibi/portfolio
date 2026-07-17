@@ -1,41 +1,64 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Controls navbar and scroll-to-top visibility based on scroll direction.
- * - At top: navbar visible, scroll-to-top hidden
- * - Scrolling down: navbar hidden, scroll-to-top visible
- * - Scrolling up: navbar visible, scroll-to-top hidden
+ * Navbar: hides on scroll down, shows on scroll up (works on every section).
+ * Scroll-to-top: visible whenever the hero section has been passed.
  */
-export function useScrollBehavior(topThreshold = 80, deltaThreshold = 8) {
+export function useScrollBehavior() {
     const [navVisible, setNavVisible] = useState(true);
     const [scrollTopVisible, setScrollTopVisible] = useState(false);
     const lastY = useRef(0);
+    const ticking = useRef(false);
 
     useEffect(() => {
-        const onScroll = () => {
-            const y = window.scrollY;
+        const hero = document.getElementById("home");
+        if (!hero) return undefined;
 
-            if (y <= topThreshold) {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setScrollTopVisible(!entry.isIntersecting);
+            },
+            { threshold: 0, rootMargin: "-10% 0px 0px 0px" }
+        );
+
+        observer.observe(hero);
+        return () => observer.disconnect();
+    }, []);
+
+    useEffect(() => {
+        const update = () => {
+            const y = window.scrollY ?? document.documentElement.scrollTop;
+
+            if (y <= 16) {
                 setNavVisible(true);
-                setScrollTopVisible(false);
-                lastY.current = y;
-                return;
+            } else if (y > lastY.current + 2) {
+                setNavVisible(false);
+            } else if (y < lastY.current - 2) {
+                setNavVisible(true);
             }
 
-            if (Math.abs(y - lastY.current) < deltaThreshold) {
-                return;
-            }
-
-            const scrollingDown = y > lastY.current;
-            setNavVisible(!scrollingDown);
-            setScrollTopVisible(scrollingDown);
             lastY.current = y;
+            ticking.current = false;
         };
 
+        const onScroll = () => {
+            if (!ticking.current) {
+                ticking.current = true;
+                requestAnimationFrame(update);
+            }
+        };
+
+        lastY.current = window.scrollY ?? document.documentElement.scrollTop;
         onScroll();
+
         window.addEventListener("scroll", onScroll, { passive: true });
-        return () => window.removeEventListener("scroll", onScroll);
-    }, [topThreshold, deltaThreshold]);
+        document.addEventListener("scroll", onScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener("scroll", onScroll);
+            document.removeEventListener("scroll", onScroll);
+        };
+    }, []);
 
     return { navVisible, scrollTopVisible };
 }

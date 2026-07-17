@@ -14,7 +14,7 @@ export default function ScrollToTop({ visible }) {
                     type="button"
                     aria-label="Scroll to top"
                     onClick={scrollToTop}
-                    className="scroll-top-btn fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full border border-[var(--color-border-strong)] bg-[var(--gradient-brand)] text-[var(--color-on-accent)] shadow-[var(--shadow-warm)]"
+                    className="scroll-top-btn fixed bottom-6 right-6 z-[60] flex h-12 w-12 items-center justify-center rounded-full border border-[var(--color-border-strong)] bg-[var(--gradient-brand)] text-[var(--color-on-accent)] shadow-[var(--shadow-warm)]"
                     initial={{ opacity: 0, y: 16, scale: 0.85 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 16, scale: 0.85 }}
