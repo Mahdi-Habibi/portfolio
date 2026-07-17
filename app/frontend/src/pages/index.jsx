@@ -5,6 +5,7 @@ import ScrollToTop from '../components/ui/ScrollToTop';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import Hero from '../components/layout/Hero';
+import SectionDivider from '../components/ui/SectionDivider';
 import { useScrollBehavior } from '../hooks/useScrollBehavior';
 const About = lazy(() => import('../components/layout/About'));
 const Projects = lazy(() => import('../components/layout/Projects'));
@@ -67,18 +68,32 @@ export default function IndexPage() {
             <main role="main">
                 <Hero content={t.hero} />
 
+                <SectionDivider />
+
                 <Suspense fallback={<SectionLoader />}>
                     <About content={t.about} />
                 </Suspense>
+
+                <SectionDivider />
+
                 <Suspense fallback={<SectionLoader />}>
                     <Projects content={t.projects} />
                 </Suspense>
+
+                <SectionDivider />
+
                 <Suspense fallback={<SectionLoader />}>
                     <Experience content={t.experience} />
                 </Suspense>
+
+                <SectionDivider />
+
                 <Suspense fallback={<SectionLoader />}>
                     <Education content={t.education} />
                 </Suspense>
+
+                <SectionDivider />
+
                 <Suspense fallback={<SectionLoader />}>
                     <Contact content={t.contact} />
                 </Suspense>
