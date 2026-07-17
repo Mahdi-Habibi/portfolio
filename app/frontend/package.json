@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "21st": "21st",
+    "21st:login": "21st login",
+    "21st:search": "21st search",
+    "21st:add": "21st add"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
@@ -17,6 +21,7 @@
     "tailwindcss": "^4.1.13"
   },
   "devDependencies": {
+    "@21st-dev/cli": "^1.7.2",
     "@eslint/js": "^9.36.0",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",

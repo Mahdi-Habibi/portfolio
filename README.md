@@ -82,6 +82,7 @@ Visit `http://127.0.0.1:8000`.
 - [Changelog](CHANGELOG.md)
 - [Deployment](docs/DEPLOYMENT.md)
 - [Architecture](docs/ARCHITECTURE.md)
+- [21st.dev setup](docs/21ST.md)
 
 ## License
 

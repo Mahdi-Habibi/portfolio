@@ -8,6 +8,10 @@ All notable changes to this portfolio are documented here.
 
 ### Added
 
+- Installed `@21st-dev/cli` with Cursor MCP config and agent skills (see `docs/21ST.md`)
+
+### Added
+
 - Advanced motion graphics: Aurora, OrbitalRings, TiltCard, Marquee, AnimatedCounter, SectionDivider
 - Resume-aligned content (experience, projects, skills, LinkedIn/GitHub)
 - Scroll-to-top button after hero; navbar hide on scroll down / show on scroll up
