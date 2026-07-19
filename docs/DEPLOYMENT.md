@@ -13,11 +13,17 @@ Workflow: `.github/workflows/pages.yml`
    - User/org site (`*.github.io`): `/`
 4. Copy `index.html` → `404.html` (SPA fallback)
 5. Add `.nojekyll`
-6. Upload artifact and deploy with `actions/deploy-pages`
+6. **Publish the built SPA to the repository root** (`index.html`, `404.html`, `assets/`, …) so branch-based Pages serves the app instead of the README
+7. Also upload a Pages artifact (used if Source is set to GitHub Actions)
+
+### Why files live at the repo root
+
+If **Settings → Pages → Source** is **Deploy from a branch** (`main` / `/`), GitHub serves files from the repository root. Without `index.html` there, visitors see the README. The workflow keeps the root in sync after every frontend build.
 
 ### Requirements
 
-- Repository **Settings → Pages → Source**: GitHub Actions
+- **Current (branch deploy):** Pages source = Deploy from a branch → `main` / `/` (root must contain the built `index.html`)
+- **Optional (cleaner):** switch Source to **GitHub Actions** — the same workflow already uploads the artifact
 - Push or merge to `main` (or run the workflow manually via **Actions → Deploy to GitHub Pages → Run workflow**)
 
 ### URL

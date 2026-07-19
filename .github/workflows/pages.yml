@@ -3,10 +3,15 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - "README.md"
+      - "CHANGELOG.md"
+      - "CONTRIBUTING.md"
+      - "docs/**"
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -17,12 +22,16 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Skip re-runs triggered only by the publish commit below
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
     defaults:
       run:
         working-directory: app/frontend
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -43,17 +52,43 @@ jobs:
           else
             BASE_PATH="/$REPO_NAME/"
           fi
+          echo "BASE_PATH=$BASE_PATH" >> "$GITHUB_ENV"
           npm run build -- --outDir dist --base "$BASE_PATH"
           cp dist/index.html dist/404.html
           touch dist/.nojekyll
 
+      - name: Publish SPA to repository root
+        # GitHub Pages is configured as legacy branch deploy from main `/`.
+        # Publishing index.html + assets at the repo root makes the live site
+        # serve the React app instead of the README.
+        working-directory: .
+        run: |
+          set -euo pipefail
+          rm -rf assets
+          cp -a app/frontend/dist/. .
+          # Drop Vite default icon if present; favicon.svg is the site icon
+          rm -f vite.svg
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- .nojekyll index.html 404.html favicon.svg assets
+          git add -u -- vite.svg || true
+          if git diff --cached --quiet; then
+            echo "No site changes to publish"
+          else
+            git commit -m "chore: publish GitHub Pages site [skip ci]"
+            git push origin HEAD:main
+          fi
+
       - name: Upload artifact
+        # Kept for when Pages source is switched to "GitHub Actions"
         uses: actions/upload-pages-artifact@v3
         with:
           path: app/frontend/dist
+        continue-on-error: true
 
   deploy:
     needs: build
+    if: needs.build.result == 'success'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -62,3 +97,4 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+        continue-on-error: true
