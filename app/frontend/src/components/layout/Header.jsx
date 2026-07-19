@@ -30,11 +30,10 @@ export default function Header({
     const isHeaderVisible = visible || isMenuOpen;
 
     return (
-        <motion.header
-            className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--color-border)] bg-[var(--color-base)]/92 backdrop-blur-xl shadow-lg header-scrolled"
-            initial={false}
-            animate={{ y: isHeaderVisible ? 0 : -120 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        <header
+            className={`site-header fixed top-0 left-0 right-0 z-[100] border-b border-[var(--color-border)] bg-[var(--color-base)]/92 backdrop-blur-xl shadow-lg ${
+                isHeaderVisible ? "site-header--visible" : "site-header--hidden"
+            }`}
         >
             <div className="container-portfolio flex h-16 items-center justify-between md:h-20">
                 <a href="#home" className="group flex items-center gap-3">
@@ -141,6 +140,6 @@ export default function Header({
                     </motion.div>
                 )}
             </AnimatePresence>
-        </motion.header>
+        </header>
     );
 }

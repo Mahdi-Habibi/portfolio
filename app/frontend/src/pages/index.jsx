@@ -1,4 +1,5 @@
 import React, { useEffect, useState, Suspense, lazy } from 'react';
+import { createPortal } from 'react-dom';
 import '../styles/global.css';
 import TechBackground from '../components/ui/TechBackground';
 import ScrollToTop from '../components/ui/ScrollToTop';
@@ -22,6 +23,13 @@ function SectionLoader() {
     );
 }
 
+function Portal({ children }) {
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => setMounted(true), []);
+    if (!mounted) return null;
+    return createPortal(children, document.body);
+}
+
 export default function IndexPage() {
     const [language, setLanguage] = useState('en');
     const [theme, setTheme] = useState(() => {
@@ -36,7 +44,7 @@ export default function IndexPage() {
     useEffect(() => {
         document.documentElement.lang = language;
         document.documentElement.dir = language === 'fa' ? 'rtl' : 'ltr';
-        document.title = t.siteTitle || 'Mahdi Habibi | Full-Stack Developer';
+        document.title = t.siteTitle || 'Mahdi Habibi | React & Django Specialist';
     }, [language, t.siteTitle]);
 
     useEffect(() => {
@@ -49,63 +57,66 @@ export default function IndexPage() {
     }, [theme]);
 
     return (
-        <div className="page-enter relative min-h-screen bg-[var(--color-base)] text-[var(--color-text)]">
-            <TechBackground />
+        <>
+            {/* Portal keeps fixed UI on document.body so parent transforms never break them */}
+            <Portal>
+                <TechBackground />
+                <Header
+                    links={t.nav}
+                    ctaText={t.sidebar.cta}
+                    language={language}
+                    languages={languages}
+                    onLanguageChange={setLanguage}
+                    theme={theme}
+                    onThemeToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                    visible={navVisible}
+                />
+                <ScrollToTop visible={scrollTopVisible} />
+            </Portal>
 
-            <Header
-                links={t.nav}
-                ctaText={t.sidebar.cta}
-                language={language}
-                languages={languages}
-                onLanguageChange={setLanguage}
-                theme={theme}
-                onThemeToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                visible={navVisible}
-            />
+            <div className="relative z-10 min-h-screen bg-transparent text-[var(--color-text)]">
+                <main role="main">
+                    <Hero content={t.hero} />
 
-            <ScrollToTop visible={scrollTopVisible} />
+                    <SectionDivider />
 
-            <main role="main">
-                <Hero content={t.hero} />
+                    <Suspense fallback={<SectionLoader />}>
+                        <About content={t.about} />
+                    </Suspense>
 
-                <SectionDivider />
+                    <SectionDivider />
 
-                <Suspense fallback={<SectionLoader />}>
-                    <About content={t.about} />
-                </Suspense>
+                    <Suspense fallback={<SectionLoader />}>
+                        <Projects content={t.projects} />
+                    </Suspense>
 
-                <SectionDivider />
+                    <SectionDivider />
 
-                <Suspense fallback={<SectionLoader />}>
-                    <Projects content={t.projects} />
-                </Suspense>
+                    <Suspense fallback={<SectionLoader />}>
+                        <Experience content={t.experience} />
+                    </Suspense>
 
-                <SectionDivider />
+                    <SectionDivider />
 
-                <Suspense fallback={<SectionLoader />}>
-                    <Experience content={t.experience} />
-                </Suspense>
+                    <Suspense fallback={<SectionLoader />}>
+                        <Education content={t.education} />
+                    </Suspense>
 
-                <SectionDivider />
+                    <SectionDivider />
 
-                <Suspense fallback={<SectionLoader />}>
-                    <Education content={t.education} />
-                </Suspense>
+                    <Suspense fallback={<SectionLoader />}>
+                        <Contact content={t.contact} />
+                    </Suspense>
+                </main>
 
-                <SectionDivider />
-
-                <Suspense fallback={<SectionLoader />}>
-                    <Contact content={t.contact} />
-                </Suspense>
-            </main>
-
-            <Footer
-                links={t.nav}
-                location={t.hero.location}
-                summary={t.footer?.summary || t.sidebar.summary}
-                contactLinks={t.contact.links}
-                labels={t.footer}
-            />
-        </div>
+                <Footer
+                    links={t.nav}
+                    location={t.hero.location}
+                    summary={t.footer?.summary || t.sidebar.summary}
+                    contactLinks={t.contact.links}
+                    labels={t.footer}
+                />
+            </div>
+        </>
     );
 }

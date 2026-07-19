@@ -1,62 +1,71 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Navbar: hides on scroll down, shows on scroll up (works on every section).
- * Scroll-to-top: visible whenever the hero section has been passed.
+ * Navbar: hide on scroll down, show on scroll up (any section).
+ * Go-to-top: show after leaving ~half the hero height.
  */
 export function useScrollBehavior() {
     const [navVisible, setNavVisible] = useState(true);
     const [scrollTopVisible, setScrollTopVisible] = useState(false);
     const lastY = useRef(0);
-    const ticking = useRef(false);
+    const heroThreshold = useRef(400);
 
     useEffect(() => {
-        const hero = document.getElementById("home");
-        if (!hero) return undefined;
+        const measure = () => {
+            const hero = document.getElementById("home");
+            if (hero) {
+                heroThreshold.current = Math.max(280, Math.round(hero.offsetHeight * 0.5));
+            } else {
+                heroThreshold.current = Math.round(window.innerHeight * 0.5);
+            }
+        };
 
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                setScrollTopVisible(!entry.isIntersecting);
-            },
-            { threshold: 0, rootMargin: "-10% 0px 0px 0px" }
-        );
+        const getY = () =>
+            window.scrollY
+            || window.pageYOffset
+            || document.documentElement.scrollTop
+            || document.body.scrollTop
+            || 0;
 
-        observer.observe(hero);
-        return () => observer.disconnect();
-    }, []);
-
-    useEffect(() => {
         const update = () => {
-            const y = window.scrollY ?? document.documentElement.scrollTop;
+            const y = getY();
+            const prev = lastY.current;
+            const delta = y - prev;
 
-            if (y <= 16) {
+            setScrollTopVisible(y > heroThreshold.current);
+
+            if (y <= 32) {
                 setNavVisible(true);
-            } else if (y > lastY.current + 2) {
+            } else if (delta > 6) {
                 setNavVisible(false);
-            } else if (y < lastY.current - 2) {
+            } else if (delta < -6) {
                 setNavVisible(true);
             }
 
             lastY.current = y;
-            ticking.current = false;
         };
 
-        const onScroll = () => {
-            if (!ticking.current) {
-                ticking.current = true;
-                requestAnimationFrame(update);
-            }
-        };
+        measure();
+        lastY.current = getY();
+        update();
 
-        lastY.current = window.scrollY ?? document.documentElement.scrollTop;
-        onScroll();
+        window.addEventListener("scroll", update, { passive: true });
+        window.addEventListener("scrollend", update, { passive: true });
+        window.addEventListener("resize", () => {
+            measure();
+            update();
+        }, { passive: true });
 
-        window.addEventListener("scroll", onScroll, { passive: true });
-        document.addEventListener("scroll", onScroll, { passive: true });
+        // Wheel/touch keep navbar responsive even if scroll events are sparse
+        window.addEventListener("wheel", update, { passive: true });
+        window.addEventListener("touchmove", update, { passive: true });
 
         return () => {
-            window.removeEventListener("scroll", onScroll);
-            document.removeEventListener("scroll", onScroll);
+            window.removeEventListener("scroll", update);
+            window.removeEventListener("scrollend", update);
+            window.removeEventListener("resize", measure);
+            window.removeEventListener("wheel", update);
+            window.removeEventListener("touchmove", update);
         };
     }, []);
 

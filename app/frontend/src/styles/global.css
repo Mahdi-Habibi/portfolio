@@ -346,9 +346,32 @@ a {
   animation: spin-slow 12s linear infinite reverse;
 }
 
-/* Page entrance */
+/* Opacity-only page fade — NEVER use transform here.
+   Transform on a parent breaks position:fixed for navbar/background. */
 .page-enter {
-  animation: fade-in-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: fade-in 0.55s ease both;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Sticky header show/hide via CSS (viewport-fixed, reliable) */
+.site-header {
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.site-header--visible {
+  transform: translate3d(0, 0, 0);
+  pointer-events: auto;
+}
+
+.site-header--hidden {
+  transform: translate3d(0, -110%, 0);
+  pointer-events: none;
 }
 
 /* Floating particles */
@@ -502,7 +525,7 @@ a {
   position: absolute;
   border-radius: 50%;
   filter: blur(80px);
-  opacity: 0.35;
+  opacity: 0.5;
 }
 
 .aurora-layer-1 {
