@@ -927,25 +927,12 @@ footer[id] {
   border-radius: 1rem;
   background: var(--accent);
   color: var(--bg);
-  padding: 0.75rem 1.25rem;
+  padding: 0.65rem 1.15rem;
   box-shadow: var(--shadow-warm);
-}
-
-.about-location-badge strong {
-  display: block;
   font-family: var(--font-display);
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1;
-}
-
-.about-location-badge span {
-  display: block;
-  margin-top: 0.25rem;
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  opacity: 0.8;
+  letter-spacing: 0.04em;
 }
 
 .about-copy h2 {
