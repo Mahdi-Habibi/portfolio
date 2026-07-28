@@ -404,10 +404,7 @@ export default function IndexPage() {
                             <div className="about-photo">
                                 <ImageOrFallback src={profileImage} alt="Mahdi Habibi portrait" />
                             </div>
-                            <div className="about-location-badge">
-                                <strong>{locationParts.city}</strong>
-                                <span>{locationParts.region}</span>
-                            </div>
+                            <div className="about-location-badge">Iran</div>
                         </div>
                         <div className="about-copy reveal">
                             <p className="eyebrow">[ About ]</p>
