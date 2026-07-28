@@ -1,6 +1,19 @@
-import './styles/main.css'
-import IndexPage from './pages'
+import "./styles/main.css";
+import "lenis/dist/lenis.css";
+import { ReactLenis } from "lenis/react";
+import IndexPage from "./pages";
+import { SMOOTH_SCROLL_OPTIONS, usePrefersReducedMotion } from "./hooks/useSmoothScroll";
 
 export default function App() {
-  return <IndexPage/>
+    const prefersReducedMotion = usePrefersReducedMotion();
+
+    if (prefersReducedMotion) {
+        return <IndexPage />;
+    }
+
+    return (
+        <ReactLenis root options={SMOOTH_SCROLL_OPTIONS}>
+            <IndexPage />
+        </ReactLenis>
+    );
 }

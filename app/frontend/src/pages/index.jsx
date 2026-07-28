@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useLenis } from "lenis/react";
 import "../styles/global.css";
 import ScrollToTop from "../components/ui/ScrollToTop";
 import { useScrollBehavior } from "../hooks/useScrollBehavior";
@@ -170,12 +171,21 @@ export default function IndexPage() {
         };
 
         updateJourneyProgress();
-        window.addEventListener("scroll", updateJourneyProgress, { passive: true });
         window.addEventListener("resize", updateJourneyProgress);
-        return () => {
-            window.removeEventListener("scroll", updateJourneyProgress);
-            window.removeEventListener("resize", updateJourneyProgress);
-        };
+        return () => window.removeEventListener("resize", updateJourneyProgress);
+    }, [language]);
+
+    useLenis((lenis) => {
+        const section = journeySectionRef.current;
+        if (!section) return;
+        const rect = section.getBoundingClientRect();
+        const scrollable = section.offsetHeight - window.innerHeight * 0.35;
+        if (scrollable <= 0) {
+            setJourneyProgress(rect.top <= window.innerHeight * 0.5 ? 1 : 0);
+            return;
+        }
+        const travelled = Math.min(Math.max(window.innerHeight * 0.25 - rect.top, 0), scrollable);
+        setJourneyProgress(travelled / scrollable);
     }, [language]);
 
     const showCasePreview = (card, idx, event) => {
@@ -244,7 +254,7 @@ export default function IndexPage() {
                     </button>
                 </div>
                 {menuOpen && (
-                    <div className="mobile-nav">
+                    <div className="mobile-nav" data-lenis-prevent>
                         {t.nav.map((item) => (
                             <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>{item.label}</a>
                         ))}

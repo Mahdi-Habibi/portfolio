@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useLenis } from "lenis/react";
+import { getScrollY } from "./useSmoothScroll";
 
 /**
- * Navbar: hide on scroll down, show on scroll up (any section).
+ * Navbar: hide on scroll down, show on scroll up.
  * Go-to-top: show after leaving ~half the hero height.
  */
 export function useScrollBehavior() {
@@ -10,64 +12,62 @@ export function useScrollBehavior() {
     const lastY = useRef(0);
     const heroThreshold = useRef(400);
 
+    const measureHero = useCallback(() => {
+        const hero = document.getElementById("home");
+        if (hero) {
+            heroThreshold.current = Math.max(280, Math.round(hero.offsetHeight * 0.5));
+        } else {
+            heroThreshold.current = Math.round(window.innerHeight * 0.5);
+        }
+    }, []);
+
+    const applyScroll = useCallback((y, direction) => {
+        const prev = lastY.current;
+        const delta = y - prev;
+
+        setScrollTopVisible(y > heroThreshold.current);
+
+        if (y <= 32) {
+            setNavVisible(true);
+        } else if (direction === 1 || (direction == null && delta > 6)) {
+            setNavVisible(false);
+        } else if (direction === -1 || (direction == null && delta < -6)) {
+            setNavVisible(true);
+        }
+
+        lastY.current = y;
+    }, []);
+
+    const lenis = useLenis((instance) => {
+        applyScroll(instance.scroll, instance.direction);
+    });
+
     useEffect(() => {
-        const measure = () => {
-            const hero = document.getElementById("home");
-            if (hero) {
-                heroThreshold.current = Math.max(280, Math.round(hero.offsetHeight * 0.5));
-            } else {
-                heroThreshold.current = Math.round(window.innerHeight * 0.5);
-            }
-        };
+        measureHero();
+        lastY.current = getScrollY();
+        applyScroll(lastY.current);
 
-        const getY = () =>
-            window.scrollY
-            || window.pageYOffset
-            || document.documentElement.scrollTop
-            || document.body.scrollTop
-            || 0;
+        if (lenis) return undefined;
 
-        const update = () => {
-            const y = getY();
-            const prev = lastY.current;
-            const delta = y - prev;
-
-            setScrollTopVisible(y > heroThreshold.current);
-
-            if (y <= 32) {
-                setNavVisible(true);
-            } else if (delta > 6) {
-                setNavVisible(false);
-            } else if (delta < -6) {
-                setNavVisible(true);
-            }
-
-            lastY.current = y;
-        };
-
-        measure();
-        lastY.current = getY();
-        update();
+        const update = () => applyScroll(getScrollY());
 
         window.addEventListener("scroll", update, { passive: true });
         window.addEventListener("scrollend", update, { passive: true });
         window.addEventListener("resize", () => {
-            measure();
+            measureHero();
             update();
         }, { passive: true });
-
-        // Wheel/touch keep navbar responsive even if scroll events are sparse
         window.addEventListener("wheel", update, { passive: true });
         window.addEventListener("touchmove", update, { passive: true });
 
         return () => {
             window.removeEventListener("scroll", update);
             window.removeEventListener("scrollend", update);
-            window.removeEventListener("resize", measure);
+            window.removeEventListener("resize", measureHero);
             window.removeEventListener("wheel", update);
             window.removeEventListener("touchmove", update);
         };
-    }, []);
+    }, [applyScroll, lenis, measureHero]);
 
     return { navVisible, scrollTopVisible };
 }

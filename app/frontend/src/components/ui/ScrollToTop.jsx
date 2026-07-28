@@ -1,11 +1,18 @@
 import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import '../../styles/global.css';
+import { useLenis } from "lenis/react";
+import "../../styles/global.css";
 
 export default function ScrollToTop({ visible }) {
+    const lenis = useLenis();
+
     const scrollToTop = () => {
+        if (lenis) {
+            lenis.scrollTo(0, { duration: 1.1 });
+            return;
+        }
+
         window.scrollTo({ top: 0, behavior: "smooth" });
-        // Keep navbar/button state in sync when smooth-scroll events are sparse
         const started = performance.now();
         const sync = () => {
             window.dispatchEvent(new Event("scroll"));
