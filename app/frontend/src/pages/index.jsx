@@ -125,6 +125,14 @@ export default function IndexPage() {
                                 <a href={t.hero.secondaryHref} className="button-secondary" target="_blank" rel="noopener noreferrer">{t.hero.secondary}</a>
                             </div>
                             <p className="meta-line">{t.hero.location}</p>
+                            <div className="hero-metrics">
+                                {t.hero.stats.map((stat) => (
+                                    <div key={stat.label}>
+                                        <strong>{stat.value}</strong>
+                                        <span>{stat.label}</span>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                         <div className="hero-portrait-wrap reveal-on-scroll is-visible">
                             <ImageOrFallback src={profileImage} alt="Mahdi Habibi portrait" />
@@ -137,6 +145,7 @@ export default function IndexPage() {
                         <div className="section-head reveal-on-scroll">
                             <p>Selected Case Studies</p>
                             <h2>{t.projects.title}</h2>
+                            <a href="#contact" className="section-inline-link">All case studies &rarr;</a>
                         </div>
                         <div className="case-grid">
                             {t.projects.cards.map((card, idx) => (
