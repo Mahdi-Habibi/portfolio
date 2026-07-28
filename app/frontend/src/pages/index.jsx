@@ -4,48 +4,88 @@ import ScrollToTop from "../components/ui/ScrollToTop";
 import { useScrollBehavior } from "../hooks/useScrollBehavior";
 import { languages, translations } from "../i18n/translations";
 
-function ImageOrFallback({ src, alt, imageClassName = "portrait-image", fallbackClassName = "portrait-fallback", fallbackText = "MH" }) {
+const SECTIONS = [
+    { id: "home", label: "Intro" },
+    { id: "projects", label: "Work" },
+    { id: "clients", label: "Clients" },
+    { id: "highlights", label: "Impact" },
+    { id: "about", label: "About" },
+    { id: "systems", label: "Stack" },
+    { id: "experience", label: "Journey" },
+    { id: "education", label: "Education" },
+    { id: "contact", label: "Contact" },
+];
+
+function ImageOrFallback({ src, alt, className = "", fallbackText = "MH" }) {
     const [broken, setBroken] = useState(false);
     if (broken) {
-        return <div className={fallbackClassName} aria-label={alt}>{fallbackText}</div>;
+        return <div className={`portrait-fallback ${className}`.trim()} aria-label={alt}>{fallbackText}</div>;
     }
-    return <img src={src} alt={alt} className={imageClassName} onError={() => setBroken(true)} />;
+    return <img src={src} alt={alt} className={className} onError={() => setBroken(true)} />;
+}
+
+function splitLocation(location) {
+    const [city, rest] = location.split(",");
+    return { city: city?.trim() || location, region: rest?.trim() || "Iran" };
 }
 
 export default function IndexPage() {
     const [language, setLanguage] = useState("en");
-    const [theme, setTheme] = useState(() => (typeof window !== "undefined" ? localStorage.getItem("theme") || "dark" : "dark"));
     const [menuOpen, setMenuOpen] = useState(false);
+    const [activeSection, setActiveSection] = useState("home");
     const t = translations[language] || translations.en;
     const { navVisible, scrollTopVisible } = useScrollBehavior();
     const profileImage = `${import.meta.env.BASE_URL}profile.jpg`;
-    const headingMeta = {
-        projectsEyebrow: "Selected Case Studies",
-        projectsTitle: "Enterprise UX, design systems, and AI - shipped at scale.",
-        aboutEyebrow: "About",
-        aboutTitle: "I build for teams solving high-stakes product problems.",
-        experienceEyebrow: "My Journey",
-        experienceTitle: "Where I have worked",
-        educationEyebrow: "Academic Track",
-        educationTitle: "Foundations and advanced systems study",
-        contactEyebrow: "Contact",
-        contactTitle: "Let's build something deliberate.",
-    };
+    const locationParts = splitLocation(t.hero.location.replace(/\([^)]*\)/, "").trim());
+    const featuredSkills = useMemo(() => t.about.toolbelt, [t.about.toolbelt]);
+    const clientTags = useMemo(() => [...t.about.toolbelt.slice(0, 12), ...t.projects.cards.flatMap((c) => c.stack)], [t.about.toolbelt, t.projects.cards]);
 
-    const featuredSkills = useMemo(() => t.about.toolbelt.slice(0, 8), [t.about.toolbelt]);
+    const impactCards = useMemo(
+        () => [
+            { initials: "MH", quote: t.about.recentWinText, name: t.about.recentWinTitle, role: "Recent delivery" },
+            ...t.hero.stats.map((stat) => ({
+                initials: stat.value.replace(/[^0-9A-Za-z+]/g, "").slice(0, 2) || "MH",
+                quote: `${stat.value} — measurable outcome across product delivery and mentoring.`,
+                name: stat.label,
+                role: "Impact metric",
+            })),
+        ],
+        [t.about.recentWinText, t.about.recentWinTitle, t.hero.stats],
+    );
+
+    const systemCards = useMemo(
+        () => [
+            {
+                featured: true,
+                title: "Full-stack product delivery",
+                body: t.about.focusAreas[0],
+                tags: ["React", "Django", "TypeScript"],
+            },
+            {
+                title: "Platform operations",
+                body: t.about.focusAreas[1],
+                tags: ["DevOps", "Deployment", "Performance"],
+            },
+            {
+                title: "Mentorship & delivery",
+                body: t.about.focusAreas[2],
+                tags: ["Teaching", "Capstone", "Team growth"],
+            },
+            {
+                title: t.about.toolbeltTitle,
+                body: "Core technologies used across client projects, SaaS platforms, and production systems.",
+                tags: t.about.toolbelt.slice(0, 4),
+            },
+        ],
+        [t.about],
+    );
 
     useEffect(() => {
         document.documentElement.lang = language;
         document.documentElement.dir = language === "fa" ? "rtl" : "ltr";
         document.title = t.siteTitle || "Mahdi Habibi | React & Django Specialist";
+        document.documentElement.setAttribute("data-theme", "dark");
     }, [language, t.siteTitle]);
-
-    useEffect(() => {
-        document.documentElement.setAttribute("data-theme", theme);
-        localStorage.setItem("theme", theme);
-        const meta = document.getElementById("theme-color-meta");
-        if (meta) meta.setAttribute("content", theme === "light" ? "#f7f5f2" : "#0b0b0b");
-    }, [theme]);
 
     useEffect(() => {
         if (!menuOpen) return;
@@ -55,40 +95,52 @@ export default function IndexPage() {
     }, [menuOpen]);
 
     useEffect(() => {
-        if (typeof window === "undefined") return;
-        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        if (reduceMotion) return;
-        const revealNodes = document.querySelectorAll(".reveal-on-scroll");
-        if (!revealNodes.length) return;
+        const nodes = document.querySelectorAll(".reveal");
+        const revealObserver = new IntersectionObserver(
+            (entries) => entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    revealObserver.unobserve(entry.target);
+                }
+            }),
+            { threshold: 0.14, rootMargin: "0px 0px -8% 0px" },
+        );
+        nodes.forEach((node) => revealObserver.observe(node));
 
-        const observer = new IntersectionObserver(
+        const sectionObserver = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("is-visible");
-                        observer.unobserve(entry.target);
-                    }
+                    if (entry.isIntersecting) setActiveSection(entry.target.id);
                 });
             },
-            { threshold: 0.18, rootMargin: "0px 0px -5% 0px" },
+            { rootMargin: "-40% 0px -45% 0px", threshold: 0 },
         );
+        SECTIONS.forEach(({ id }) => {
+            const el = document.getElementById(id);
+            if (el) sectionObserver.observe(el);
+        });
 
-        revealNodes.forEach((node) => observer.observe(node));
-        return () => observer.disconnect();
+        return () => {
+            revealObserver.disconnect();
+            sectionObserver.disconnect();
+        };
     }, [language]);
 
+    const heroTags = "React / Django / TypeScript / DevOps / AI Operations";
+    const heroCred = `${t.hero.stats[0]?.value || "47+"} students mentored · ${t.hero.stats[1]?.value || "10+"} client projects · ${t.hero.stats[2]?.value || "25%"} discoverability lift`;
+
     return (
-        <div className="portfolio-root">
+        <div className="grain">
             <header className={`site-header ${navVisible || menuOpen ? "site-header--visible" : "site-header--hidden"}`}>
-                <div className="site-shell nav-row">
-                    <a href="#home" className="brand">Mahdi<span>.</span></a>
-                    <nav className="desktop-nav" aria-label={t.navLabel || "Navigation"}>
+                <div className="container-x header-inner">
+                    <a href="#home" className="brand">Mahdi<span className="brand-accent">.</span></a>
+                    <nav className="header-nav" aria-label={t.navLabel || "Navigation"}>
                         {t.nav.map((item) => (
-                            <a key={item.href} href={item.href}>{item.label}</a>
+                            <a key={item.href} href={item.href} className="link-underline">{item.label}</a>
                         ))}
                     </nav>
-                    <div className="desktop-actions">
-                        <div className="language-switcher" role="group" aria-label={t.languageLabel || "Language"}>
+                    <div className="header-actions">
+                        <div className="lang-switch" role="group" aria-label={t.languageLabel || "Language"}>
                             {languages.map((lang) => (
                                 <button
                                     key={lang.code}
@@ -100,24 +152,20 @@ export default function IndexPage() {
                                 </button>
                             ))}
                         </div>
-                        <button type="button" className="theme-toggle" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
-                            {theme === "dark" ? "Light" : "Dark"}
-                        </button>
-                        <a href="#contact" className="cta-link">{t.sidebar.cta}</a>
+                        <a href="#contact" className="btn-accent">{t.sidebar.cta}</a>
                     </div>
                     <button
                         type="button"
-                        className="menu-btn"
+                        className="menu-toggle"
                         aria-expanded={menuOpen}
-                        aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+                        aria-label={menuOpen ? "Close menu" : "Open menu"}
                         onClick={() => setMenuOpen((v) => !v)}
                     >
-                        <span />
                         <span />
                     </button>
                 </div>
                 {menuOpen && (
-                    <div className="mobile-panel">
+                    <div className="mobile-nav">
                         {t.nav.map((item) => (
                             <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>{item.label}</a>
                         ))}
@@ -125,153 +173,237 @@ export default function IndexPage() {
                 )}
             </header>
 
+            <nav className="section-rail" aria-label="Section navigation">
+                {SECTIONS.map((section) => (
+                    <a
+                        key={section.id}
+                        href={`#${section.id}`}
+                        className={activeSection === section.id ? "is-active" : ""}
+                    >
+                        <span>{section.label}</span>
+                        <span />
+                    </a>
+                ))}
+            </nav>
+
             <main>
-                <section id="home" className="hero-block section-spacer">
-                    <div className="site-shell hero-grid">
-                        <div className="reveal-on-scroll is-visible">
-                            <p className="kicker">{t.hero.kicker}</p>
-                            <h1>{t.hero.title}</h1>
-                            <p className="lede">{t.hero.subtitle}</p>
-                            <div className="hero-cta-row">
-                                <a href="#projects" className="button-primary">{t.hero.primary}</a>
-                                <a href={t.hero.secondaryHref} className="button-secondary" target="_blank" rel="noopener noreferrer">{t.hero.secondary}</a>
+                <section id="home" className="hero-section">
+                    <div className="hero-glow" aria-hidden="true" />
+                    <div className="hero-gradient-a" aria-hidden="true" />
+                    <div className="hero-gradient-b" aria-hidden="true" />
+                    <div className="container-x hero-content">
+                        <div className="reveal is-visible">
+                            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1.75rem", maxWidth: "22rem" }}>
+                                <span className="eyebrow">{locationParts.city}, {locationParts.region}</span>
+                                <span className="eyebrow eyebrow-faint">{heroTags}</span>
                             </div>
-                            <p className="meta-line">{t.hero.location}</p>
-                            <div className="hero-metrics">
-                                {t.hero.stats.map((stat) => (
-                                    <div key={stat.label}>
-                                        <strong>{stat.value}</strong>
-                                        <span>{stat.label}</span>
-                                    </div>
-                                ))}
+                            <h1 className="hero-name">
+                                <span className="block">Mahdi</span>
+                                <span className="block hero-name-muted">Habibi</span>
+                            </h1>
+                            <p className="hero-lede">{t.hero.subtitle.split(".")[0]}.</p>
+                            <p className="hero-cred">{heroCred}</p>
+                            <div className="hero-cta">
+                                <a href="#projects" className="btn-solid">{t.hero.primary}</a>
+                                <a href="#contact" className="btn-accent">{t.sidebar.cta}</a>
+                                <a href={t.hero.secondaryHref} className="btn-ghost" target="_blank" rel="noopener noreferrer">{t.hero.secondary} ↗</a>
                             </div>
-                        </div>
-                        <div className="hero-portrait-wrap reveal-on-scroll is-visible">
-                            <ImageOrFallback src={profileImage} alt="Mahdi Habibi portrait" />
+                            <a href="#projects" className="hero-scroll-hint link-underline">View my case studies</a>
                         </div>
                     </div>
                 </section>
 
-                <section id="projects" className="section-spacer section-border-top">
-                    <div className="site-shell">
-                        <div className="section-head reveal-on-scroll">
-                            <p>{headingMeta.projectsEyebrow}</p>
-                            <h2>{headingMeta.projectsTitle}</h2>
-                            <a href="#contact" className="section-inline-link">All case studies &rarr;</a>
+                <section id="projects" className="section-block">
+                    <div className="container-x">
+                        <div className="section-head-row reveal">
+                            <div>
+                                <p className="eyebrow">[ Selected case studies ]</p>
+                                <h2 className="section-title section-title-wide">Enterprise UX, design systems, and AI - shipped at scale.</h2>
+                            </div>
+                            <a href="#contact" className="link-underline" style={{ color: "var(--fg-muted)", fontSize: "0.875rem" }}>All case studies →</a>
                         </div>
-                        <div className="case-grid">
+                        <div className="work-grid">
                             {t.projects.cards.map((card, idx) => (
-                                <article key={card.title} className="case-card reveal-on-scroll">
-                                    <span className="case-index">{String(idx + 1).padStart(2, "0")}</span>
-                                    <h3>{card.title}</h3>
-                                    <p className="case-meta">{t.hero.kicker}</p>
-                                    <p>{card.description}</p>
-                                    <div className="case-preview" aria-hidden="true">
-                                        <ImageOrFallback
-                                            src={profileImage}
-                                            alt="Case preview portrait"
-                                            imageClassName="case-preview-image"
-                                            fallbackClassName="case-preview-fallback"
-                                            fallbackText="MH"
-                                        />
+                                <article key={card.title} className="work-card reveal">
+                                    <div className="work-card-media">
+                                        <span className="work-card-index">{String(idx + 1).padStart(2, "0")}</span>
+                                        <div className="work-card-fallback">{String(idx + 1).padStart(2, "0")}</div>
                                     </div>
-                                    <ul>
-                                        {card.stack.map((tech) => <li key={tech}>{tech}</li>)}
-                                    </ul>
-                                    <p className="case-result">{card.result}</p>
+                                    <div className="work-card-body">
+                                        <div className="work-card-top">
+                                            <div>
+                                                <h3>{card.title}</h3>
+                                                <p className="work-card-meta">{t.hero.kicker} · 2025</p>
+                                            </div>
+                                        </div>
+                                        <p className="work-card-result">{card.result}</p>
+                                        <p>{card.description}</p>
+                                        <div className="work-card-tags">
+                                            {card.stack.map((tech) => <span key={tech}>{tech}</span>)}
+                                        </div>
+                                    </div>
                                 </article>
                             ))}
                         </div>
                     </div>
                 </section>
 
-                <section id="about" className="section-spacer section-border-top">
-                    <div className="site-shell split-grid">
-                        <div className="reveal-on-scroll">
-                            <div className="section-head">
-                                <p>{headingMeta.aboutEyebrow}</p>
-                                <h2>{headingMeta.aboutTitle}</h2>
-                            </div>
-                            <p className="copy">{t.about.body}</p>
-                            <ul className="focus-list">
-                                {t.about.focusAreas.map((item) => <li key={item}>{item}</li>)}
-                            </ul>
-                            <div className="chip-row">
-                                {featuredSkills.map((skill) => <span key={skill}>{skill}</span>)}
+                <section id="clients" className="section-block section-border clients-panel">
+                    <div className="container-x reveal">
+                        <p className="eyebrow">[ Selected clients &amp; platforms ]</p>
+                        <h2 className="section-title" style={{ marginInline: "auto", maxWidth: "24ch" }}>Product and platform work across SaaS, IoT, and enterprise web systems.</h2>
+                        <p className="section-copy" style={{ marginInline: "auto" }}>Hover to preview a case study, click to open</p>
+                        <div className="clients-marquee" aria-hidden="true">
+                            <div className="clients-track">
+                                {[...clientTags, ...clientTags].map((tag, i) => <span key={`${tag}-${i}`}>{tag}</span>)}
                             </div>
                         </div>
-                        <aside className="about-card reveal-on-scroll">
-                            <ImageOrFallback src={profileImage} alt="Mahdi Habibi black-and-white portrait" />
-                            <p className="small-label">{t.about.recentWinTitle}</p>
-                            <p>{t.about.recentWinText}</p>
-                        </aside>
                     </div>
                 </section>
 
-                <section id="experience" className="section-spacer section-border-top">
-                    <div className="site-shell">
-                        <div className="section-head reveal-on-scroll">
-                            <p>{headingMeta.experienceEyebrow}</p>
-                            <h2>{headingMeta.experienceTitle}</h2>
+                <section id="highlights" className="section-block section-border">
+                    <div className="container-x">
+                        <p className="eyebrow reveal">[ What leaders say ]</p>
+                        <h2 className="section-title section-title-wide reveal">Endorsed by measurable outcomes and delivery impact.</h2>
+                        <div className="masonry">
+                            {impactCards.map((card) => (
+                                <figure key={`${card.name}-${card.initials}`} className="masonry-card reveal">
+                                    <blockquote>{card.quote}</blockquote>
+                                    <figcaption>
+                                        <span className="avatar-badge">{card.initials}</span>
+                                        <span style={{ fontSize: "0.875rem" }}>
+                                            <strong style={{ display: "block" }}>{card.name}</strong>
+                                            <span style={{ color: "var(--fg-muted)" }}>{card.role}</span>
+                                        </span>
+                                    </figcaption>
+                                </figure>
+                            ))}
                         </div>
-                        <div className="timeline">
-                            {t.experience.items.map((item) => (
-                                <article key={`${item.role}-${item.company}`} className="timeline-item reveal-on-scroll">
-                                    <p className="timeline-period">{item.period}</p>
-                                    <h3>{item.role}</h3>
-                                    <p className="timeline-company">{item.company}</p>
+                    </div>
+                </section>
+
+                <section id="about" className="section-block">
+                    <div className="container-x about-grid">
+                        <div className="about-photo-wrap reveal">
+                            <div className="about-photo">
+                                <ImageOrFallback src={profileImage} alt="Mahdi Habibi portrait" />
+                            </div>
+                            <div className="about-location-badge">
+                                <strong>{locationParts.city}</strong>
+                                <span>{locationParts.region}</span>
+                            </div>
+                        </div>
+                        <div className="about-copy reveal">
+                            <p className="eyebrow">[ About ]</p>
+                            <h2>{t.about.title}</h2>
+                            <p>{t.about.body}</p>
+                            <div className="skill-tags">
+                                {featuredSkills.slice(0, 10).map((skill) => <span key={skill}>{skill}</span>)}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="systems" className="section-block section-border">
+                    <div className="container-x">
+                        <div className="reveal">
+                            <p className="eyebrow">[ Design system intelligence ]</p>
+                            <h2 className="section-title">Tools that make systems think.</h2>
+                            <p className="section-copy">{t.about.recentWinText}</p>
+                        </div>
+                        <div className="systems-grid">
+                            {systemCards.map((card) => (
+                                <article key={card.title} className={`system-card reveal ${card.featured ? "featured" : ""}`}>
+                                    <h3>{card.title}</h3>
+                                    <p>{card.body}</p>
+                                    <div className="system-card-tags">
+                                        {card.tags.map((tag) => <span key={tag}>{tag}</span>)}
+                                    </div>
+                                </article>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                <section id="experience" className="section-block section-border journey-section">
+                    <div className="container-x journey-layout">
+                        <div className="journey-intro reveal">
+                            <p className="eyebrow">[ My journey ]</p>
+                            <h2 className="section-title">Where I have worked</h2>
+                            <p className="section-copy">Full-stack engineering across product companies, client delivery, and technical education — from foundational web work to AI-enabled platform operations.</p>
+                            <div className="journey-progress">
+                                <div className="journey-progress-labels">
+                                    <span>Foundations</span>
+                                    <span>Today</span>
+                                </div>
+                                <div className="journey-progress-bar"><span /></div>
+                            </div>
+                        </div>
+                        <ol className="journey-list">
+                            {t.experience.items.map((item, idx) => (
+                                <li key={`${item.role}-${item.company}`} className="journey-item reveal">
+                                    <span className="journey-dot" aria-hidden="true" />
+                                    <p className="journey-role">{item.company} · {item.role.split(",")[0]}</p>
+                                    <p className="journey-meta">{item.role} · {item.period}</p>
+                                    <h3>{item.bullets[0]?.split(".")[0] || item.role}</h3>
                                     <ul>
                                         {item.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
                                     </ul>
-                                </article>
+                                </li>
                             ))}
-                        </div>
+                        </ol>
                     </div>
                 </section>
 
-                <section id="education" className="section-spacer section-border-top">
-                    <div className="site-shell">
-                        <div className="section-head reveal-on-scroll">
-                            <p>{headingMeta.educationEyebrow}</p>
-                            <h2>{headingMeta.educationTitle}</h2>
+                <section id="education" className="section-block section-border">
+                    <div className="container-x">
+                        <div className="section-head-row reveal">
+                            <div>
+                                <p className="eyebrow">[ Writing ]</p>
+                                <h2 className="section-title">Academic foundations and advanced systems study.</h2>
+                            </div>
+                            <a href="#contact" className="link-underline" style={{ color: "var(--fg-muted)", fontSize: "0.875rem" }}>Get in touch →</a>
                         </div>
-                        <div className="edu-grid">
+                        <div className="writing-grid">
                             {t.education.items.map((item) => (
-                                <article key={item.school} className="edu-card reveal-on-scroll">
+                                <article key={item.school} className="writing-card reveal">
                                     <h3>{item.school}</h3>
-                                    <p>{item.degree}</p>
-                                    <p className="timeline-period">{item.period}</p>
-                                    <p>{item.note}</p>
+                                    <p>{item.degree}. {item.note}</p>
+                                    <span>{item.period} ↗</span>
                                 </article>
                             ))}
                         </div>
                     </div>
                 </section>
 
-                <section id="contact" className="section-spacer section-border-top contact-block">
-                    <div className="site-shell">
-                        <div className="section-head reveal-on-scroll">
-                            <p>{headingMeta.contactEyebrow}</p>
-                            <h2>{headingMeta.contactTitle}</h2>
-                        </div>
-                        <p className="copy reveal-on-scroll">{t.contact.body}</p>
+                <section id="contact" className="section-block section-border contact-section">
+                    <div className="container-x reveal">
+                        <p className="eyebrow">[ Contact ]</p>
+                        <h2 className="section-title">{t.contact.heading}</h2>
+                        <p className="section-copy">{t.contact.body}</p>
                         <div className="contact-links">
                             {t.contact.links.map((link) => (
-                                <a key={link.href} href={link.href} target={link.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className="reveal-on-scroll">
+                                <a
+                                    key={link.href}
+                                    href={link.href}
+                                    target={link.href.startsWith("http") ? "_blank" : undefined}
+                                    rel="noopener noreferrer"
+                                >
                                     {link.label}
                                 </a>
                             ))}
                         </div>
-                        <p className="meta-line">{t.contact.location}</p>
                     </div>
                 </section>
             </main>
-            <footer className="site-footer">
-                <div className="site-shell footer-row">
+
+            <footer id="footer" className="site-footer">
+                <div className="container-x footer-row">
                     <p>{t.footer?.summary || t.sidebar.summary}</p>
-                    <a href="#home">Back to top</a>
+                    <a href="#home" className="link-underline">Back to top</a>
                 </div>
             </footer>
+
             <ScrollToTop visible={scrollTopVisible} />
         </div>
     );
