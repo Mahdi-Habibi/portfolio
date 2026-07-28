@@ -118,6 +118,21 @@ export default function IndexPage() {
     }, [language, t.siteTitle]);
 
     useEffect(() => {
+        if (!menuOpen) return undefined;
+
+        document.body.classList.add("menu-open");
+        const onKeyDown = (event) => {
+            if (event.key === "Escape") setMenuOpen(false);
+        };
+        window.addEventListener("keydown", onKeyDown);
+
+        return () => {
+            document.body.classList.remove("menu-open");
+            window.removeEventListener("keydown", onKeyDown);
+        };
+    }, [menuOpen]);
+
+    useEffect(() => {
         if (!menuOpen) return;
         const close = () => setMenuOpen(false);
         window.addEventListener("resize", close);
@@ -245,7 +260,7 @@ export default function IndexPage() {
                     </div>
                     <button
                         type="button"
-                        className="menu-toggle"
+                        className={`menu-toggle ${menuOpen ? "menu-toggle--open" : ""}`}
                         aria-expanded={menuOpen}
                         aria-label={menuOpen ? "Close menu" : "Open menu"}
                         onClick={() => setMenuOpen((v) => !v)}
@@ -254,11 +269,38 @@ export default function IndexPage() {
                     </button>
                 </div>
                 {menuOpen && (
-                    <div className="mobile-nav" data-lenis-prevent>
-                        {t.nav.map((item) => (
-                            <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>{item.label}</a>
-                        ))}
-                    </div>
+                    <>
+                        <button
+                            type="button"
+                            className="mobile-nav-backdrop"
+                            aria-label="Close menu"
+                            onClick={() => setMenuOpen(false)}
+                        />
+                        <div className="mobile-nav-panel" data-lenis-prevent>
+                            <nav className="mobile-nav" aria-label={t.navLabel || "Navigation"}>
+                                {t.nav.map((item) => (
+                                    <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>{item.label}</a>
+                                ))}
+                            </nav>
+                            <div className="mobile-nav-footer">
+                                <div className="lang-switch" role="group" aria-label={t.languageLabel || "Language"}>
+                                    {languages.map((lang) => (
+                                        <button
+                                            key={lang.code}
+                                            type="button"
+                                            onClick={() => setLanguage(lang.code)}
+                                            className={language === lang.code ? "is-active" : ""}
+                                        >
+                                            {lang.code}
+                                        </button>
+                                    ))}
+                                </div>
+                                <a href="#contact" className="btn-accent mobile-nav-cta" onClick={() => setMenuOpen(false)}>
+                                    {t.sidebar.cta}
+                                </a>
+                            </div>
+                        </div>
+                    </>
                 )}
             </header>
 
@@ -309,7 +351,7 @@ export default function IndexPage() {
                                 <p className="eyebrow">[ Selected repositories ]</p>
                                 <h2 className="section-title section-title-wide">Shipped products from my GitHub — learning platforms, SaaS, IoT, and automation.</h2>
                             </div>
-                            <a href="https://github.com/Mahdi-Habibi?tab=repositories" className="link-underline" style={{ color: "var(--fg-muted)", fontSize: "0.875rem" }} target="_blank" rel="noopener noreferrer">All repositories →</a>
+                            <a href="https://github.com/Mahdi-Habibi?tab=repositories" className="link-underline section-link" target="_blank" rel="noopener noreferrer">All repositories →</a>
                         </div>
                         <div className="work-grid">
                             {t.projects.cards.map((card, idx) => (
@@ -367,8 +409,8 @@ export default function IndexPage() {
                 <section id="clients" className="section-block section-border clients-panel">
                     <div className="container-x reveal">
                         <p className="eyebrow">[ Stack in public repos ]</p>
-                        <h2 className="section-title" style={{ marginInline: "auto", maxWidth: "24ch" }}>Languages and frameworks used across Pathwise, Pocket Crypto, SaaS, IoT, and finance apps.</h2>
-                        <p className="section-copy" style={{ marginInline: "auto" }}>Hover a case study to preview its cover, click to open the repo or live demo</p>
+                        <h2 className="section-title section-title-center">Languages and frameworks used across Pathwise, Pocket Crypto, SaaS, IoT, and finance apps.</h2>
+                        <p className="section-copy section-copy-center">Tap a project to open the repo or live demo</p>
                         <div className="clients-marquee" aria-hidden="true">
                             <div className="clients-track">
                                 {[...clientTags, ...clientTags].map((tag, i) => <span key={`${tag}-${i}`}>{tag}</span>)}
@@ -484,7 +526,7 @@ export default function IndexPage() {
                                 <p className="eyebrow">[ Writing ]</p>
                                 <h2 className="section-title">Academic foundations and advanced systems study.</h2>
                             </div>
-                            <a href="#contact" className="link-underline" style={{ color: "var(--fg-muted)", fontSize: "0.875rem" }}>Get in touch →</a>
+                            <a href="#contact" className="link-underline section-link">Get in touch →</a>
                         </div>
                         <div className="writing-grid">
                             {t.education.items.map((item) => (
