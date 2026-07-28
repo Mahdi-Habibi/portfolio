@@ -19,6 +19,18 @@ export default function IndexPage() {
     const t = translations[language] || translations.en;
     const { navVisible, scrollTopVisible } = useScrollBehavior();
     const profileImage = `${import.meta.env.BASE_URL}profile.jpg`;
+    const headingMeta = {
+        projectsEyebrow: "Selected Case Studies",
+        projectsTitle: "Enterprise UX, design systems, and AI - shipped at scale.",
+        aboutEyebrow: "About",
+        aboutTitle: "I build for teams solving high-stakes product problems.",
+        experienceEyebrow: "My Journey",
+        experienceTitle: "Where I have worked",
+        educationEyebrow: "Academic Track",
+        educationTitle: "Foundations and advanced systems study",
+        contactEyebrow: "Contact",
+        contactTitle: "Let's build something deliberate.",
+    };
 
     const featuredSkills = useMemo(() => t.about.toolbelt.slice(0, 8), [t.about.toolbelt]);
 
@@ -143,8 +155,8 @@ export default function IndexPage() {
                 <section id="projects" className="section-spacer section-border-top">
                     <div className="site-shell">
                         <div className="section-head reveal-on-scroll">
-                            <p>Selected Case Studies</p>
-                            <h2>{t.projects.title}</h2>
+                            <p>{headingMeta.projectsEyebrow}</p>
+                            <h2>{headingMeta.projectsTitle}</h2>
                             <a href="#contact" className="section-inline-link">All case studies &rarr;</a>
                         </div>
                         <div className="case-grid">
@@ -152,6 +164,7 @@ export default function IndexPage() {
                                 <article key={card.title} className="case-card reveal-on-scroll">
                                     <span className="case-index">{String(idx + 1).padStart(2, "0")}</span>
                                     <h3>{card.title}</h3>
+                                    <p className="case-meta">{t.hero.kicker}</p>
                                     <p>{card.description}</p>
                                     <div className="case-preview" aria-hidden="true">
                                         <ImageOrFallback
@@ -176,8 +189,8 @@ export default function IndexPage() {
                     <div className="site-shell split-grid">
                         <div className="reveal-on-scroll">
                             <div className="section-head">
-                                <p>{t.about.titleLabel}</p>
-                                <h2>{t.about.title}</h2>
+                                <p>{headingMeta.aboutEyebrow}</p>
+                                <h2>{headingMeta.aboutTitle}</h2>
                             </div>
                             <p className="copy">{t.about.body}</p>
                             <ul className="focus-list">
@@ -198,8 +211,8 @@ export default function IndexPage() {
                 <section id="experience" className="section-spacer section-border-top">
                     <div className="site-shell">
                         <div className="section-head reveal-on-scroll">
-                            <p>My Journey</p>
-                            <h2>{t.experience.title}</h2>
+                            <p>{headingMeta.experienceEyebrow}</p>
+                            <h2>{headingMeta.experienceTitle}</h2>
                         </div>
                         <div className="timeline">
                             {t.experience.items.map((item) => (
@@ -219,8 +232,8 @@ export default function IndexPage() {
                 <section id="education" className="section-spacer section-border-top">
                     <div className="site-shell">
                         <div className="section-head reveal-on-scroll">
-                            <p>Academic Track</p>
-                            <h2>{t.education.title}</h2>
+                            <p>{headingMeta.educationEyebrow}</p>
+                            <h2>{headingMeta.educationTitle}</h2>
                         </div>
                         <div className="edu-grid">
                             {t.education.items.map((item) => (
@@ -238,8 +251,8 @@ export default function IndexPage() {
                 <section id="contact" className="section-spacer section-border-top contact-block">
                     <div className="site-shell">
                         <div className="section-head reveal-on-scroll">
-                            <p>{t.contact.title}</p>
-                            <h2>{t.contact.heading}</h2>
+                            <p>{headingMeta.contactEyebrow}</p>
+                            <h2>{headingMeta.contactTitle}</h2>
                         </div>
                         <p className="copy reveal-on-scroll">{t.contact.body}</p>
                         <div className="contact-links">
