@@ -1,122 +1,224 @@
-import React, { useEffect, useState, Suspense, lazy } from 'react';
-import { createPortal } from 'react-dom';
-import '../styles/global.css';
-import TechBackground from '../components/ui/TechBackground';
-import ScrollToTop from '../components/ui/ScrollToTop';
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
-import Hero from '../components/layout/Hero';
-import SectionDivider from '../components/ui/SectionDivider';
-import { useScrollBehavior } from '../hooks/useScrollBehavior';
-const About = lazy(() => import('../components/layout/About'));
-const Projects = lazy(() => import('../components/layout/Projects'));
-const Experience = lazy(() => import('../components/layout/Experience'));
-const Education = lazy(() => import('../components/layout/Education'));
-const Contact = lazy(() => import('../components/layout/Contact'));
-import { languages, translations } from '../i18n/translations';
+import React, { useEffect, useMemo, useState } from "react";
+import "../styles/global.css";
+import ScrollToTop from "../components/ui/ScrollToTop";
+import { useScrollBehavior } from "../hooks/useScrollBehavior";
+import { languages, translations } from "../i18n/translations";
 
-function SectionLoader() {
-    return (
-        <div role="status" aria-live="polite" className="section flex items-center justify-center">
-            <span className="font-mono text-xs tracking-widest text-[var(--color-muted)]">Loading…</span>
-        </div>
-    );
-}
-
-function Portal({ children }) {
-    const [mounted, setMounted] = useState(false);
-    useEffect(() => setMounted(true), []);
-    if (!mounted) return null;
-    return createPortal(children, document.body);
+function ImageOrFallback({ src, alt }) {
+    const [broken, setBroken] = useState(false);
+    if (broken) {
+        return <div className="portrait-fallback" aria-label={alt}>MH</div>;
+    }
+    return <img src={src} alt={alt} className="portrait-image" onError={() => setBroken(true)} />;
 }
 
 export default function IndexPage() {
-    const [language, setLanguage] = useState('en');
-    const [theme, setTheme] = useState(() => {
-        if (typeof window !== 'undefined') {
-            return localStorage.getItem('theme') || 'dark';
-        }
-        return 'dark';
-    });
+    const [language, setLanguage] = useState("en");
+    const [theme, setTheme] = useState(() => (typeof window !== "undefined" ? localStorage.getItem("theme") || "dark" : "dark"));
+    const [menuOpen, setMenuOpen] = useState(false);
     const t = translations[language] || translations.en;
     const { navVisible, scrollTopVisible } = useScrollBehavior();
+    const profileImage = `${import.meta.env.BASE_URL}profile.jpg`;
+
+    const featuredSkills = useMemo(() => t.about.toolbelt.slice(0, 8), [t.about.toolbelt]);
 
     useEffect(() => {
         document.documentElement.lang = language;
-        document.documentElement.dir = language === 'fa' ? 'rtl' : 'ltr';
-        document.title = t.siteTitle || 'Mahdi Habibi | React & Django Specialist';
+        document.documentElement.dir = language === "fa" ? "rtl" : "ltr";
+        document.title = t.siteTitle || "Mahdi Habibi | React & Django Specialist";
     }, [language, t.siteTitle]);
 
     useEffect(() => {
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-        const meta = document.getElementById('theme-color-meta');
-        if (meta) {
-            meta.setAttribute('content', theme === 'light' ? '#FFF9F0' : '#5B2A4A');
-        }
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+        const meta = document.getElementById("theme-color-meta");
+        if (meta) meta.setAttribute("content", theme === "light" ? "#f7f5f2" : "#0b0b0b");
     }, [theme]);
 
+    useEffect(() => {
+        if (!menuOpen) return;
+        const close = () => setMenuOpen(false);
+        window.addEventListener("resize", close);
+        return () => window.removeEventListener("resize", close);
+    }, [menuOpen]);
+
     return (
-        <>
-            {/* Portal keeps fixed UI on document.body so parent transforms never break them */}
-            <Portal>
-                <TechBackground />
-                <Header
-                    links={t.nav}
-                    ctaText={t.sidebar.cta}
-                    language={language}
-                    languages={languages}
-                    onLanguageChange={setLanguage}
-                    theme={theme}
-                    onThemeToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                    visible={navVisible}
-                />
-                <ScrollToTop visible={scrollTopVisible} />
-            </Portal>
+        <div className="portfolio-root">
+            <header className={`site-header ${navVisible || menuOpen ? "site-header--visible" : "site-header--hidden"}`}>
+                <div className="site-shell nav-row">
+                    <a href="#home" className="brand">Mahdi<span>.</span></a>
+                    <nav className="desktop-nav" aria-label={t.navLabel || "Navigation"}>
+                        {t.nav.map((item) => (
+                            <a key={item.href} href={item.href}>{item.label}</a>
+                        ))}
+                    </nav>
+                    <div className="desktop-actions">
+                        <div className="language-switcher" role="group" aria-label={t.languageLabel || "Language"}>
+                            {languages.map((lang) => (
+                                <button
+                                    key={lang.code}
+                                    type="button"
+                                    onClick={() => setLanguage(lang.code)}
+                                    className={language === lang.code ? "is-active" : ""}
+                                >
+                                    {lang.code}
+                                </button>
+                            ))}
+                        </div>
+                        <button type="button" className="theme-toggle" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+                            {theme === "dark" ? "Light" : "Dark"}
+                        </button>
+                        <a href="#contact" className="cta-link">{t.sidebar.cta}</a>
+                    </div>
+                    <button
+                        type="button"
+                        className="menu-btn"
+                        aria-expanded={menuOpen}
+                        aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+                        onClick={() => setMenuOpen((v) => !v)}
+                    >
+                        <span />
+                        <span />
+                    </button>
+                </div>
+                {menuOpen && (
+                    <div className="mobile-panel">
+                        {t.nav.map((item) => (
+                            <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>{item.label}</a>
+                        ))}
+                    </div>
+                )}
+            </header>
 
-            <div className="relative z-10 min-h-screen bg-transparent text-[var(--color-text)]">
-                <main role="main">
-                    <Hero content={t.hero} />
+            <main>
+                <section id="home" className="hero-block section-spacer">
+                    <div className="site-shell hero-grid">
+                        <div>
+                            <p className="kicker">{t.hero.kicker}</p>
+                            <h1>{t.hero.title}</h1>
+                            <p className="lede">{t.hero.subtitle}</p>
+                            <div className="hero-cta-row">
+                                <a href="#projects" className="button-primary">{t.hero.primary}</a>
+                                <a href={t.hero.secondaryHref} className="button-secondary" target="_blank" rel="noopener noreferrer">{t.hero.secondary}</a>
+                            </div>
+                            <p className="meta-line">{t.hero.location}</p>
+                        </div>
+                        <div className="hero-portrait-wrap">
+                            <ImageOrFallback src={profileImage} alt="Mahdi Habibi portrait" />
+                        </div>
+                    </div>
+                </section>
 
-                    <SectionDivider />
+                <section id="projects" className="section-spacer section-border-top">
+                    <div className="site-shell">
+                        <div className="section-head">
+                            <p>Selected Case Studies</p>
+                            <h2>{t.projects.title}</h2>
+                        </div>
+                        <div className="case-grid">
+                            {t.projects.cards.map((card, idx) => (
+                                <article key={card.title} className="case-card">
+                                    <span className="case-index">{String(idx + 1).padStart(2, "0")}</span>
+                                    <h3>{card.title}</h3>
+                                    <p>{card.description}</p>
+                                    <ul>
+                                        {card.stack.map((tech) => <li key={tech}>{tech}</li>)}
+                                    </ul>
+                                    <p className="case-result">{card.result}</p>
+                                </article>
+                            ))}
+                        </div>
+                    </div>
+                </section>
 
-                    <Suspense fallback={<SectionLoader />}>
-                        <About content={t.about} />
-                    </Suspense>
+                <section id="about" className="section-spacer section-border-top">
+                    <div className="site-shell split-grid">
+                        <div>
+                            <div className="section-head">
+                                <p>{t.about.titleLabel}</p>
+                                <h2>{t.about.title}</h2>
+                            </div>
+                            <p className="copy">{t.about.body}</p>
+                            <ul className="focus-list">
+                                {t.about.focusAreas.map((item) => <li key={item}>{item}</li>)}
+                            </ul>
+                            <div className="chip-row">
+                                {featuredSkills.map((skill) => <span key={skill}>{skill}</span>)}
+                            </div>
+                        </div>
+                        <aside className="about-card">
+                            <ImageOrFallback src={profileImage} alt="Mahdi Habibi black-and-white portrait" />
+                            <p className="small-label">{t.about.recentWinTitle}</p>
+                            <p>{t.about.recentWinText}</p>
+                        </aside>
+                    </div>
+                </section>
 
-                    <SectionDivider />
+                <section id="experience" className="section-spacer section-border-top">
+                    <div className="site-shell">
+                        <div className="section-head">
+                            <p>My Journey</p>
+                            <h2>{t.experience.title}</h2>
+                        </div>
+                        <div className="timeline">
+                            {t.experience.items.map((item) => (
+                                <article key={`${item.role}-${item.company}`} className="timeline-item">
+                                    <p className="timeline-period">{item.period}</p>
+                                    <h3>{item.role}</h3>
+                                    <p className="timeline-company">{item.company}</p>
+                                    <ul>
+                                        {item.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
+                                    </ul>
+                                </article>
+                            ))}
+                        </div>
+                    </div>
+                </section>
 
-                    <Suspense fallback={<SectionLoader />}>
-                        <Projects content={t.projects} />
-                    </Suspense>
+                <section id="education" className="section-spacer section-border-top">
+                    <div className="site-shell">
+                        <div className="section-head">
+                            <p>Academic Track</p>
+                            <h2>{t.education.title}</h2>
+                        </div>
+                        <div className="edu-grid">
+                            {t.education.items.map((item) => (
+                                <article key={item.school} className="edu-card">
+                                    <h3>{item.school}</h3>
+                                    <p>{item.degree}</p>
+                                    <p className="timeline-period">{item.period}</p>
+                                    <p>{item.note}</p>
+                                </article>
+                            ))}
+                        </div>
+                    </div>
+                </section>
 
-                    <SectionDivider />
-
-                    <Suspense fallback={<SectionLoader />}>
-                        <Experience content={t.experience} />
-                    </Suspense>
-
-                    <SectionDivider />
-
-                    <Suspense fallback={<SectionLoader />}>
-                        <Education content={t.education} />
-                    </Suspense>
-
-                    <SectionDivider />
-
-                    <Suspense fallback={<SectionLoader />}>
-                        <Contact content={t.contact} />
-                    </Suspense>
-                </main>
-
-                <Footer
-                    links={t.nav}
-                    location={t.hero.location}
-                    summary={t.footer?.summary || t.sidebar.summary}
-                    contactLinks={t.contact.links}
-                    labels={t.footer}
-                />
-            </div>
-        </>
+                <section id="contact" className="section-spacer section-border-top contact-block">
+                    <div className="site-shell">
+                        <div className="section-head">
+                            <p>{t.contact.title}</p>
+                            <h2>{t.contact.heading}</h2>
+                        </div>
+                        <p className="copy">{t.contact.body}</p>
+                        <div className="contact-links">
+                            {t.contact.links.map((link) => (
+                                <a key={link.href} href={link.href} target={link.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer">
+                                    {link.label}
+                                </a>
+                            ))}
+                        </div>
+                        <p className="meta-line">{t.contact.location}</p>
+                    </div>
+                </section>
+            </main>
+            <footer className="site-footer">
+                <div className="site-shell footer-row">
+                    <p>{t.footer?.summary || t.sidebar.summary}</p>
+                    <a href="#home">Back to top</a>
+                </div>
+            </footer>
+            <ScrollToTop visible={scrollTopVisible} />
+        </div>
     );
 }
