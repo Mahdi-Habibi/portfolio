@@ -706,6 +706,28 @@ footer[id] {
   color: var(--fg-muted);
 }
 
+.work-card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+  font-size: 0.82rem;
+  color: var(--fg-muted);
+}
+
+.work-card-body h3 a {
+  transition: color 0.2s ease;
+}
+
+.work-card-body h3 a:hover {
+  color: var(--accent);
+}
+
+.work-card-media {
+  display: block;
+  color: inherit;
+}
+
 .case-preview-float {
   position: fixed;
   z-index: 200;

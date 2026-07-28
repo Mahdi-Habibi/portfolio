@@ -29,7 +29,7 @@ function splitLocation(location) {
     return { city: city?.trim() || location, region: rest?.trim() || "Iran" };
 }
 
-function CasePreviewPanel({ preview, profileImage }) {
+function CasePreviewPanel({ preview }) {
     if (!preview) return null;
     return (
         <div
@@ -38,7 +38,7 @@ function CasePreviewPanel({ preview, profileImage }) {
             aria-hidden="true"
         >
             <div className="case-preview-float-media">
-                <ImageOrFallback src={profileImage} alt="" className="case-preview-float-image" />
+                <ImageOrFallback src={preview.image} alt="" className="case-preview-float-image" fallbackText={preview.index} />
             </div>
             <div className="case-preview-float-body">
                 <span className="case-preview-float-index">{preview.index}</span>
@@ -47,6 +47,12 @@ function CasePreviewPanel({ preview, profileImage }) {
             </div>
         </div>
     );
+}
+
+function projectImageUrl(imagePath) {
+    if (!imagePath) return "";
+    const base = import.meta.env.BASE_URL || "/";
+    return `${base}${imagePath.replace(/^\//, "")}`;
 }
 
 export default function IndexPage() {
@@ -80,23 +86,23 @@ export default function IndexPage() {
         () => [
             {
                 featured: true,
-                title: "Full-stack product delivery",
-                body: t.about.focusAreas[0],
-                tags: ["React", "Django", "TypeScript"],
+                title: "Adaptive learning platforms",
+                body: "Pathwise monorepo — Next.js 15, NestJS 11, Prisma, PostgreSQL, OTP auth, and personalized roadmaps.",
+                tags: ["Next.js", "NestJS", "Prisma", "TypeScript"],
             },
             {
-                title: "Platform operations",
-                body: t.about.focusAreas[1],
-                tags: ["DevOps", "Deployment", "Performance"],
+                title: "Multi-tenant SaaS",
+                body: "Workspace isolation, RBAC, JWT refresh cookies, and Django REST + Next.js delivery.",
+                tags: ["Django", "DRF", "Next.js", "PostgreSQL"],
             },
             {
-                title: "Mentorship & delivery",
-                body: t.about.focusAreas[2],
-                tags: ["Teaching", "Capstone", "Team growth"],
+                title: "Realtime & IoT",
+                body: "MQTT dashboards, Socket.IO Kanban boards, and Express APIs for live collaboration.",
+                tags: ["MQTT", "Socket.IO", "MongoDB", "React"],
             },
             {
                 title: t.about.toolbeltTitle,
-                body: "Core technologies used across client projects, SaaS platforms, and production systems.",
+                body: "Stack extracted from public repositories — languages, frameworks, data stores, and deploy targets actually used in code.",
                 tags: t.about.toolbelt.slice(0, 4),
             },
         ],
@@ -178,6 +184,7 @@ export default function IndexPage() {
         setCasePreview({
             title: card.title,
             result: card.result,
+            image: projectImageUrl(card.image),
             index: String(idx + 1).padStart(2, "0"),
             x: Math.min(event.clientX + offset, window.innerWidth - 340),
             y: Math.min(event.clientY + offset, window.innerHeight - 280),
@@ -198,8 +205,8 @@ export default function IndexPage() {
 
     const hideCasePreview = () => setCasePreview(null);
 
-    const heroTags = "React / Django / TypeScript / DevOps / AI Operations";
-    const heroCred = `${t.hero.stats[0]?.value || "47+"} students mentored · ${t.hero.stats[1]?.value || "10+"} client projects · ${t.hero.stats[2]?.value || "25%"} discoverability lift`;
+    const heroTags = "TypeScript / Python / React / Next.js / NestJS / Django";
+    const heroCred = `${t.hero.stats[0]?.value || "12"} public repos · ${t.hero.stats[1]?.value || "6+"} selected apps · ${t.hero.stats[2]?.value || "TS / PY"} primary stack`;
 
     return (
         <div className="grain">
@@ -289,41 +296,56 @@ export default function IndexPage() {
                     <div className="container-x">
                         <div className="section-head-row reveal">
                             <div>
-                                <p className="eyebrow">[ Selected case studies ]</p>
-                                <h2 className="section-title section-title-wide">Enterprise UX, design systems, and AI - shipped at scale.</h2>
+                                <p className="eyebrow">[ Selected repositories ]</p>
+                                <h2 className="section-title section-title-wide">Shipped products from my GitHub — learning platforms, SaaS, IoT, and automation.</h2>
                             </div>
-                            <a href="#contact" className="link-underline" style={{ color: "var(--fg-muted)", fontSize: "0.875rem" }}>All case studies →</a>
+                            <a href="https://github.com/Mahdi-Habibi?tab=repositories" className="link-underline" style={{ color: "var(--fg-muted)", fontSize: "0.875rem" }} target="_blank" rel="noopener noreferrer">All repositories →</a>
                         </div>
                         <div className="work-grid">
                             {t.projects.cards.map((card, idx) => (
                                 <article
-                                    key={card.title}
+                                    key={card.id || card.title}
                                     className="work-card reveal"
                                     onMouseEnter={(event) => showCasePreview(card, idx, event)}
                                     onMouseLeave={hideCasePreview}
                                     onFocus={(event) => showCasePreview(card, idx, event)}
                                     onBlur={hideCasePreview}
                                 >
-                                    <div className="work-card-media">
+                                    <a
+                                        className="work-card-media"
+                                        href={card.live || card.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={`${card.title} — open project`}
+                                    >
                                         <span className="work-card-index">{String(idx + 1).padStart(2, "0")}</span>
                                         <ImageOrFallback
-                                            src={profileImage}
-                                            alt=""
+                                            src={projectImageUrl(card.image)}
+                                            alt={`${card.title} preview`}
                                             className="work-card-preview-image"
+                                            fallbackText={String(idx + 1).padStart(2, "0")}
                                         />
                                         <div className="work-card-media-overlay" />
-                                    </div>
+                                    </a>
                                     <div className="work-card-body">
                                         <div className="work-card-top">
                                             <div>
-                                                <h3>{card.title}</h3>
-                                                <p className="work-card-meta">{t.hero.kicker} · 2025</p>
+                                                <h3>
+                                                    <a href={card.href} target="_blank" rel="noopener noreferrer">{card.title}</a>
+                                                </h3>
+                                                <p className="work-card-meta">{card.stack?.[0] || t.hero.kicker} · {card.year || "2026"}</p>
                                             </div>
                                         </div>
                                         <p className="work-card-result">{card.result}</p>
                                         <p>{card.description}</p>
                                         <div className="work-card-tags">
                                             {card.stack.map((tech) => <span key={tech}>{tech}</span>)}
+                                        </div>
+                                        <div className="work-card-links">
+                                            <a href={card.href} target="_blank" rel="noopener noreferrer" className="link-underline">{t.projects.cta}</a>
+                                            {card.live ? (
+                                                <a href={card.live} target="_blank" rel="noopener noreferrer" className="link-underline">Live demo ↗</a>
+                                            ) : null}
                                         </div>
                                     </div>
                                 </article>
@@ -334,9 +356,9 @@ export default function IndexPage() {
 
                 <section id="clients" className="section-block section-border clients-panel">
                     <div className="container-x reveal">
-                        <p className="eyebrow">[ Selected clients &amp; platforms ]</p>
-                        <h2 className="section-title" style={{ marginInline: "auto", maxWidth: "24ch" }}>Product and platform work across SaaS, IoT, and enterprise web systems.</h2>
-                        <p className="section-copy" style={{ marginInline: "auto" }}>Hover to preview a case study, click to open</p>
+                        <p className="eyebrow">[ Stack in public repos ]</p>
+                        <h2 className="section-title" style={{ marginInline: "auto", maxWidth: "24ch" }}>Languages and frameworks used across Pathwise, Pocket Crypto, SaaS, IoT, and finance apps.</h2>
+                        <p className="section-copy" style={{ marginInline: "auto" }}>Hover a case study to preview its cover, click to open the repo or live demo</p>
                         <div className="clients-marquee" aria-hidden="true">
                             <div className="clients-track">
                                 {[...clientTags, ...clientTags].map((tag, i) => <span key={`${tag}-${i}`}>{tag}</span>)}
@@ -347,8 +369,8 @@ export default function IndexPage() {
 
                 <section id="highlights" className="section-block section-border">
                     <div className="container-x">
-                        <p className="eyebrow reveal">[ What leaders say ]</p>
-                        <h2 className="section-title section-title-wide reveal">Endorsed by measurable outcomes and delivery impact.</h2>
+                        <p className="eyebrow reveal">[ Impact signals ]</p>
+                        <h2 className="section-title section-title-wide reveal">Outcomes from mentoring, client delivery, and public engineering work.</h2>
                         <div className="masonry">
                             {impactCards.map((card) => (
                                 <figure key={`${card.name}-${card.initials}`} className="masonry-card reveal">
@@ -391,8 +413,8 @@ export default function IndexPage() {
                 <section id="systems" className="section-block section-border">
                     <div className="container-x">
                         <div className="reveal">
-                            <p className="eyebrow">[ Design system intelligence ]</p>
-                            <h2 className="section-title">Tools that make systems think.</h2>
+                            <p className="eyebrow">[ Systems &amp; tooling ]</p>
+                            <h2 className="section-title">Tools that power the repositories above.</h2>
                             <p className="section-copy">{t.about.recentWinText}</p>
                         </div>
                         <div className="systems-grid">
@@ -498,7 +520,7 @@ export default function IndexPage() {
             </footer>
 
             <ScrollToTop visible={scrollTopVisible} />
-            <CasePreviewPanel preview={casePreview} profileImage={profileImage} />
+            <CasePreviewPanel preview={casePreview} />
         </div>
     );
 }
