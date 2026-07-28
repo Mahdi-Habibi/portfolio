@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "../styles/global.css";
 import ScrollToTop from "../components/ui/ScrollToTop";
 import { useScrollBehavior } from "../hooks/useScrollBehavior";
@@ -29,10 +29,33 @@ function splitLocation(location) {
     return { city: city?.trim() || location, region: rest?.trim() || "Iran" };
 }
 
+function CasePreviewPanel({ preview, profileImage }) {
+    if (!preview) return null;
+    return (
+        <div
+            className="case-preview-float"
+            style={{ left: preview.x, top: preview.y }}
+            aria-hidden="true"
+        >
+            <div className="case-preview-float-media">
+                <ImageOrFallback src={profileImage} alt="" className="case-preview-float-image" />
+            </div>
+            <div className="case-preview-float-body">
+                <span className="case-preview-float-index">{preview.index}</span>
+                <p className="case-preview-float-title">{preview.title}</p>
+                <p className="case-preview-float-result">{preview.result}</p>
+            </div>
+        </div>
+    );
+}
+
 export default function IndexPage() {
     const [language, setLanguage] = useState("en");
     const [menuOpen, setMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState("home");
+    const [casePreview, setCasePreview] = useState(null);
+    const [journeyProgress, setJourneyProgress] = useState(0);
+    const journeySectionRef = useRef(null);
     const t = translations[language] || translations.en;
     const { navVisible, scrollTopVisible } = useScrollBehavior();
     const profileImage = `${import.meta.env.BASE_URL}profile.jpg`;
@@ -126,6 +149,55 @@ export default function IndexPage() {
         };
     }, [language]);
 
+    useEffect(() => {
+        const updateJourneyProgress = () => {
+            const section = journeySectionRef.current;
+            if (!section) return;
+            const rect = section.getBoundingClientRect();
+            const scrollable = section.offsetHeight - window.innerHeight * 0.35;
+            if (scrollable <= 0) {
+                setJourneyProgress(rect.top <= window.innerHeight * 0.5 ? 1 : 0);
+                return;
+            }
+            const travelled = Math.min(Math.max(window.innerHeight * 0.25 - rect.top, 0), scrollable);
+            setJourneyProgress(travelled / scrollable);
+        };
+
+        updateJourneyProgress();
+        window.addEventListener("scroll", updateJourneyProgress, { passive: true });
+        window.addEventListener("resize", updateJourneyProgress);
+        return () => {
+            window.removeEventListener("scroll", updateJourneyProgress);
+            window.removeEventListener("resize", updateJourneyProgress);
+        };
+    }, [language]);
+
+    const showCasePreview = (card, idx, event) => {
+        if (window.matchMedia("(max-width: 1024px)").matches) return;
+        const offset = 24;
+        setCasePreview({
+            title: card.title,
+            result: card.result,
+            index: String(idx + 1).padStart(2, "0"),
+            x: Math.min(event.clientX + offset, window.innerWidth - 340),
+            y: Math.min(event.clientY + offset, window.innerHeight - 280),
+        });
+    };
+
+    const moveCasePreview = (event) => {
+        setCasePreview((prev) => {
+            if (!prev) return prev;
+            const offset = 24;
+            return {
+                ...prev,
+                x: Math.min(event.clientX + offset, window.innerWidth - 340),
+                y: Math.min(event.clientY + offset, window.innerHeight - 280),
+            };
+        });
+    };
+
+    const hideCasePreview = () => setCasePreview(null);
+
     const heroTags = "React / Django / TypeScript / DevOps / AI Operations";
     const heroCred = `${t.hero.stats[0]?.value || "47+"} students mentored · ${t.hero.stats[1]?.value || "10+"} client projects · ${t.hero.stats[2]?.value || "25%"} discoverability lift`;
 
@@ -186,29 +258,29 @@ export default function IndexPage() {
                 ))}
             </nav>
 
-            <main>
+            <main onMouseMove={moveCasePreview}>
                 <section id="home" className="hero-section">
                     <div className="hero-glow" aria-hidden="true" />
                     <div className="hero-gradient-a" aria-hidden="true" />
                     <div className="hero-gradient-b" aria-hidden="true" />
                     <div className="container-x hero-content">
-                        <div className="reveal is-visible">
-                            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1.75rem", maxWidth: "22rem" }}>
+                        <div className="hero-enter">
+                            <div className="hero-meta hero-fade hero-fade-1">
                                 <span className="eyebrow">{locationParts.city}, {locationParts.region}</span>
                                 <span className="eyebrow eyebrow-faint">{heroTags}</span>
                             </div>
                             <h1 className="hero-name">
-                                <span className="block">Mahdi</span>
-                                <span className="block hero-name-muted">Habibi</span>
+                                <span className="line-mask"><span className="line-mask-inner line-mask-inner-1">Mahdi</span></span>
+                                <span className="line-mask"><span className="line-mask-inner line-mask-inner-2 hero-name-muted">Habibi</span></span>
                             </h1>
-                            <p className="hero-lede">{t.hero.subtitle.split(".")[0]}.</p>
-                            <p className="hero-cred">{heroCred}</p>
-                            <div className="hero-cta">
+                            <p className="hero-lede hero-fade hero-fade-2">{t.hero.subtitle.split(".")[0]}.</p>
+                            <p className="hero-cred hero-fade hero-fade-3">{heroCred}</p>
+                            <div className="hero-cta hero-fade hero-fade-4">
                                 <a href="#projects" className="btn-solid">{t.hero.primary}</a>
                                 <a href="#contact" className="btn-accent">{t.sidebar.cta}</a>
                                 <a href={t.hero.secondaryHref} className="btn-ghost" target="_blank" rel="noopener noreferrer">{t.hero.secondary} ↗</a>
                             </div>
-                            <a href="#projects" className="hero-scroll-hint link-underline">View my case studies</a>
+                            <a href="#projects" className="hero-scroll-hint link-underline hero-fade hero-fade-5">View my case studies</a>
                         </div>
                     </div>
                 </section>
@@ -224,10 +296,22 @@ export default function IndexPage() {
                         </div>
                         <div className="work-grid">
                             {t.projects.cards.map((card, idx) => (
-                                <article key={card.title} className="work-card reveal">
+                                <article
+                                    key={card.title}
+                                    className="work-card reveal"
+                                    onMouseEnter={(event) => showCasePreview(card, idx, event)}
+                                    onMouseLeave={hideCasePreview}
+                                    onFocus={(event) => showCasePreview(card, idx, event)}
+                                    onBlur={hideCasePreview}
+                                >
                                     <div className="work-card-media">
                                         <span className="work-card-index">{String(idx + 1).padStart(2, "0")}</span>
-                                        <div className="work-card-fallback">{String(idx + 1).padStart(2, "0")}</div>
+                                        <ImageOrFallback
+                                            src={profileImage}
+                                            alt=""
+                                            className="work-card-preview-image"
+                                        />
+                                        <div className="work-card-media-overlay" />
                                     </div>
                                     <div className="work-card-body">
                                         <div className="work-card-top">
@@ -325,7 +409,7 @@ export default function IndexPage() {
                     </div>
                 </section>
 
-                <section id="experience" className="section-block section-border journey-section">
+                <section id="experience" ref={journeySectionRef} className="section-block section-border journey-section">
                     <div className="container-x journey-layout">
                         <div className="journey-intro reveal">
                             <p className="eyebrow">[ My journey ]</p>
@@ -336,12 +420,20 @@ export default function IndexPage() {
                                     <span>Foundations</span>
                                     <span>Today</span>
                                 </div>
-                                <div className="journey-progress-bar"><span /></div>
+                                <div className="journey-progress-bar">
+                                    <span style={{ width: `${Math.round(journeyProgress * 100)}%` }} />
+                                </div>
                             </div>
                         </div>
                         <ol className="journey-list">
-                            {t.experience.items.map((item, idx) => (
-                                <li key={`${item.role}-${item.company}`} className="journey-item reveal">
+                            {t.experience.items.map((item, idx) => {
+                                const itemProgress = (idx + 1) / t.experience.items.length;
+                                const isActive = journeyProgress >= itemProgress - 0.12;
+                                return (
+                                <li
+                                    key={`${item.role}-${item.company}`}
+                                    className={`journey-item reveal ${isActive ? "is-active" : ""}`}
+                                >
                                     <span className="journey-dot" aria-hidden="true" />
                                     <p className="journey-role">{item.company} · {item.role.split(",")[0]}</p>
                                     <p className="journey-meta">{item.role} · {item.period}</p>
@@ -350,7 +442,8 @@ export default function IndexPage() {
                                         {item.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
                                     </ul>
                                 </li>
-                            ))}
+                                );
+                            })}
                         </ol>
                     </div>
                 </section>
@@ -405,6 +498,7 @@ export default function IndexPage() {
             </footer>
 
             <ScrollToTop visible={scrollTopVisible} />
+            <CasePreviewPanel preview={casePreview} profileImage={profileImage} />
         </div>
     );
 }
