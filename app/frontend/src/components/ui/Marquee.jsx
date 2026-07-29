@@ -9,11 +9,24 @@ export default function Marquee({ items, className, speed = 28 }) {
                 className="marquee-track flex w-max gap-3"
                 style={{ "--marquee-speed": `${speed}s` }}
             >
-                {track.map((item, i) => (
-                    <span key={`${item}-${i}`} className="chip shrink-0 whitespace-nowrap">
-                        {item}
-                    </span>
-                ))}
+                {track.map((item, i) => {
+                    const label = typeof item === "string" ? item : item.label;
+                    const href = typeof item === "string" ? null : item.href;
+
+                    return href ? (
+                        <a
+                            key={`${label}-${i}`}
+                            href={href}
+                            className="chip shrink-0 whitespace-nowrap"
+                        >
+                            {label}
+                        </a>
+                    ) : (
+                        <span key={`${label}-${i}`} className="chip shrink-0 whitespace-nowrap">
+                            {label}
+                        </span>
+                    );
+                })}
             </div>
         </div>
     );

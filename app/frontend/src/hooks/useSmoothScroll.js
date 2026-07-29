@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 const BASE_SMOOTH_SCROLL_OPTIONS = {
     lerp: 0.075,

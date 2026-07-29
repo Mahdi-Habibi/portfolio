@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { createElement } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 const variants = {
     hidden: { opacity: 0, y: 28 },
@@ -10,7 +11,13 @@ const variants = {
 };
 
 export default function FadeIn({ children, className, delay = 0, as = "div" }) {
+    const reduceMotion = useReducedMotion();
     const Component = motion[as] ?? motion.div;
+
+    if (reduceMotion) {
+        return createElement(as, { className }, children);
+    }
+
     return (
         <Component
             className={className}

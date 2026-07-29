@@ -1,74 +1,53 @@
-import React from "react";
 import { motion } from "framer-motion";
-import '../../styles/global.css';
-import SectionHeader from "../ui/SectionHeader";
-import SpotlightCard from "../ui/SpotlightCard";
+import FadeIn from "../ui/FadeIn";
 
-export default function Experience({ content }) {
+export default function Experience({ t, journeySectionRef, journeyProgress }) {
+    const s = t.sections.experience;
+
     return (
-        <section id="experience" className="section section-alt relative overflow-hidden">
-            <div className="container-portfolio">
-                <SectionHeader label={content.title} subtitle="Career timeline" />
-
-                <div className="relative mx-auto max-w-3xl">
-                    <motion.div
-                        className="absolute left-[11px] top-0 bottom-0 w-px origin-top bg-[var(--color-border)]"
-                        initial={{ scaleY: 0 }}
-                        whileInView={{ scaleY: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                        <motion.div
-                            className="absolute inset-x-0 top-0 h-24 bg-[var(--gradient-brand)] blur-sm"
-                            animate={{ y: ["0%", "400%", "0%"] }}
-                            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                        />
-                    </motion.div>
-
-                    <div className="space-y-6">
-                        {content.items.map((job, i) => (
-                            <motion.div
-                                key={job.role + job.company}
-                                className="relative pl-10"
-                                initial={{ opacity: 0, x: -28 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true, margin: "-40px" }}
-                                transition={{ duration: 0.5, delay: i * 0.08 }}
-                            >
-                                <motion.span
-                                    className="absolute left-0 top-6 h-6 w-6 rounded-full border-2 border-[var(--color-accent)] bg-[var(--color-base)]"
-                                    initial={{ scale: 0 }}
-                                    whileInView={{ scale: 1 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: i * 0.08 + 0.2, type: "spring", stiffness: 260 }}
-                                    animate={{ boxShadow: ["0 0 0px transparent", "0 0 16px var(--color-glow-gold)", "0 0 0px transparent"] }}
-                                    style={{ animationDuration: "3s", animationIterationCount: "infinite" }}
-                                />
-                                <SpotlightCard className="p-6">
-                                    <div className="flex flex-wrap items-start justify-between gap-3">
-                                        <div>
-                                            <h3 className="font-display text-lg font-bold text-[var(--color-text)]">{job.role}</h3>
-                                            <p className="mt-1 text-sm text-[var(--color-accent)]">{job.company}</p>
-                                        </div>
-                                        <span className="chip">{job.period}</span>
-                                    </div>
-                                    <ul className="mt-4 space-y-2.5 text-sm text-[var(--color-muted)]">
-                                        {job.bullets.map((bullet) => (
-                                            <motion.li
-                                                key={bullet}
-                                                className="flex gap-2"
-                                                whileHover={{ x: 4 }}
-                                            >
-                                                <span className="text-[var(--color-accent-secondary)]">›</span>
-                                                <span>{bullet}</span>
-                                            </motion.li>
-                                        ))}
-                                    </ul>
-                                </SpotlightCard>
-                            </motion.div>
-                        ))}
+        <section id="experience" ref={journeySectionRef} className="section-block section-border journey-section">
+            <div className="container-x journey-layout">
+                <FadeIn className="journey-intro">
+                    <p className="eyebrow">{s.eyebrow}</p>
+                    <h2 className="section-title">{s.title}</h2>
+                    <p className="section-copy">{s.copy}</p>
+                    <div className="journey-progress">
+                        <div className="journey-progress-labels">
+                            <span>{s.progressStart}</span>
+                            <span>{s.progressEnd}</span>
+                        </div>
+                        <div className="journey-progress-bar">
+                            <motion.span
+                                style={{ width: `${Math.round(journeyProgress * 100)}%` }}
+                                initial={false}
+                                animate={{ width: `${Math.round(journeyProgress * 100)}%` }}
+                                transition={{ type: "spring", stiffness: 120, damping: 24 }}
+                            />
+                        </div>
                     </div>
-                </div>
+                </FadeIn>
+                <ol className="journey-list">
+                    {t.experience.items.map((item, idx) => {
+                        const itemProgress = (idx + 1) / t.experience.items.length;
+                        const isActive = journeyProgress >= itemProgress - 0.12;
+                        return (
+                            <FadeIn
+                                key={`${item.role}-${item.company}`}
+                                delay={idx * 0.04}
+                                as="li"
+                                className={`journey-item ${isActive ? "is-active" : ""}`}
+                            >
+                                <span className="journey-dot" aria-hidden="true" />
+                                <p className="journey-role">{item.company} · {item.role.split(",")[0]}</p>
+                                <p className="journey-meta">{item.role} · {item.period}</p>
+                                <h3>{item.bullets[0]?.split(".")[0] || item.role}</h3>
+                                <ul>
+                                    {item.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
+                                </ul>
+                            </FadeIn>
+                        );
+                    })}
+                </ol>
             </div>
         </section>
     );

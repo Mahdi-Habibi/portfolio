@@ -19,15 +19,15 @@ Browser
 
 ## Frontend data flow
 
-- `IndexPage` owns language + theme state
+- `IndexPage` owns language, section observation, project-preview state, and journey progress
 - Copy comes from `i18n/translations.js`
-- Layout sections: Header → Hero → About → Projects → Experience → Education → Contact → Footer
-- Non-hero sections are `React.lazy` + `Suspense` for code splitting
+- Layout sections: Header → Hero → Projects → Clients → Highlights → About → Systems → Experience → Education → Contact → Footer
+- Section markup is split across `components/layout`; `IndexPage` is the thin orchestrator
 - `useScrollBehavior` drives navbar visibility and scroll-to-top
 
 ## Design tokens
 
-Defined in `src/styles/global.css` as CSS custom properties (`--color-*`, `--gradient-*`, `--shadow-*`). Components reference variables so dark/light themes stay consistent.
+Defined in `src/styles/global.css` as CSS custom properties (`--bg`, `--accent`, `--color-*`, `--gradient-*`, `--shadow-*`). The portfolio intentionally uses one forced-dark, gold-accented theme.
 
 ## Motion layer
 

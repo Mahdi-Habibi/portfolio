@@ -12,7 +12,7 @@ const projectCardsEn = [
             "Persian-first adaptive learning platform: phone OTP onboarding, goal assessment, readiness tests, personalized roadmaps, and lesson playback. Full-stack monorepo with Next.js 15, NestJS 11, Prisma, and PostgreSQL.",
         stack: ["Next.js", "NestJS", "Prisma", "PostgreSQL", "TypeScript"],
         result: "Live demo on GitHub Pages",
-        image: "projects/pathwise.jpg",
+        image: "projects/pathwise.svg",
         href: "https://github.com/Mahdi-Habibi/pathwise",
         live: "https://mahdi-habibi.github.io/pathwise/",
         year: "2026",
@@ -24,7 +24,7 @@ const projectCardsEn = [
             "Python Telegram bot that serves live currency and crypto quotes from CoinMarketCap, plus scheduled automations for hourly-to-monthly price updates. Deployed as a Vercel serverless webhook.",
         stack: ["Python", "Telegram Bot API", "APScheduler", "Vercel"],
         result: "Live market quotes on demand",
-        image: "projects/pocket-crypto.jpg",
+        image: "projects/pocket-crypto.svg",
         href: "https://github.com/Mahdi-Habibi/pocket_crypto",
         live: "https://pocketcrypto.vercel.app",
         year: "2025",
@@ -36,7 +36,7 @@ const projectCardsEn = [
             "Production-oriented MVP with workspace tenancy, RBAC (owner/admin/member), invites, projects, tasks, and activity logs. Django REST + SimpleJWT backend with a Next.js App Router frontend.",
         stack: ["Django", "DRF", "Next.js", "PostgreSQL", "JWT"],
         result: "Tenant-isolated workspaces",
-        image: "projects/multi-tenant.jpg",
+        image: "projects/multi-tenant.svg",
         href: "https://github.com/Mahdi-Habibi/Multi-Tenant--Project--Management--SaaS",
         live: null,
         year: "2026",
@@ -48,7 +48,7 @@ const projectCardsEn = [
             "MQTT-enabled dashboard for sensor monitoring and device control. Node/Express + MongoDB backend bridges MQTT topics; React + Recharts frontend visualizes telemetry with JWT auth.",
         stack: ["React", "Node.js", "MQTT", "MongoDB", "Recharts"],
         result: "Realtime device control",
-        image: "projects/smart-home.jpg",
+        image: "projects/smart-home.svg",
         href: "https://github.com/Mahdi-Habibi/smart-home-iot-dashboard",
         live: null,
         year: "2026",
@@ -60,7 +60,7 @@ const projectCardsEn = [
             "Full-stack Kanban board with JWT authentication and Socket.IO realtime updates. React + Tailwind client, Express + MongoDB API, and Docker Compose for local orchestration.",
         stack: ["React", "Tailwind", "Express", "Socket.IO", "MongoDB"],
         result: "Realtime collaboration",
-        image: "projects/task-platform.jpg",
+        image: "projects/task-platform.svg",
         href: "https://github.com/Mahdi-Habibi/task-management-platform",
         live: null,
         year: "2025",
@@ -72,7 +72,7 @@ const projectCardsEn = [
             "Budget tracker with auth, transactions, savings goals, analytics charts, and a simple spend forecast. Express + Prisma API with a React + Chart.js dashboard, deployable on Vercel.",
         stack: ["React", "Express", "Prisma", "Chart.js", "Zod"],
         result: "Spend forecasting built in",
-        image: "projects/budget-tracker.jpg",
+        image: "projects/budget-tracker.svg",
         href: "https://github.com/Mahdi-Habibi/Personal-Finance---Budget-Tracker",
         live: null,
         year: "2026",
@@ -100,6 +100,311 @@ const skillsFromRepos = [
     "REST API",
     "Vercel",
     "Telegram Bot API",
+];
+
+const systemCardsEn = [
+    {
+        featured: true,
+        title: "Adaptive learning platforms",
+        body: "Pathwise monorepo — Next.js 15, NestJS 11, Prisma, PostgreSQL, OTP auth, and personalized roadmaps.",
+        tags: ["Next.js", "NestJS", "Prisma", "TypeScript"],
+    },
+    {
+        title: "Multi-tenant SaaS",
+        body: "Workspace isolation, RBAC, JWT refresh cookies, and Django REST + Next.js delivery.",
+        tags: ["Django", "DRF", "Next.js", "PostgreSQL"],
+    },
+    {
+        title: "Realtime & IoT",
+        body: "MQTT dashboards, Socket.IO Kanban boards, and Express APIs for live collaboration.",
+        tags: ["MQTT", "Socket.IO", "MongoDB", "React"],
+    },
+    {
+        title: "Skills from shipped repositories",
+        body: "Stack extracted from public repositories — languages, frameworks, data stores, and deploy targets actually used in code.",
+        tags: ["TypeScript", "Python", "React", "Next.js"],
+    },
+];
+
+const sectionsEn = {
+    rail: [
+        { id: "home", label: "Intro" },
+        { id: "projects", label: "Work" },
+        { id: "clients", label: "Clients" },
+        { id: "highlights", label: "Impact" },
+        { id: "about", label: "About" },
+        { id: "systems", label: "Stack" },
+        { id: "experience", label: "Journey" },
+        { id: "education", label: "Education" },
+        { id: "contact", label: "Contact" },
+    ],
+    hero: {
+        tags: "TypeScript / Python / React / Next.js / NestJS / Django",
+        firstName: "Mahdi",
+        lastName: "Habibi",
+        scrollHint: "View my case studies",
+        credRepos: "public repos",
+        credApps: "selected apps",
+        credStack: "primary stack",
+    },
+    projects: {
+        eyebrow: "[ Selected repositories ]",
+        title: "Shipped products from my GitHub — learning platforms, SaaS, IoT, and automation.",
+        allRepos: "All repositories",
+        liveDemo: "Live demo",
+    },
+    clients: {
+        eyebrow: "[ Stack in public repos ]",
+        title: "Languages and frameworks used across Pathwise, Pocket Crypto, SaaS, IoT, and finance apps.",
+        copy: "Tap a project to open the repo or live demo",
+    },
+    highlights: {
+        eyebrow: "[ Impact signals ]",
+        title: "Outcomes from mentoring, client delivery, and public engineering work.",
+        recentDelivery: "Recent delivery",
+        impactMetric: "Impact metric",
+        statQuote: "measurable outcome across product delivery and mentoring.",
+    },
+    about: {
+        eyebrow: "[ About ]",
+        locationBadge: "Iran",
+    },
+    systems: {
+        eyebrow: "[ Systems & tooling ]",
+        title: "Tools that power the repositories above.",
+    },
+    experience: {
+        eyebrow: "[ My journey ]",
+        title: "Where I have worked",
+        copy: "Full-stack engineering across product companies, client delivery, and technical education — from foundational web work to AI-enabled platform operations.",
+        progressStart: "Foundations",
+        progressEnd: "Today",
+    },
+    education: {
+        eyebrow: "[ Writing ]",
+        title: "Academic foundations and advanced systems study.",
+        cta: "Get in touch",
+    },
+    contact: {
+        eyebrow: "[ Contact ]",
+    },
+    footer: {
+        backToTop: "Back to top",
+    },
+    ui: {
+        projectOpen: "Open project",
+        projectPreview: "Project preview",
+        portraitAlt: "Portrait of Mahdi Habibi",
+        scrollTop: "Scroll to top",
+        sectionNavigation: "Section navigation",
+        copied: "Copied",
+        copyEmail: "Copy email address",
+    },
+    meta: {
+        description: "Mahdi Habibi Nazarlu — Full-stack engineer. Python & JavaScript developer building React, Next.js, Django, and NestJS products.",
+    },
+    menu: {
+        open: "Open menu",
+        close: "Close menu",
+    },
+};
+
+const sectionsFa = {
+    ...sectionsEn,
+    rail: [
+        { id: "home", label: "معرفی" },
+        { id: "projects", label: "کار" },
+        { id: "clients", label: "مشتری" },
+        { id: "highlights", label: "اثر" },
+        { id: "about", label: "درباره" },
+        { id: "systems", label: "استک" },
+        { id: "experience", label: "مسیر" },
+        { id: "education", label: "تحصیل" },
+        { id: "contact", label: "تماس" },
+    ],
+    hero: {
+        ...sectionsEn.hero,
+        tags: "TypeScript / Python / React / Next.js / NestJS / Django",
+        firstName: "مهدی",
+        lastName: "حبیبی",
+        scrollHint: "مطالعات موردی را ببینید",
+        credRepos: "مخزن عمومی",
+        credApps: "اپ منتخب",
+        credStack: "استک اصلی",
+    },
+    projects: {
+        eyebrow: "[ مخازن منتخب ]",
+        title: "محصولات تحویل‌شده از گیت‌هاب — پلتفرم یادگیری، SaaS، IoT و اتوماسیون.",
+        allRepos: "همه مخازن",
+        liveDemo: "دموی زنده",
+    },
+    clients: {
+        eyebrow: "[ استک در مخازن عمومی ]",
+        title: "زبان‌ها و فریم‌ورک‌ها در Pathwise، Pocket Crypto، SaaS، IoT و اپ‌های مالی.",
+        copy: "برای باز کردن مخزن یا دمو روی پروژه ضربه بزنید",
+    },
+    highlights: {
+        eyebrow: "[ سیگنال‌های اثر ]",
+        title: "نتایج منتورینگ، تحویل مشتری و کار مهندسی عمومی.",
+        recentDelivery: "تحویل اخیر",
+        impactMetric: "معیار اثر",
+        statQuote: "نتیجه قابل اندازه‌گیری در تحویل محصول و منتورینگ.",
+    },
+    about: {
+        eyebrow: "[ درباره ]",
+        locationBadge: "ایران",
+    },
+    systems: {
+        eyebrow: "[ سیستم‌ها و ابزار ]",
+        title: "ابزارهایی که مخازن بالا را پشتیبانی می‌کنند.",
+    },
+    experience: {
+        eyebrow: "[ مسیر من ]",
+        title: "جایی که کار کرده‌ام",
+        copy: "مهندسی فول‌استک در شرکت‌های محصول، تحویل مشتری و آموزش فنی — از وب پایه تا عملیات پلتفرم مبتنی بر AI.",
+        progressStart: "مبانی",
+        progressEnd: "امروز",
+    },
+    education: {
+        eyebrow: "[ نوشتار ]",
+        title: "مبانی آکادمیک و مطالعه سیستم‌های پیشرفته.",
+        cta: "تماس بگیرید",
+    },
+    contact: { eyebrow: "[ تماس ]" },
+    footer: { backToTop: "بازگشت به بالا" },
+    ui: {
+        projectOpen: "باز کردن پروژه",
+        projectPreview: "پیش‌نمایش پروژه",
+        portraitAlt: "تصویر مهدی حبیبی",
+        scrollTop: "بازگشت به بالای صفحه",
+        sectionNavigation: "ناوبری بخش‌ها",
+        copied: "کپی شد",
+        copyEmail: "کپی آدرس ایمیل",
+    },
+    meta: {
+        description: "مهدی حبیبی نظرلو — مهندس فول‌استک. توسعه‌دهنده Python و JavaScript با React، Next.js، Django و NestJS.",
+    },
+    menu: { open: "باز کردن منو", close: "بستن منو" },
+};
+
+const systemCardsFa = [
+    {
+        featured: true,
+        title: "پلتفرم‌های یادگیری تطبیقی",
+        body: "مونوریپو Pathwise — Next.js 15، NestJS 11، Prisma، PostgreSQL، OTP و مسیرهای شخصی‌سازی‌شده.",
+        tags: ["Next.js", "NestJS", "Prisma", "TypeScript"],
+    },
+    {
+        title: "SaaS چندمستاجری",
+        body: "جداسازی workspace، RBAC، JWT refresh cookie و تحویل Django REST + Next.js.",
+        tags: ["Django", "DRF", "Next.js", "PostgreSQL"],
+    },
+    {
+        title: "بلادرنگ و IoT",
+        body: "داشبوردهای MQTT، بورد Kanban با Socket.IO و APIهای Express برای همکاری زنده.",
+        tags: ["MQTT", "Socket.IO", "MongoDB", "React"],
+    },
+    {
+        title: "مهارت‌ها بر اساس مخازن",
+        body: "استک استخراج‌شده از مخازن عمومی — زبان‌ها، فریم‌ورک‌ها، پایگاه داده و اهداف استقرار.",
+        tags: ["TypeScript", "Python", "React", "Next.js"],
+    },
+];
+
+const sectionsEs = {
+    ...sectionsEn,
+    rail: [
+        { id: "home", label: "Inicio" },
+        { id: "projects", label: "Trabajo" },
+        { id: "clients", label: "Clientes" },
+        { id: "highlights", label: "Impacto" },
+        { id: "about", label: "Sobre mí" },
+        { id: "systems", label: "Stack" },
+        { id: "experience", label: "Trayectoria" },
+        { id: "education", label: "Educación" },
+        { id: "contact", label: "Contacto" },
+    ],
+    hero: {
+        ...sectionsEn.hero,
+        scrollHint: "Ver casos de estudio",
+        credRepos: "repos públicos",
+        credApps: "apps seleccionadas",
+        credStack: "stack principal",
+    },
+    projects: {
+        eyebrow: "[ Repositorios seleccionados ]",
+        title: "Productos entregados desde GitHub — plataformas de aprendizaje, SaaS, IoT y automatización.",
+        allRepos: "Todos los repositorios",
+        liveDemo: "Demo en vivo",
+    },
+    clients: {
+        eyebrow: "[ Stack en repos públicos ]",
+        title: "Lenguajes y frameworks en Pathwise, Pocket Crypto, SaaS, IoT y apps financieras.",
+        copy: "Toca un proyecto para abrir el repo o la demo",
+    },
+    highlights: {
+        eyebrow: "[ Señales de impacto ]",
+        title: "Resultados de mentoría, entrega a clientes e ingeniería pública.",
+        recentDelivery: "Entrega reciente",
+        impactMetric: "Métrica de impacto",
+        statQuote: "resultado medible en entrega de producto y mentoría.",
+    },
+    about: { eyebrow: "[ Sobre mí ]", locationBadge: "Irán" },
+    systems: {
+        eyebrow: "[ Sistemas y herramientas ]",
+        title: "Herramientas que impulsan los repositorios anteriores.",
+    },
+    experience: {
+        eyebrow: "[ Mi trayectoria ]",
+        title: "Dónde he trabajado",
+        copy: "Ingeniería full-stack en empresas de producto, entrega a clientes y educación técnica — desde web fundamental hasta operaciones con IA.",
+        progressStart: "Fundamentos",
+        progressEnd: "Hoy",
+    },
+    education: {
+        eyebrow: "[ Escritura ]",
+        title: "Fundamentos académicos y estudio avanzado de sistemas.",
+        cta: "Contáctame",
+    },
+    contact: { eyebrow: "[ Contacto ]" },
+    footer: { backToTop: "Volver arriba" },
+    ui: {
+        projectOpen: "Abrir proyecto",
+        projectPreview: "Vista previa del proyecto",
+        portraitAlt: "Retrato de Mahdi Habibi",
+        scrollTop: "Volver arriba",
+        sectionNavigation: "Navegación por secciones",
+        copied: "Copiado",
+        copyEmail: "Copiar correo",
+    },
+    meta: {
+        description: "Mahdi Habibi Nazarlu — Ingeniero full-stack. Desarrollador Python y JavaScript con React, Next.js, Django y NestJS.",
+    },
+    menu: { open: "Abrir menú", close: "Cerrar menú" },
+};
+
+const systemCardsEs = [
+    {
+        featured: true,
+        title: "Plataformas de aprendizaje adaptativo",
+        body: "Monorepo Pathwise — Next.js 15, NestJS 11, Prisma, PostgreSQL, OTP y roadmaps personalizados.",
+        tags: ["Next.js", "NestJS", "Prisma", "TypeScript"],
+    },
+    {
+        title: "SaaS multi-tenant",
+        body: "Aislamiento de workspace, RBAC, cookies JWT refresh y entrega Django REST + Next.js.",
+        tags: ["Django", "DRF", "Next.js", "PostgreSQL"],
+    },
+    {
+        title: "Tiempo real e IoT",
+        body: "Dashboards MQTT, tableros Kanban Socket.IO y APIs Express para colaboración en vivo.",
+        tags: ["MQTT", "Socket.IO", "MongoDB", "React"],
+    },
+    {
+        title: "Skills desde repositorios",
+        body: "Stack extraído de repos públicos — lenguajes, frameworks, datos y destinos de despliegue.",
+        tags: ["TypeScript", "Python", "React", "Next.js"],
+    },
 ];
 
 export const translations = {
@@ -244,6 +549,8 @@ export const translations = {
                 { label: "GitHub", href: "https://github.com/Mahdi-Habibi/" },
             ],
         },
+        sections: sectionsEn,
+        systemCards: systemCardsEn,
     },
     fa: {
         siteTitle: "مهدی حبیبی | مهندس فول‌استک",
@@ -429,6 +736,8 @@ export const translations = {
                 { label: "گیت‌هاب", href: "https://github.com/Mahdi-Habibi/" },
             ],
         },
+        sections: sectionsFa,
+        systemCards: systemCardsFa,
     },
     es: {
         siteTitle: "Mahdi Habibi | Ingeniero Full-stack",
@@ -614,5 +923,7 @@ export const translations = {
                 { label: "GitHub", href: "https://github.com/Mahdi-Habibi/" },
             ],
         },
+        sections: sectionsEs,
+        systemCards: systemCardsEs,
     },
 };

@@ -1,6 +1,6 @@
 # Mahdi Habibi — Portfolio
 
-Modern multilingual portfolio for **Mahdi Habibi Nazarlu**, React & Django specialist.
+Dark, high-tech multilingual portfolio for **Mahdi Habibi Nazarlu**, full-stack engineer.
 
 **Live site:** [https://mahdi-habibi.github.io/portfolio/](https://mahdi-habibi.github.io/portfolio/)
 
@@ -70,9 +70,13 @@ Visit `http://127.0.0.1:8000`.
 
 - Sticky top navbar that hides on scroll down and returns on scroll up
 - Go-to-top button after leaving the hero section
-- Light / dark theme with brand palette (gold + plum)
-- Advanced motion: aurora, tilt cards, marquee, orbital rings, counters
-- Multilingual content with RTL for Persian
+- Forced-dark design system with a gold accent and responsive glass surfaces
+- Advanced motion: aurora, tilt cards, spotlight cards, marquee, orbital rings, and counters
+- Motion-safe fallbacks for `prefers-reduced-motion`
+- Multilingual content with complete Persian RTL and Spanish support
+- Touch-friendly project previews and full-screen mobile navigation
+- Responsive layouts tested at phone, tablet, laptop, and desktop widths
+- SEO metadata, JSON-LD person schema, and social preview assets
 - GitHub Pages CI via `.github/workflows/pages.yml`
 
 ## Documentation

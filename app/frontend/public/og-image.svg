@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070709"/>
+      <stop offset="100%" stop-color="#16161c"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#e9b872"/>
+      <stop offset="100%" stop-color="#f6c48a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <g opacity="0.12" stroke="#e9b872" stroke-width="1">
+    <path d="M0 80H1200M0 160H1200M0 240H1200M0 320H1200M0 400H1200M0 480H1200M0 560H1200"/>
+    <path d="M80 0V630M160 0V630M240 0V630M320 0V630M400 0V630M480 0V630M560 0V630M640 0V630M720 0V630M800 0V630M880 0V630M960 0V630M1040 0V630M1120 0V630"/>
+  </g>
+  <text x="96" y="280" fill="url(#gold)" font-family="system-ui,sans-serif" font-size="72" font-weight="700" letter-spacing="8">MAHDI</text>
+  <text x="96" y="360" fill="#f5f2ec" font-family="system-ui,sans-serif" font-size="72" font-weight="700" letter-spacing="8">HABIBI</text>
+  <text x="96" y="430" fill="#8b8790" font-family="ui-monospace,monospace" font-size="28" letter-spacing="4">FULL-STACK ENGINEER · REACT · DJANGO · NESTJS</text>
+</svg>

@@ -1,7 +1,12 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export default function TextReveal({ text, className, delay = 0 }) {
+    const reduceMotion = useReducedMotion();
     const words = text.split(" ");
+
+    if (reduceMotion) {
+        return <span className={className}>{text}</span>;
+    }
 
     return (
         <motion.span

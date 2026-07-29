@@ -1,145 +1,138 @@
-import React, { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import '../../styles/global.css';
-
-function NavLink({ href, label, onClick }) {
-    return (
-        <a
-            href={href}
-            onClick={onClick}
-            className="group relative font-display text-sm font-medium tracking-wide text-[var(--color-muted)] transition-colors duration-200 hover:text-[var(--color-accent)]"
-        >
-            {label}
-            <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-[var(--gradient-brand)] transition-all duration-300 group-hover:w-full" />
-        </a>
-    );
-}
+import { createPortal } from "react-dom";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { languages } from "../../i18n/translations";
 
 export default function Header({
-    links,
-    ctaText,
+    t,
     language,
-    languages,
-    onLanguageChange,
-    theme,
-    onThemeToggle,
-    visible = true,
+    setLanguage,
+    menuOpen,
+    setMenuOpen,
+    navVisible,
 }) {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const closeMenu = () => setIsMenuOpen(false);
-    const isHeaderVisible = visible || isMenuOpen;
+    const reduceMotion = useReducedMotion();
+    const mobileLinks = t.sections?.rail?.length
+        ? t.sections.rail.map((section) => ({ href: `#${section.id}`, label: section.label }))
+        : t.nav;
 
-    return (
-        <header
-            className={`site-header fixed top-0 left-0 right-0 z-[100] border-b border-[var(--color-border)] bg-[var(--color-base)]/92 backdrop-blur-xl shadow-lg ${
-                isHeaderVisible ? "site-header--visible" : "site-header--hidden"
-            }`}
-        >
-            <div className="container-portfolio flex h-16 items-center justify-between md:h-20">
-                <a href="#home" className="group flex items-center gap-3">
-                    <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--gradient-brand)] font-display text-sm font-bold text-[var(--color-on-accent)] shadow-[var(--shadow-warm)] transition-transform duration-300 group-hover:scale-105">
-                        MH
-                    </span>
-                    <span className="hidden font-display text-sm font-semibold tracking-wide text-[var(--color-text)] sm:block">
-                        Mahdi Habibi
-                    </span>
-                </a>
-
-                <nav aria-label="Main navigation" className="hidden items-center gap-8 lg:flex">
-                    {links.map((link) => (
-                        <NavLink key={link.href} href={link.href} label={link.label} />
-                    ))}
-                </nav>
-
-                <div className="hidden items-center gap-3 lg:flex">
-                    <div className="flex gap-1 rounded-lg border border-[var(--color-border)] p-1">
-                        {languages.map((lang) => (
-                            <button
-                                key={lang.code}
-                                type="button"
-                                onClick={() => onLanguageChange(lang.code)}
-                                className={`rounded-md px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-wider transition-all ${
-                                    lang.code === language
-                                        ? "bg-[var(--color-accent)] text-[var(--color-on-accent)]"
-                                        : "text-[var(--color-muted)] hover:text-[var(--color-text)]"
-                                }`}
-                            >
-                                {lang.code}
-                            </button>
-                        ))}
-                    </div>
-                    <button
+    const mobileMenu = createPortal(
+        <AnimatePresence>
+            {menuOpen && (
+                <>
+                    <motion.button
                         type="button"
-                        onClick={onThemeToggle}
-                        aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
-                        className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--color-border)] text-[var(--color-muted)] transition hover:border-[var(--color-border-strong)] hover:text-[var(--color-accent)]"
-                    >
-                        {theme === 'dark' ? '☀' : '☾'}
-                    </button>
-                    <a href="#contact" className="btn-cyber btn-cyber-primary text-xs">
-                        {ctaText}
-                    </a>
-                </div>
-
-                <button
-                    type="button"
-                    aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-                    aria-expanded={isMenuOpen}
-                    className="flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--color-border)] lg:hidden"
-                    onClick={() => setIsMenuOpen((prev) => !prev)}
-                >
-                    <motion.span className="relative block h-3 w-4" aria-hidden>
-                        <motion.span
-                            className="absolute left-0 top-0 block h-0.5 w-full rounded bg-[var(--color-text)]"
-                            animate={{ rotate: isMenuOpen ? 45 : 0, y: isMenuOpen ? 6 : 0 }}
-                        />
-                        <motion.span
-                            className="absolute left-0 top-1.5 block h-0.5 w-full rounded bg-[var(--color-text)]"
-                            animate={{ opacity: isMenuOpen ? 0 : 1 }}
-                        />
-                        <motion.span
-                            className="absolute left-0 bottom-0 block h-0.5 w-full rounded bg-[var(--color-text)]"
-                            animate={{ rotate: isMenuOpen ? -45 : 0, y: isMenuOpen ? -6 : 0 }}
-                        />
-                    </motion.span>
-                </button>
-            </div>
-
-            <AnimatePresence>
-                {isMenuOpen && (
+                        className="mobile-nav-backdrop cursor-pointer"
+                        aria-label={t.sections.menu.close}
+                        onClick={() => setMenuOpen(false)}
+                        initial={reduceMotion ? false : { opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={reduceMotion ? undefined : { opacity: 0 }}
+                        transition={{ duration: reduceMotion ? 0 : 0.2 }}
+                    />
                     <motion.div
-                        className="border-t border-[var(--color-border)] bg-[var(--color-base)]/95 backdrop-blur-xl lg:hidden"
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.25 }}
+                        id="mobile-nav-panel"
+                        className="mobile-nav-panel"
+                        data-lenis-prevent
+                        role="dialog"
+                        aria-modal="true"
+                        initial={reduceMotion ? false : { opacity: 0, x: language === "fa" ? "-100%" : "100%" }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={reduceMotion ? undefined : { opacity: 0, x: language === "fa" ? "-100%" : "100%" }}
+                        transition={{ duration: reduceMotion ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] }}
                     >
-                        <nav aria-label="Mobile navigation" className="container-portfolio flex flex-col gap-4 py-6">
-                            {links.map((link) => (
-                                <NavLink key={link.href} href={link.href} label={link.label} onClick={closeMenu} />
+                        <div className="mobile-nav-panel-header">
+                            <span className="brand">Mahdi<span className="brand-accent">.</span></span>
+                            <button
+                                type="button"
+                                className="menu-toggle menu-toggle--open cursor-pointer"
+                                aria-label={t.sections.menu.close}
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                <span />
+                            </button>
+                        </div>
+                        <nav className="mobile-nav" aria-label={t.navLabel || "Navigation"}>
+                            {mobileLinks.map((item) => (
+                                <a
+                                    key={item.href}
+                                    href={item.href}
+                                    className="cursor-pointer"
+                                    onClick={() => setMenuOpen(false)}
+                                >
+                                    {item.label}
+                                </a>
                             ))}
-                            <div className="mt-2 flex flex-wrap items-center gap-3 border-t border-[var(--color-border)] pt-4">
+                        </nav>
+                        <div className="mobile-nav-footer">
+                            <div className="lang-switch" role="group" aria-label={t.languageLabel || "Language"}>
                                 {languages.map((lang) => (
                                     <button
                                         key={lang.code}
                                         type="button"
-                                        onClick={() => { onLanguageChange(lang.code); closeMenu(); }}
-                                        className={`chip cursor-pointer ${lang.code === language ? "border-[var(--color-border-strong)]" : ""}`}
+                                        onClick={() => setLanguage(lang.code)}
+                                        className={`cursor-pointer ${language === lang.code ? "is-active" : ""}`}
                                     >
-                                        {lang.label}
+                                        {lang.code}
                                     </button>
                                 ))}
-                                <button type="button" onClick={onThemeToggle} className="chip cursor-pointer">
-                                    {theme === 'dark' ? 'Light mode' : 'Dark mode'}
-                                </button>
-                                <a href="#contact" onClick={closeMenu} className="btn-cyber btn-cyber-primary text-xs">
-                                    {ctaText}
-                                </a>
                             </div>
-                        </nav>
+                            <a
+                                href="#contact"
+                                className="btn-accent mobile-nav-cta cursor-pointer"
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                {t.sidebar.cta}
+                            </a>
+                        </div>
                     </motion.div>
-                )}
-            </AnimatePresence>
-        </header>
+                </>
+            )}
+        </AnimatePresence>,
+        document.body,
+    );
+
+    return (
+        <>
+            <header className={`site-header ${navVisible || menuOpen ? "site-header--visible" : "site-header--hidden"}${menuOpen ? " site-header--menu-open" : ""}`}>
+                <div className="container-x header-inner">
+                    <a href="#home" className="brand cursor-pointer" onClick={() => setMenuOpen(false)}>
+                        Mahdi<span className="brand-accent">.</span>
+                    </a>
+                    <nav className="header-nav" aria-label={t.navLabel || "Navigation"}>
+                        {t.nav.map((item) => (
+                            <a key={item.href} href={item.href} className="link-underline cursor-pointer">
+                                {item.label}
+                            </a>
+                        ))}
+                    </nav>
+                    <div className="header-actions">
+                        <div className="lang-switch" role="group" aria-label={t.languageLabel || "Language"}>
+                            {languages.map((lang) => (
+                                <button
+                                    key={lang.code}
+                                    type="button"
+                                    onClick={() => setLanguage(lang.code)}
+                                    className={`cursor-pointer ${language === lang.code ? "is-active" : ""}`}
+                                >
+                                    {lang.code}
+                                </button>
+                            ))}
+                        </div>
+                        <a href="#contact" className="btn-accent cursor-pointer">{t.sidebar.cta}</a>
+                    </div>
+                    <button
+                        type="button"
+                        className={`menu-toggle cursor-pointer ${menuOpen ? "menu-toggle--open" : ""}`}
+                        aria-expanded={menuOpen}
+                        aria-controls="mobile-nav-panel"
+                        aria-label={menuOpen ? t.sections.menu.close : t.sections.menu.open}
+                        onClick={() => setMenuOpen((v) => !v)}
+                    >
+                        <span />
+                    </button>
+                </div>
+            </header>
+            {mobileMenu}
+        </>
     );
 }

@@ -1,6 +1,6 @@
 # Frontend
 
-React + Vite portfolio SPA with Tailwind CSS 4 and Framer Motion.
+React + Vite portfolio SPA with Tailwind CSS 4, Framer Motion, Lenis, and Lucide icons.
 
 ## Scripts
 
@@ -31,16 +31,26 @@ Brand colors (CSS variables in `styles/global.css`):
 
 | Token | Hex |
 |-------|-----|
-| Amber gold | `#F0A72E` |
-| Deep plum | `#5B2A4A` |
-| Bright gold | `#F6B43D` |
-| Soft cream | `#F1D36F` |
+| Background | `#070709` |
+| Elevated surface | `#0F1014` |
+| Soft surface | `#16161C` |
+| Brand gold | `#E9B872` |
+| Warm foreground | `#F5F2EC` |
 
-Dark mode is default; light mode via `data-theme="light"`.
+The portfolio is intentionally dark-only. Display typography uses Syncopate, body copy uses Inter, and technical labels use Space Mono.
 
 ## Content
 
 All copy lives in `src/i18n/translations.js`. Update that file to change experience, projects, skills, or contact links in all languages.
+
+## Responsive and accessibility behavior
+
+- Desktop smooth scrolling uses Lenis; touch devices retain native scrolling.
+- Header navigation collapses below 1024px into an animated full-screen menu.
+- Project cards use pointer previews on desktop and tap-to-expand details on touch devices.
+- Persian switches the document to RTL and uses logical CSS positioning.
+- Motion components and CSS loops respect `prefers-reduced-motion`.
+- Key layouts are verified at 375px, 768px, 1024px, and 1440px.
 
 ## Build notes
 

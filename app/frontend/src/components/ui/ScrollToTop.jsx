@@ -1,10 +1,11 @@
 import React from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useLenis } from "lenis/react";
 import "../../styles/global.css";
 
-export default function ScrollToTop({ visible }) {
+export default function ScrollToTop({ visible, label = "Scroll to top" }) {
     const lenis = useLenis();
+    const reduceMotion = useReducedMotion();
 
     const scrollToTop = () => {
         if (lenis) {
@@ -12,7 +13,7 @@ export default function ScrollToTop({ visible }) {
             return;
         }
 
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
         const started = performance.now();
         const sync = () => {
             window.dispatchEvent(new Event("scroll"));
@@ -28,15 +29,15 @@ export default function ScrollToTop({ visible }) {
             {visible && (
                 <motion.button
                     type="button"
-                    aria-label="Scroll to top"
+                    aria-label={label}
                     onClick={scrollToTop}
-                    className="scroll-top-btn fixed bottom-6 right-6 z-[110] flex h-12 w-12 items-center justify-center rounded-full border border-[var(--color-border-strong)] bg-[var(--gradient-brand)] text-[var(--color-on-accent)] shadow-[var(--shadow-warm)]"
-                    initial={{ opacity: 0, y: 20, scale: 0.85 }}
+                    className="scroll-top-btn fixed bottom-6 z-[110] flex h-12 w-12 items-center justify-center rounded-full border border-[var(--color-border-strong)] bg-[image:var(--gradient-brand)] text-[var(--color-on-accent)] shadow-[var(--shadow-warm)] [inset-inline-end:1.5rem]"
+                    initial={reduceMotion ? false : { opacity: 0, y: 20, scale: 0.85 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 20, scale: 0.85 }}
-                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                    whileHover={{ scale: 1.08, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
+                    exit={reduceMotion ? undefined : { opacity: 0, y: 20, scale: 0.85 }}
+                    transition={reduceMotion ? { duration: 0 } : { duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                    whileHover={reduceMotion ? undefined : { scale: 1.08, y: -2 }}
+                    whileTap={reduceMotion ? undefined : { scale: 0.95 }}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

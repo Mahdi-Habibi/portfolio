@@ -1,72 +1,24 @@
-import React from "react";
-import '../../styles/global.css';
+import { languages } from "../../i18n/translations";
 
-export default function Footer({ links, location, summary, contactLinks, labels }) {
-    const year = new Date().getFullYear();
-
+export default function Footer({ t, language, setLanguage }) {
     return (
-        <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface)]">
-            <div className="container-portfolio py-12 md:py-16">
-                <div className="grid gap-10 md:grid-cols-3">
-                    <div className="space-y-3">
-                        <div className="flex items-center gap-3">
-                            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--gradient-brand)] font-display text-sm font-bold text-[var(--color-on-accent)]">
-                                MH
-                            </span>
-                            <span className="font-display text-lg font-bold text-[var(--color-text)]">Mahdi Habibi Nazarlu</span>
-                        </div>
-                        <p className="max-w-xs text-sm leading-relaxed text-[var(--color-muted)]">
-                            {summary}
-                        </p>
+        <footer id="footer" className="site-footer">
+            <div className="container-x footer-row">
+                <p>{t.footer?.summary || t.sidebar.summary}</p>
+                <div className="footer-actions">
+                    <div className="lang-switch" role="group" aria-label={t.languageLabel}>
+                        {languages.map((lang) => (
+                            <button
+                                key={lang.code}
+                                type="button"
+                                onClick={() => setLanguage(lang.code)}
+                                className={language === lang.code ? "is-active" : ""}
+                            >
+                                {lang.code}
+                            </button>
+                        ))}
                     </div>
-
-                    <div>
-                        <p className="mb-4 font-display text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-accent)]">
-                            {labels?.navigation || "Navigation"}
-                        </p>
-                        <ul className="space-y-2">
-                            {links.map((link) => (
-                                <li key={link.href}>
-                                    <a
-                                        href={link.href}
-                                        className="text-sm text-[var(--color-muted)] transition hover:text-[var(--color-accent)]"
-                                    >
-                                        {link.label}
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    <div>
-                        <p className="mb-4 font-display text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-accent)]">
-                            {labels?.contact || "Contact"}
-                        </p>
-                        <ul className="space-y-2 text-sm text-[var(--color-muted)]">
-                            {contactLinks?.map((link) => (
-                                <li key={link.href}>
-                                    <a
-                                        href={link.href}
-                                        className="transition hover:text-[var(--color-accent)]"
-                                        target={link.href.startsWith("http") ? "_blank" : undefined}
-                                        rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                                    >
-                                        {link.label}
-                                    </a>
-                                </li>
-                            ))}
-                            <li>{location}</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-[var(--color-border)] pt-8 sm:flex-row">
-                    <p className="font-mono text-xs text-[var(--color-muted)]">
-                        © {year} Mahdi Habibi Nazarlu. All rights reserved.
-                    </p>
-                    <p className="font-mono text-xs text-[var(--color-muted)]">
-                        Built with React & Django
-                    </p>
+                    <a href="#home" className="link-underline cursor-pointer">{t.sections.footer.backToTop}</a>
                 </div>
             </div>
         </footer>

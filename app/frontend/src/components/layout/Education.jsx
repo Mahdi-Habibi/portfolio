@@ -1,33 +1,27 @@
-import React from "react";
-import { motion } from "framer-motion";
-import '../../styles/global.css';
-import SectionHeader from "../ui/SectionHeader";
-import SpotlightCard from "../ui/SpotlightCard";
+import FadeIn from "../ui/FadeIn";
 
-export default function Education({ content }) {
+export default function Education({ t }) {
+    const s = t.sections.education;
+
     return (
-        <section id="education" className="section">
-            <div className="container-portfolio">
-                <SectionHeader label={content.title} subtitle="Academic background" />
-
-                <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
-                    {content.items.map((item, i) => (
-                        <motion.div
-                            key={item.school}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.45, delay: i * 0.1 }}
-                        >
-                            <SpotlightCard className="h-full p-6">
-                                <p className="font-mono text-xs uppercase tracking-wider text-[var(--color-accent)]">
-                                    {item.period}
-                                </p>
-                                <h3 className="mt-2 font-display text-lg font-bold text-[var(--color-text)]">{item.school}</h3>
-                                <p className="mt-1 text-sm font-medium text-[var(--color-muted)]">{item.degree}</p>
-                                <p className="mt-3 text-sm leading-relaxed text-[var(--color-muted)]">{item.note}</p>
-                            </SpotlightCard>
-                        </motion.div>
+        <section id="education" className="section-block section-border">
+            <div className="container-x">
+                <FadeIn className="section-head-row">
+                    <div>
+                        <p className="eyebrow">{s.eyebrow}</p>
+                        <h2 className="section-title">{s.title}</h2>
+                    </div>
+                    <a href="#contact" className="link-underline section-link cursor-pointer">
+                        {s.cta} →
+                    </a>
+                </FadeIn>
+                <div className="writing-grid">
+                    {t.education.items.map((item, idx) => (
+                        <FadeIn key={item.school} delay={idx * 0.06} className="writing-card glass-panel">
+                            <h3>{item.school}</h3>
+                            <p>{item.degree}. {item.note}</p>
+                            <span>{item.period} ↗</span>
+                        </FadeIn>
                     ))}
                 </div>
             </div>

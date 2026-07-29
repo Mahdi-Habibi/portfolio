@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0f1014"/><stop offset="100%" stop-color="#16161c"/></linearGradient></defs>
+  <rect width="800" height="600" fill="url(#g)"/>
+  <rect x="40" y="40" width="720" height="520" rx="16" fill="none" stroke="#e9b872" stroke-opacity="0.35"/>
+  <text x="400" y="310" text-anchor="middle" fill="#e9b872" font-family="ui-monospace,monospace" font-size="48" font-weight="700">TM</text>
+  <text x="400" y="360" text-anchor="middle" fill="#8b8790" font-family="ui-monospace,monospace" font-size="18">TASK PLATFORM</text>
+</svg>

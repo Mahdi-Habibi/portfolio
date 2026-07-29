@@ -1,11 +1,18 @@
 import { useEffect, useRef, useState } from "react";
+import { usePrefersReducedMotion } from "../../hooks/useSmoothScroll";
 
 export default function AnimatedCounter({ value, className }) {
     const ref = useRef(null);
+    const reduceMotion = usePrefersReducedMotion();
     const [display, setDisplay] = useState(String(value));
     const started = useRef(false);
 
     useEffect(() => {
+        if (reduceMotion) {
+            setDisplay(String(value));
+            return undefined;
+        }
+
         const el = ref.current;
         if (!el) return undefined;
 
@@ -27,7 +34,7 @@ export default function AnimatedCounter({ value, className }) {
 
             const tick = (now) => {
                 const progress = Math.min((now - start) / duration, 1);
-                const eased = 1 - Math.pow(1 - progress, 3);
+                const eased = 1 - (1 - progress) ** 3;
                 setDisplay(`${Math.round(target * eased)}${suffix}`);
                 if (progress < 1) requestAnimationFrame(tick);
             };
@@ -35,16 +42,13 @@ export default function AnimatedCounter({ value, className }) {
             requestAnimationFrame(tick);
         };
 
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) run();
-            },
-            { threshold: 0.2 }
-        );
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) run();
+        }, { threshold: 0.2 });
 
         observer.observe(el);
         return () => observer.disconnect();
-    }, [value]);
+    }, [value, reduceMotion]);
 
     return (
         <span ref={ref} className={className}>
