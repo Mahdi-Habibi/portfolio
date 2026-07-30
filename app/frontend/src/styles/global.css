@@ -1882,16 +1882,20 @@ body.menu-open {
   }
 }
 
+/* Reveals animate transform only. Fading from opacity 0 leaves content
+   permanently invisible whenever the entrance never runs (hidden tab,
+   throttled rAF), which repeatedly wiped out section headings. */
 .fade-in-rise {
   opacity: 1;
   transform: translateY(1rem);
-  transition:
-    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--fade-delay, 0s),
-    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--fade-delay, 0s);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--fade-delay, 0s);
+}
+
+.fade-in-rise--section {
+  transform: translateY(1.5rem);
 }
 
 .fade-in-rise.is-visible {
-  opacity: 1;
   transform: translateY(0);
 }
 

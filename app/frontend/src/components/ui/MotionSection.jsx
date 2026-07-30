@@ -1,23 +1,16 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { createElement } from "react";
+import useReveal from "../../hooks/useReveal";
 
 export default function MotionSection({ children, className, delay = 0, as = "div" }) {
-    const reduceMotion = useReducedMotion();
-    const Component = motion[as] ?? motion.div;
+    const [ref, visible] = useReveal();
 
-    if (reduceMotion) {
-        const Static = as;
-        return <Static className={className}>{children}</Static>;
-    }
-
-    return (
-        <Component
-            className={className}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
-        >
-            {children}
-        </Component>
+    return createElement(
+        as,
+        {
+            ref,
+            className: `fade-in-rise fade-in-rise--section${visible ? " is-visible" : ""}${className ? ` ${className}` : ""}`,
+            style: { "--fade-delay": `${delay}s` },
+        },
+        children,
     );
 }

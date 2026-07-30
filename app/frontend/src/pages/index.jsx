@@ -74,9 +74,6 @@ export default function IndexPage() {
         window.localStorage.setItem("portfolio-language", language);
         document.title = t.siteTitle || "Mahdi Habibi | React & Django Specialist";
         document.documentElement.setAttribute("data-theme", "dark");
-        // #region agent log
-        fetch('http://127.0.0.1:7846/ingest/b1423bf0-a65e-43f4-94de-40744853aff2',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'296c64'},body:JSON.stringify({sessionId:'296c64',runId:'pre-fix',hypothesisId:'H3',location:'index.jsx:title-effect',message:'Document title effect applied',data:{language,translatedTitle:t.siteTitle,documentTitle:document.title,storedLanguage:window.localStorage.getItem('portfolio-language')},timestamp:Date.now()})}).catch(()=>{});
-        // #endregion
 
         const description = t.sections.meta.description;
         const setMetaContent = (selector, content) => {
@@ -102,16 +99,6 @@ export default function IndexPage() {
             }
         }
     }, [language, t.siteTitle, t.sections.meta.description, t.sections.meta.jobTitle]);
-
-    useEffect(() => {
-        const onVisibilityChange = () => {
-            // #region agent log
-            fetch('http://127.0.0.1:7846/ingest/b1423bf0-a65e-43f4-94de-40744853aff2',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'296c64'},body:JSON.stringify({sessionId:'296c64',runId:'pre-fix',hypothesisId:'H5',location:'index.jsx:visibility',message:'Document visibility changed',data:{visibilityState:document.visibilityState,documentTitle:document.title,scrollY:window.scrollY},timestamp:Date.now()})}).catch(()=>{});
-            // #endregion
-        };
-        document.addEventListener("visibilitychange", onVisibilityChange);
-        return () => document.removeEventListener("visibilitychange", onVisibilityChange);
-    }, []);
 
     useEffect(() => {
         if (!menuOpen) return undefined;
