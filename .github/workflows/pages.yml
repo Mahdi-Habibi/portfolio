@@ -57,6 +57,7 @@ jobs:
             BASE_PATH="/$REPO_NAME/"
             SITE_URL="https://${OWNER}.github.io/$REPO_NAME"
           fi
+          export BASE_PATH SITE_URL
           echo "BASE_PATH=$BASE_PATH" >> "$GITHUB_ENV"
           echo "SITE_URL=$SITE_URL" >> "$GITHUB_ENV"
           echo "Building with BASE_PATH=$BASE_PATH SITE_URL=$SITE_URL"
