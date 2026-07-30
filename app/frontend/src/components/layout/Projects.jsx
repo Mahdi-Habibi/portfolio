@@ -67,6 +67,7 @@ export default function Projects({
                                             src={projectImageUrl(card.image)}
                                             alt={`${card.title} — ${t.sections.ui.projectPreview}`}
                                             className="work-card-preview-image"
+                                            fallbackClassName="work-card-fallback"
                                             fallbackText={String(idx + 1).padStart(2, "0")}
                                         />
                                         <div className="work-card-media-overlay" />

@@ -32,7 +32,7 @@ export default function IndexPage() {
     const journeySectionRef = useRef(null);
     const t = translations[language] || translations.en;
     const { navVisible, scrollTopVisible } = useScrollBehavior();
-    const profileImage = assetUrl("profile.svg");
+    const profileImage = assetUrl("profile.jpg");
 
     const featuredSkills = useMemo(() => t.about.toolbelt, [t.about.toolbelt]);
     const clientTags = useMemo(() => {
