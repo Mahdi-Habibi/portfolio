@@ -8,7 +8,7 @@
 
 **Project:** Mahdi Portfolio
 **Generated:** 2026-07-29 15:36:02
-**Category:** Space Tech / Aerospace
+**Category:** Developer Portfolio / High-tech Dark UI
 
 ---
 
@@ -18,24 +18,26 @@
 
 | Role | Hex | CSS Variable |
 |------|-----|--------------|
-| Primary | `#1E293B` | `--color-primary` |
-| Secondary | `#334155` | `--color-secondary` |
-| CTA/Accent | `#22C55E` | `--color-cta` |
-| Background | `#0F172A` | `--color-background` |
-| Text | `#F8FAFC` | `--color-text` |
+| Background | `#070709` | `--bg` |
+| Elevated surface | `#0F1014` | `--bg-elev` |
+| Soft surface | `#16161C` | `--bg-soft` |
+| Foreground | `#F5F2EC` | `--fg` |
+| Muted text | `#8B8790` | `--fg-muted` |
+| Accent / CTA | `#E9B872` | `--accent` |
 
-**Color Notes:** Code dark + run green
+**Color Notes:** Forced-dark portfolio with warm gold accent and cream foreground.
 
 ### Typography
 
 - **Heading Font:** Syncopate
-- **Body Font:** Space Mono
-- **Mood:** kinetic, motion, futuristic, speed, wide, tech
-- **Google Fonts:** [Syncopate + Space Mono](https://fonts.google.com/share?selection.family=Space+Mono:wght@400;700|Syncopate:wght@400;700)
+- **Body Font:** Inter
+- **Technical Font:** Space Mono
+- **Mood:** kinetic, motion, futuristic, precise, premium engineering
+- **Google Fonts:** [Syncopate + Inter + Space Mono](https://fonts.google.com/share?selection.family=Inter:wght@400;500;600|Space+Mono:wght@400;700|Syncopate:wght@400;700)
 
 **CSS Import:**
 ```css
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syncopate:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&family=Syncopate:wght@400;700&display=swap');
 ```
 
 ### Spacing Variables
@@ -68,8 +70,8 @@
 ```css
 /* Primary Button */
 .btn-primary {
-  background: #22C55E;
-  color: white;
+  background: #E9B872;
+  color: #070709;
   padding: 12px 24px;
   border-radius: 8px;
   font-weight: 600;

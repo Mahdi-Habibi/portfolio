@@ -9,7 +9,7 @@ export default function ScrollToTop({ visible, label = "Scroll to top" }) {
 
     const scrollToTop = () => {
         if (lenis) {
-            lenis.scrollTo(0, { duration: 1.1 });
+            lenis.scrollTo(0, { duration: reduceMotion ? 0 : 1.1 });
             return;
         }
 

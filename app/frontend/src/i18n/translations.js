@@ -202,6 +202,7 @@ const sectionsEn = {
     },
     meta: {
         description: "Mahdi Habibi Nazarlu — Full-stack engineer. Python & JavaScript developer building React, Next.js, Django, and NestJS products.",
+        jobTitle: "Full-stack Engineer",
     },
     menu: {
         open: "Open menu",
@@ -283,6 +284,7 @@ const sectionsFa = {
     },
     meta: {
         description: "مهدی حبیبی نظرلو — مهندس فول‌استک. توسعه‌دهنده Python و JavaScript با React، Next.js، Django و NestJS.",
+        jobTitle: "مهندس فول‌استک",
     },
     menu: { open: "باز کردن منو", close: "بستن منو" },
 };
@@ -379,6 +381,7 @@ const sectionsEs = {
     },
     meta: {
         description: "Mahdi Habibi Nazarlu — Ingeniero full-stack. Desarrollador Python y JavaScript con React, Next.js, Django y NestJS.",
+        jobTitle: "Ingeniero full-stack",
     },
     menu: { open: "Abrir menú", close: "Cerrar menú" },
 };

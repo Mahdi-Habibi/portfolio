@@ -74,10 +74,44 @@ export default function IndexPage() {
         window.localStorage.setItem("portfolio-language", language);
         document.title = t.siteTitle || "Mahdi Habibi | React & Django Specialist";
         document.documentElement.setAttribute("data-theme", "dark");
+        // #region agent log
+        fetch('http://127.0.0.1:7846/ingest/b1423bf0-a65e-43f4-94de-40744853aff2',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'296c64'},body:JSON.stringify({sessionId:'296c64',runId:'pre-fix',hypothesisId:'H3',location:'index.jsx:title-effect',message:'Document title effect applied',data:{language,translatedTitle:t.siteTitle,documentTitle:document.title,storedLanguage:window.localStorage.getItem('portfolio-language')},timestamp:Date.now()})}).catch(()=>{});
+        // #endregion
 
-        const desc = document.querySelector('meta[name="description"]');
-        if (desc) desc.setAttribute("content", t.sections.meta.description);
-    }, [language, t.siteTitle, t.sections.meta.description]);
+        const description = t.sections.meta.description;
+        const setMetaContent = (selector, content) => {
+            const element = document.querySelector(selector);
+            if (element) element.setAttribute("content", content);
+        };
+
+        setMetaContent('meta[name="description"]', description);
+        setMetaContent('meta[property="og:title"]', t.siteTitle);
+        setMetaContent('meta[property="og:description"]', description);
+        setMetaContent('meta[name="twitter:title"]', t.siteTitle);
+        setMetaContent('meta[name="twitter:description"]', description);
+
+        const jsonLd = document.querySelector('script[type="application/ld+json"]');
+        if (jsonLd) {
+            try {
+                const schema = JSON.parse(jsonLd.textContent);
+                schema.description = description;
+                if (t.sections.meta.jobTitle) schema.jobTitle = t.sections.meta.jobTitle;
+                jsonLd.textContent = JSON.stringify(schema);
+            } catch {
+                // Keep static schema if parsing fails.
+            }
+        }
+    }, [language, t.siteTitle, t.sections.meta.description, t.sections.meta.jobTitle]);
+
+    useEffect(() => {
+        const onVisibilityChange = () => {
+            // #region agent log
+            fetch('http://127.0.0.1:7846/ingest/b1423bf0-a65e-43f4-94de-40744853aff2',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'296c64'},body:JSON.stringify({sessionId:'296c64',runId:'pre-fix',hypothesisId:'H5',location:'index.jsx:visibility',message:'Document visibility changed',data:{visibilityState:document.visibilityState,documentTitle:document.title,scrollY:window.scrollY},timestamp:Date.now()})}).catch(()=>{});
+            // #endregion
+        };
+        document.addEventListener("visibilitychange", onVisibilityChange);
+        return () => document.removeEventListener("visibilitychange", onVisibilityChange);
+    }, []);
 
     useEffect(() => {
         if (!menuOpen) return undefined;

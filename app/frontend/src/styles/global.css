@@ -1093,6 +1093,8 @@ body.menu-open {
 }
 
 .system-card {
+  position: relative;
+  overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 1rem;
   background: color-mix(in srgb, var(--bg-elev) 40%, transparent);
@@ -1109,6 +1111,7 @@ body.menu-open {
 
 .system-card.featured {
   grid-column: span 1;
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
 }
 
 @media (min-width: 1024px) {
@@ -1865,6 +1868,33 @@ body.menu-open {
   }
 }
 
+.text-reveal-word {
+  opacity: 1;
+  animation: text-reveal-rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes text-reveal-rise {
+  from {
+    transform: translateY(0.75rem);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.fade-in-rise {
+  opacity: 1;
+  transform: translateY(1rem);
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--fade-delay, 0s),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--fade-delay, 0s);
+}
+
+.fade-in-rise.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1877,9 +1907,12 @@ body.menu-open {
   }
 
   .line-mask-inner,
-  .hero-fade {
-    opacity: 1;
-    transform: none;
+  .hero-fade,
+  .text-reveal-word,
+  .fade-in-rise,
+  .fade-in-rise.is-visible {
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   .journey-item {
@@ -2107,32 +2140,21 @@ body.menu-open {
   color: var(--accent);
 }
 
-.systems-grid {
-  margin-top: 2.5rem;
-  display: grid;
-  gap: 1rem;
+.hero-visual--mobile {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
 }
 
-@media (min-width: 768px) {
-  .systems-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: repeat(2, minmax(0, 1fr));
+.hero-portrait-ring--mobile {
+  width: min(180px, 48vw);
+  height: min(180px, 48vw);
+}
+
+@media (min-width: 1024px) {
+  .hero-visual--mobile {
+    display: none;
   }
-
-  .system-card.featured {
-    grid-column: span 1;
-    grid-row: span 2;
-  }
-}
-
-.system-card {
-  position: relative;
-  overflow: hidden;
-  padding: 1.5rem;
-}
-
-.system-card.featured {
-  border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
 }
 
 .work-card-mobile-preview {

@@ -1,8 +1,10 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import FadeIn from "../ui/FadeIn";
 
 export default function Experience({ t, journeySectionRef, journeyProgress }) {
+    const reduceMotion = useReducedMotion();
     const s = t.sections.experience;
+    const progressWidth = `${Math.round(journeyProgress * 100)}%`;
 
     return (
         <section id="experience" ref={journeySectionRef} className="section-block section-border journey-section">
@@ -17,12 +19,16 @@ export default function Experience({ t, journeySectionRef, journeyProgress }) {
                             <span>{s.progressEnd}</span>
                         </div>
                         <div className="journey-progress-bar">
-                            <motion.span
-                                style={{ width: `${Math.round(journeyProgress * 100)}%` }}
-                                initial={false}
-                                animate={{ width: `${Math.round(journeyProgress * 100)}%` }}
-                                transition={{ type: "spring", stiffness: 120, damping: 24 }}
-                            />
+                            {reduceMotion ? (
+                                <span style={{ width: progressWidth, display: "block", height: "100%" }} />
+                            ) : (
+                                <motion.span
+                                    style={{ width: progressWidth }}
+                                    initial={false}
+                                    animate={{ width: progressWidth }}
+                                    transition={{ type: "spring", stiffness: 120, damping: 24 }}
+                                />
+                            )}
                         </div>
                     </div>
                 </FadeIn>
