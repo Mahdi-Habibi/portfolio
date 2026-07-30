@@ -2,7 +2,7 @@
 
 Dark, high-tech multilingual portfolio for **Mahdi Habibi Nazarlu**, full-stack engineer.
 
-**Live site:** [https://mahdi-habibi.github.io/portfolio/](https://mahdi-habibi.github.io/portfolio/)
+**Live site:** [https://mahdihabibi.com](https://mahdihabibi.com) ([GitHub Pages mirror](https://mahdi-habibi.github.io/portfolio/))
 
 ## Stack
 
@@ -52,7 +52,7 @@ npm run build
 Output goes to `app/backend/dist` (for Django) or can be overridden for Pages:
 
 ```bash
-npm run build -- --outDir dist --base "/portfolio/"
+npm run build -- --outDir dist --base "/"
 ```
 
 ### Backend (optional local serve)

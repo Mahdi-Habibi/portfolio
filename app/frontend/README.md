@@ -55,5 +55,5 @@ All copy lives in `src/i18n/translations.js`. Update that file to change experie
 ## Build notes
 
 - Default Vite `base` is `/static/` for Django serving.
-- GitHub Pages overrides `--base "/portfolio/"` and `--outDir dist` in CI.
+- GitHub Pages overrides `--base` and `--outDir dist` in CI (`/` when `CNAME` exists, else `/portfolio/`).
 - React Compiler is enabled via `babel-plugin-react-compiler`.

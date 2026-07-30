@@ -12,7 +12,7 @@ Single-page portfolio application:
 ```
 Browser
    │
-   ├─ GitHub Pages ──► static assets + index.html (base /portfolio/)
+   ├─ GitHub Pages ──► static assets + index.html (base `/` with custom domain, else `/portfolio/`)
    │
    └─ Django (dev/alt) ──► TemplateView(index.html) + /static/*
 ```

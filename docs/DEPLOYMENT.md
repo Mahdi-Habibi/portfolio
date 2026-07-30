@@ -8,9 +8,10 @@ Workflow: `.github/workflows/pages.yml`
 
 1. Checkout
 2. `npm ci` in `app/frontend`
-3. Build with correct base path:
-   - Project site: `/portfolio/`
+3. Build with correct base path + absolute site URL:
+   - Custom domain (`CNAME` present): `/` + `https://<cname>`
    - User/org site (`*.github.io`): `/`
+   - Project site (no custom domain): `/portfolio/`
 4. Copy `index.html` → `404.html` (SPA fallback)
 5. Add `.nojekyll`
 6. **Publish the built SPA to the repository root** (`index.html`, `404.html`, `assets/`, …) so branch-based Pages serves the app instead of the README
@@ -28,7 +29,8 @@ If **Settings → Pages → Source** is **Deploy from a branch** (`main` / `/`),
 
 ### URL
 
-https://mahdi-habibi.github.io/portfolio/
+- Custom domain: https://mahdihabibi.com
+- GitHub Pages path (when no custom domain): https://mahdi-habibi.github.io/portfolio/
 
 After deploy, hard-refresh (`Ctrl+Shift+R` / `Cmd+Shift+R`) if the browser caches an old bundle.
 
@@ -36,7 +38,7 @@ After deploy, hard-refresh (`Ctrl+Shift+R` / `Cmd+Shift+R`) if the browser cache
 
 ```bash
 cd app/frontend
-npm run build -- --outDir dist --base "/portfolio/"
+npm run build -- --outDir dist --base "/"
 npm run preview
 ```
 
