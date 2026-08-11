@@ -6,76 +6,76 @@ export const languages = [
 
 const projectCardsEn = [
     {
-        id: "pathwise",
-        title: "Pathwise (Kia Academy)",
+        id: "kia-academy",
+        title: "Kia Academy",
         description:
-            "Persian-first adaptive learning platform: phone OTP onboarding, goal assessment, readiness tests, personalized roadmaps, and lesson playback. Full-stack monorepo with Next.js 15, NestJS 11, Prisma, and PostgreSQL.",
+            "Problem: Iranian learners need guided paths from assessment to paid coursework. Solution: Persian-first adaptive learning with phone OTP, goal assessment, readiness tests, personalized roadmaps, and lesson playback in a typed monorepo.",
         stack: ["Next.js", "NestJS", "Prisma", "PostgreSQL", "TypeScript"],
         result: "Live demo on GitHub Pages",
         image: "projects/pathwise.jpg",
-        href: "https://github.com/Mahdi-Habibi/pathwise",
-        live: "https://mahdi-habibi.github.io/pathwise/",
+        href: "https://github.com/Mahdi-Habibi/kia-academy",
+        live: "https://mahdi-habibi.github.io/kia-academy/",
         year: "2026",
-    },
-    {
-        id: "pocket-crypto",
-        title: "Pocket Crypto",
-        description:
-            "Python Telegram bot that serves live currency and crypto quotes from CoinMarketCap, plus scheduled automations for hourly-to-monthly price updates. Deployed as a Vercel serverless webhook.",
-        stack: ["Python", "Telegram Bot API", "APScheduler", "Vercel"],
-        result: "Live market quotes on demand",
-        image: "projects/pocket-crypto.jpg",
-        href: "https://github.com/Mahdi-Habibi/pocket_crypto",
-        live: "https://pocketcrypto.vercel.app",
-        year: "2025",
     },
     {
         id: "multi-tenant",
         title: "Multi-Tenant Project SaaS",
         description:
-            "Production-oriented MVP with workspace tenancy, RBAC (owner/admin/member), invites, projects, tasks, and activity logs. Django REST + SimpleJWT backend with a Next.js App Router frontend.",
-        stack: ["Django", "DRF", "Next.js", "PostgreSQL", "JWT"],
-        result: "Tenant-isolated workspaces",
+            "Problem: teams need isolated workspaces with clear permissions. Solution: workspace tenancy, RBAC (owner/admin/member), invites, projects, tasks, and activity logs behind Django REST + JWT, with a Next.js App Router client.",
+        stack: ["Django", "DRF", "Next.js", "PostgreSQL", "Docker"],
+        result: "Tenant-isolated workspaces with OpenAPI docs",
         image: "projects/multi-tenant.jpg",
         href: "https://github.com/Mahdi-Habibi/Multi-Tenant--Project--Management--SaaS",
         live: null,
         year: "2026",
     },
     {
+        id: "pocket-crypto",
+        title: "Pocket Crypto",
+        description:
+            "Problem: traders want market data without leaving Telegram. Solution: Python bot serving CoinMarketCap quotes, watchlists, alerts, compare/convert flows, and scheduled price automations.",
+        stack: ["Python", "Telegram Bot API", "APScheduler"],
+        result: "On-demand quotes and scheduled updates",
+        image: "projects/pocket-crypto.jpg",
+        href: "https://github.com/Mahdi-Habibi/pocket_crypto",
+        live: null,
+        year: "2025",
+    },
+    {
         id: "smart-home",
         title: "Smart Home IoT Dashboard",
         description:
-            "MQTT-enabled dashboard for sensor monitoring and device control. Node/Express + MongoDB backend bridges MQTT topics; React + Recharts frontend visualizes telemetry with JWT auth.",
+            "Problem: operators need live sensor visibility and device control. Solution: MQTT bridge for telemetry and commands, JWT-secured Express APIs, and a React + Recharts dashboard.",
         stack: ["React", "Node.js", "MQTT", "MongoDB", "Recharts"],
-        result: "Realtime device control",
+        result: "Realtime monitoring and device control",
         image: "projects/smart-home.jpg",
         href: "https://github.com/Mahdi-Habibi/smart-home-iot-dashboard",
         live: null,
         year: "2026",
     },
     {
+        id: "essenvian",
+        title: "Essenvian Fragrance Studio",
+        description:
+            "Problem: a fragrance studio needed a clear B2B web presence. Solution: English brand site covering fine fragrance, personal-care, and home-care platforms with consultation-oriented conversion paths.",
+        stack: ["HTML", "CSS", "JavaScript", "Brand UI"],
+        result: "Live marketing site at essenvian.com",
+        image: "projects/essenvian.jpg",
+        href: "https://github.com/Mahdi-Habibi/essenvian",
+        live: "https://essenvian.com",
+        year: "2025",
+    },
+    {
         id: "task-platform",
         title: "Task Management Platform",
         description:
-            "Full-stack Kanban board with JWT authentication and Socket.IO realtime updates. React + Tailwind client, Express + MongoDB API, and Docker Compose for local orchestration.",
+            "Problem: small teams need a simple realtime board. Solution: Kanban UI with JWT auth and Socket.IO updates; React + Tailwind client, Express + MongoDB API, Docker Compose for local runs.",
         stack: ["React", "Tailwind", "Express", "Socket.IO", "MongoDB"],
-        result: "Realtime collaboration",
+        result: "Realtime Kanban collaboration",
         image: "projects/task-platform.jpg",
         href: "https://github.com/Mahdi-Habibi/task-management-platform",
         live: null,
         year: "2025",
-    },
-    {
-        id: "budget-tracker",
-        title: "Personal Finance Tracker",
-        description:
-            "Budget tracker with auth, transactions, savings goals, analytics charts, and a simple spend forecast. Express + Prisma API with a React + Chart.js dashboard, deployable on Vercel.",
-        stack: ["React", "Express", "Prisma", "Chart.js", "Zod"],
-        result: "Spend forecasting built in",
-        image: "projects/budget-tracker.jpg",
-        href: "https://github.com/Mahdi-Habibi/Personal-Finance---Budget-Tracker",
-        live: null,
-        year: "2026",
     },
 ];
 
@@ -98,15 +98,13 @@ const skillsFromRepos = [
     "Socket.IO",
     "JWT",
     "REST API",
-    "Vercel",
-    "Telegram Bot API",
 ];
 
 const systemCardsEn = [
     {
         featured: true,
         title: "Adaptive learning platforms",
-        body: "Pathwise monorepo — Next.js 15, NestJS 11, Prisma, PostgreSQL, OTP auth, and personalized roadmaps.",
+        body: "Kia Academy monorepo — Next.js 15, NestJS 11, Prisma, PostgreSQL, OTP auth, and personalized roadmaps.",
         tags: ["Next.js", "NestJS", "Prisma", "TypeScript"],
     },
     {
@@ -148,14 +146,14 @@ const sectionsEn = {
         credStack: "primary stack",
     },
     projects: {
-        eyebrow: "[ Selected repositories ]",
-        title: "Shipped products from my GitHub — learning platforms, SaaS, IoT, and automation.",
+        eyebrow: "[ Selected work ]",
+        title: "Flagship builds first — adaptive learning, multi-tenant SaaS, automation, and realtime systems.",
         allRepos: "All repositories",
         liveDemo: "Live demo",
     },
     clients: {
         eyebrow: "[ Stack in public repos ]",
-        title: "Languages and frameworks used across Pathwise, Pocket Crypto, SaaS, IoT, and finance apps.",
+        title: "Languages and frameworks used across Kia Academy, multi-tenant SaaS, IoT, and automation work.",
         copy: "Tap a project to open the repo or live demo",
     },
     highlights: {
@@ -176,7 +174,7 @@ const sectionsEn = {
     experience: {
         eyebrow: "[ My journey ]",
         title: "Where I have worked",
-        copy: "Full-stack engineering across product companies, client delivery, and technical education — from foundational web work to AI-enabled platform operations.",
+        copy: "Full-stack engineering across product companies, client delivery, and technical education — from foundational web work to production platform operations.",
         progressStart: "Foundations",
         progressEnd: "Today",
     },
@@ -201,8 +199,8 @@ const sectionsEn = {
         copyEmail: "Copy email address",
     },
     meta: {
-        description: "Mahdi Habibi Nazarlu — Full-stack engineer. Python & JavaScript developer building React, Next.js, Django, and NestJS products.",
-        jobTitle: "Full-stack Engineer",
+        description: "Mahdi Habibi Nazarlu — Full-Stack Engineer building React, Next.js, Django, and NestJS products: SaaS, learning platforms, and realtime systems.",
+        jobTitle: "Full-Stack Engineer",
     },
     menu: {
         open: "Open menu",
@@ -234,14 +232,14 @@ const sectionsFa = {
         credStack: "استک اصلی",
     },
     projects: {
-        eyebrow: "[ مخازن منتخب ]",
-        title: "محصولات تحویل‌شده از گیت‌هاب — پلتفرم یادگیری، SaaS، IoT و اتوماسیون.",
+        eyebrow: "[ کار منتخب ]",
+        title: "اول پروژه‌های اصلی — یادگیری تطبیقی، SaaS چندمستاجری، اتوماسیون و سیستم‌های بلادرنگ.",
         allRepos: "همه مخازن",
         liveDemo: "دموی زنده",
     },
     clients: {
         eyebrow: "[ استک در مخازن عمومی ]",
-        title: "زبان‌ها و فریم‌ورک‌ها در Pathwise، Pocket Crypto، SaaS، IoT و اپ‌های مالی.",
+        title: "زبان‌ها و فریم‌ورک‌ها در Kia Academy، SaaS چندمستاجری، IoT و اتوماسیون.",
         copy: "برای باز کردن مخزن یا دمو روی پروژه ضربه بزنید",
     },
     highlights: {
@@ -262,7 +260,7 @@ const sectionsFa = {
     experience: {
         eyebrow: "[ مسیر من ]",
         title: "جایی که کار کرده‌ام",
-        copy: "مهندسی فول‌استک در شرکت‌های محصول، تحویل مشتری و آموزش فنی — از وب پایه تا عملیات پلتفرم مبتنی بر AI.",
+        copy: "مهندسی فول‌استک در شرکت‌های محصول، تحویل مشتری و آموزش فنی — از وب پایه تا عملیات پلتفرم در production.",
         progressStart: "مبانی",
         progressEnd: "امروز",
     },
@@ -283,7 +281,7 @@ const sectionsFa = {
         copyEmail: "کپی آدرس ایمیل",
     },
     meta: {
-        description: "مهدی حبیبی نظرلو — مهندس فول‌استک. توسعه‌دهنده Python و JavaScript با React، Next.js، Django و NestJS.",
+        description: "مهدی حبیبی نظرلو — مهندس فول‌استک. ساخت محصولات React، Next.js، Django و NestJS: SaaS، یادگیری و سیستم‌های بلادرنگ.",
         jobTitle: "مهندس فول‌استک",
     },
     menu: { open: "باز کردن منو", close: "بستن منو" },
@@ -293,7 +291,7 @@ const systemCardsFa = [
     {
         featured: true,
         title: "پلتفرم‌های یادگیری تطبیقی",
-        body: "مونوریپو Pathwise — Next.js 15، NestJS 11، Prisma، PostgreSQL، OTP و مسیرهای شخصی‌سازی‌شده.",
+        body: "مونوریپو Kia Academy — Next.js 15، NestJS 11، Prisma، PostgreSQL، OTP و مسیرهای شخصی‌سازی‌شده.",
         tags: ["Next.js", "NestJS", "Prisma", "TypeScript"],
     },
     {
@@ -334,14 +332,14 @@ const sectionsEs = {
         credStack: "stack principal",
     },
     projects: {
-        eyebrow: "[ Repositorios seleccionados ]",
-        title: "Productos entregados desde GitHub — plataformas de aprendizaje, SaaS, IoT y automatización.",
+        eyebrow: "[ Trabajo seleccionado ]",
+        title: "Primero lo principal — aprendizaje adaptativo, SaaS multi-tenant, automatización y sistemas en tiempo real.",
         allRepos: "Todos los repositorios",
         liveDemo: "Demo en vivo",
     },
     clients: {
         eyebrow: "[ Stack en repos públicos ]",
-        title: "Lenguajes y frameworks en Pathwise, Pocket Crypto, SaaS, IoT y apps financieras.",
+        title: "Lenguajes y frameworks en Kia Academy, SaaS multi-tenant, IoT y automatización.",
         copy: "Toca un proyecto para abrir el repo o la demo",
     },
     highlights: {
@@ -359,7 +357,7 @@ const sectionsEs = {
     experience: {
         eyebrow: "[ Mi trayectoria ]",
         title: "Dónde he trabajado",
-        copy: "Ingeniería full-stack en empresas de producto, entrega a clientes y educación técnica — desde web fundamental hasta operaciones con IA.",
+        copy: "Ingeniería full-stack en empresas de producto, entrega a clientes y educación técnica — desde web fundamental hasta operaciones de plataforma en producción.",
         progressStart: "Fundamentos",
         progressEnd: "Hoy",
     },
@@ -380,8 +378,8 @@ const sectionsEs = {
         copyEmail: "Copiar correo",
     },
     meta: {
-        description: "Mahdi Habibi Nazarlu — Ingeniero full-stack. Desarrollador Python y JavaScript con React, Next.js, Django y NestJS.",
-        jobTitle: "Ingeniero full-stack",
+        description: "Mahdi Habibi Nazarlu — Ingeniero Full-Stack con React, Next.js, Django y NestJS: SaaS, plataformas de aprendizaje y sistemas en tiempo real.",
+        jobTitle: "Ingeniero Full-Stack",
     },
     menu: { open: "Abrir menú", close: "Cerrar menú" },
 };
@@ -390,7 +388,7 @@ const systemCardsEs = [
     {
         featured: true,
         title: "Plataformas de aprendizaje adaptativo",
-        body: "Monorepo Pathwise — Next.js 15, NestJS 11, Prisma, PostgreSQL, OTP y roadmaps personalizados.",
+        body: "Monorepo Kia Academy — Next.js 15, NestJS 11, Prisma, PostgreSQL, OTP y roadmaps personalizados.",
         tags: ["Next.js", "NestJS", "Prisma", "TypeScript"],
     },
     {
@@ -412,7 +410,7 @@ const systemCardsEs = [
 
 export const translations = {
     en: {
-        siteTitle: "Mahdi Habibi | Full-stack Engineer",
+        siteTitle: "Mahdi Habibi | Full-Stack Engineer",
         languageLabel: "Language",
         navLabel: "Navigation",
         nav: [
@@ -425,20 +423,20 @@ export const translations = {
         ],
         sidebar: {
             summary:
-                "Full-stack engineer and website technical manager building React, Next.js, Django, and NestJS products — with a focus on web performance, marketing technology, and automation.",
+                "Full-Stack Engineer shipping React, Next.js, Django, and NestJS products — multi-tenant SaaS, adaptive learning, and realtime systems.",
             cta: "Let's collaborate",
         },
         footer: {
             summary:
-                "Full-stack engineer at Padideh Shamim Ghaem — shipping thoughtful web products, mentoring developers, and exploring AI-assisted systems.",
+                "Full-Stack Engineer at Padideh Shamim Ghaem — production web platforms, mentoring, and typed full-stack systems.",
             navigation: "Navigation",
             contact: "Contact",
         },
         hero: {
-            kicker: "Full-stack Engineer",
-            title: "Mahdi Habibi Nazarlu — Full-stack engineer building thoughtful web products with React & Django.",
+            kicker: "Full-Stack Engineer",
+            title: "Mahdi Habibi Nazarlu — Full-Stack Engineer building production web platforms with React, Next.js, Django, and NestJS.",
             subtitle:
-                "Python & JavaScript developer focused on web performance, technical SEO, marketing technology, and automation. I design and ship full-stack applications end to end — from APIs and data models to interfaces people enjoy using.",
+                "I ship full-stack applications end to end — from APIs and data models to interfaces people use. Focused on SaaS architecture, learning products, and realtime systems.",
             primary: "View projects",
             secondary: "GitHub profile",
             secondaryHref: "https://github.com/Mahdi-Habibi/",
@@ -451,18 +449,18 @@ export const translations = {
         },
         about: {
             titleLabel: "About",
-            title: "Clear systems, calm interfaces, production-ready delivery.",
-            body: "I design and ship full-stack applications end to end — from API design and data models to interfaces people actually enjoy using. Currently Website Technical Manager at Padideh Shamim Ghaem, deepening computer architecture as a Master's student at Shahid Beheshti University, and open to collaboration on AI-driven apps and serious full-stack builds.",
+            title: "Clear systems, intentional interfaces, production-ready delivery.",
+            body: "I design and ship full-stack applications end to end — from API design and data models to interfaces people actually use. Currently Website Technical Manager at Padideh Shamim Ghaem, deepening computer architecture as a Master's student at Shahid Beheshti University, and open to full-stack / platform engineering roles.",
             focusAreas: [
                 "Ship TypeScript, React/Next.js, NestJS, and Django applications with secure APIs and intentional UX.",
                 "Own web performance, technical SEO, marketing technology, and platform operations in production.",
-                "Build automation and AI-assisted workflows that hold up beyond demos.",
+                "Build multi-tenant, realtime, and automation systems that hold up beyond demos.",
             ],
             toolbeltTitle: "Skills from shipped repositories",
             toolbelt: skillsFromRepos,
             recentWinTitle: "Selected work",
             recentWinText:
-                "Pathwise (Kia Academy) — adaptive learning platform with Next.js, NestJS, and Prisma, live in demo mode on GitHub Pages.",
+                "Kia Academy — adaptive learning platform with Next.js, NestJS, and Prisma; live demo on GitHub Pages.",
         },
         projects: {
             title: "Projects",
@@ -543,7 +541,7 @@ export const translations = {
         contact: {
             title: "Contact",
             heading: "Let's build something deliberate.",
-            body: "Open to collaboration on AI-driven apps, automation tools, and serious full-stack builds. Based in Iran — say hello anytime.",
+            body: "Open to full-stack and platform engineering roles, plus collaboration on SaaS, learning products, and automation. Based in Iran — say hello anytime.",
             location: "Iran",
             links: [
                 { label: "Email", href: "mailto:info.mahdihabibi@gmail.com" },
@@ -569,20 +567,20 @@ export const translations = {
         ],
         sidebar: {
             summary:
-                "مهندس فول‌استک و مدیر فنی وب‌سایت — ساخت محصولات React، Next.js، Django و NestJS با تمرکز بر عملکرد وب، مارکتینگ تکنولوژی و اتوماسیون.",
+                "مهندس فول‌استک — ساخت محصولات React، Next.js، Django و NestJS: SaaS چندمستاجری، یادگیری تطبیقی و سیستم‌های بلادرنگ.",
             cta: "همکاری کنیم",
         },
         footer: {
             summary:
-                "مهندس فول‌استک در پدیده شمیم قائم — ساخت محصولات وب، منتورینگ و کاوش سیستم‌های مبتنی بر AI.",
+                "مهندس فول‌استک در پدیده شمیم قائم — پلتفرم‌های وب production، منتورینگ و سیستم‌های فول‌استک.",
             navigation: "مسیرها",
             contact: "تماس",
         },
         hero: {
             kicker: "مهندس فول‌استک",
-            title: "مهدی حبیبی نظرلو — مهندس فول‌استک برای ساخت محصولات وب با React و Django.",
+            title: "مهدی حبیبی نظرلو — مهندس فول‌استک برای ساخت پلتفرم‌های وب با React، Next.js، Django و NestJS.",
             subtitle:
-                "توسعه‌دهنده Python و JavaScript با تمرکز بر عملکرد وب، سئوی فنی، مارکتینگ تکنولوژی و اتوماسیون. اپلیکیشن‌های فول‌استک را از API تا رابط کاربری تحویل می‌دهم.",
+                "اپلیکیشن‌های فول‌استک را از API و مدل داده تا رابط کاربری تحویل می‌دهم. تمرکز روی معماری SaaS، محصولات یادگیری و سیستم‌های بلادرنگ.",
             primary: "مشاهده پروژه‌ها",
             secondary: "پروفایل گیت‌هاب",
             secondaryHref: "https://github.com/Mahdi-Habibi/",
@@ -595,63 +593,63 @@ export const translations = {
         },
         about: {
             titleLabel: "درباره",
-            title: "سیستم‌های شفاف، رابط‌های آرام، تحویل آمادهٔ production.",
-            body: "اپلیکیشن‌های فول‌استک را از طراحی API و مدل داده تا رابط کاربری می‌سازم. مدیر فنی وب‌سایت در پدیده شمیم قائم، دانشجوی ارشد معماری سیستم‌ها در دانشگاه شهید بهشتی، و آماده همکاری روی محصولات AI و ساخت فول‌استک جدی.",
+            title: "سیستم‌های شفاف، رابط‌های دقیق، تحویل آمادهٔ production.",
+            body: "اپلیکیشن‌های فول‌استک را از طراحی API و مدل داده تا رابط کاربری می‌سازم. مدیر فنی وب‌سایت در پدیده شمیم قائم، دانشجوی ارشد معماری سیستم‌ها در دانشگاه شهید بهشتی، و آماده نقش‌های فول‌استک و platform engineering.",
             focusAreas: [
                 "تحویل اپلیکیشن‌های TypeScript، React/Next.js، NestJS و Django با API امن و UX دقیق.",
                 "مالکیت عملکرد وب، سئوی فنی، مارکتینگ تکنولوژی و عملیات پلتفرم در production.",
-                "ساخت اتوماسیون و جریان‌های AI که فراتر از دمو دوام بیاورند.",
+                "ساخت سیستم‌های چندمستاجری، بلادرنگ و اتوماسیون فراتر از دمو.",
             ],
             toolbeltTitle: "مهارت‌ها بر اساس مخازن",
             toolbelt: skillsFromRepos,
             recentWinTitle: "کار منتخب",
             recentWinText:
-                "Pathwise (آکادمی کیا) — پلتفرم یادگیری تطبیقی با Next.js، NestJS و Prisma، دموی زنده روی GitHub Pages.",
+                "Kia Academy — پلتفرم یادگیری تطبیقی با Next.js، NestJS و Prisma؛ دموی زنده روی GitHub Pages.",
         },
         projects: {
             title: "پروژه‌ها",
             cards: [
                 {
                     ...projectCardsEn[0],
-                    title: "Pathwise (آکادمی کیا)",
+                    title: "Kia Academy (آکادمی کیا)",
                     description:
-                        "پلتفرم یادگیری تطبیقی فارسی‌محور با OTP موبایل، ارزیابی هدف، آزمون آمادگی، مسیر شخصی‌سازی‌شده و پخش درس. مونوریپو Next.js ۱۵، NestJS ۱۱، Prisma و PostgreSQL.",
+                        "مسئله: یادگیرندگان ایرانی به مسیر هدایت‌شده از ارزیابی تا دوره نیاز دارند. راه‌حل: یادگیری تطبیقی فارسی‌محور با OTP، ارزیابی هدف، آزمون آمادگی، مسیر شخصی‌سازی‌شده و پخش درس در مونوریپو typed.",
                     result: "دموی زنده روی GitHub Pages",
                 },
                 {
                     ...projectCardsEn[1],
-                    title: "Pocket Crypto",
+                    title: "SaaS مدیریت پروژه چندمستاجری",
                     description:
-                        "ربات تلگرام Python برای قیمت لحظه‌ای ارز و کریپتو از CoinMarketCap، به‌همراه اتوماسیون‌های زمان‌بندی‌شده و استقرار webhook روی Vercel.",
-                    result: "نقل‌قول لحظه‌ای بازار",
+                        "مسئله: تیم‌ها به workspace جدا با دسترسی مشخص نیاز دارند. راه‌حل: tenancy، RBAC، دعوت‌نامه، پروژه، وظیفه و لاگ فعالیت با Django REST + JWT و فرانت Next.js.",
+                    result: "جداسازی tenant با مستندات OpenAPI",
                 },
                 {
                     ...projectCardsEn[2],
-                    title: "SaaS مدیریت پروژه چندمستاجری",
+                    title: "Pocket Crypto",
                     description:
-                        "MVP تولیدی با tenancy مبتنی بر workspace، RBAC، دعوت‌نامه، پروژه، وظیفه و لاگ فعالیت. بک‌اند Django REST + JWT و فرانت Next.js.",
-                    result: "جداسازی tenant در workspace",
+                        "مسئله: دسترسی به داده بازار بدون خروج از تلگرام. راه‌حل: ربات Python برای قیمت CoinMarketCap، واچ‌لیست، هشدار، مقایسه/تبدیل و اتوماسیون زمان‌بندی‌شده.",
+                    result: "نقل‌قول لحظه‌ای و به‌روزرسانی زمان‌بندی‌شده",
                 },
                 {
                     ...projectCardsEn[3],
                     title: "داشبورد IoT خانه هوشمند",
                     description:
-                        "داشبورد MQTT برای پایش سنسور و کنترل دستگاه. بک‌اند Node/Express + MongoDB و فرانت React + Recharts با احراز هویت JWT.",
-                    result: "کنترل بلادرنگ دستگاه",
+                        "مسئله: پایش سنسور و کنترل دستگاه به‌صورت زنده. راه‌حل: پل MQTT، APIهای Express با JWT و داشبورد React + Recharts.",
+                    result: "پایش و کنترل بلادرنگ",
                 },
                 {
                     ...projectCardsEn[4],
-                    title: "پلتفرم مدیریت وظایف",
+                    title: "Essenvian Fragrance Studio",
                     description:
-                        "بورد Kanban فول‌استک با JWT و به‌روزرسانی بلادرنگ Socket.IO. کلاینت React + Tailwind، API اکسپرس + MongoDB و Docker Compose.",
-                    result: "همکاری بلادرنگ",
+                        "مسئله: حضور وب B2B شفاف برای استودیو عطر. راه‌حل: سایت برند انگلیسی با مسیرهای مشاوره و معرفی پلتفرم‌های fragrance، personal-care و home-care.",
+                    result: "سایت زنده در essenvian.com",
                 },
                 {
                     ...projectCardsEn[5],
-                    title: "ردیاب مالی شخصی",
+                    title: "پلتفرم مدیریت وظایف",
                     description:
-                        "ردیاب بودجه با احراز هویت، تراکنش، اهداف پس‌انداز، نمودار تحلیل و پیش‌بینی هزینه. API اکسپرس + Prisma و داشبورد React + Chart.js.",
-                    result: "پیش‌بینی هزینه داخلی",
+                        "مسئله: بورد ساده بلادرنگ برای تیم‌های کوچک. راه‌حل: Kanban با JWT و Socket.IO؛ کلاینت React + Tailwind، API اکسپرس + MongoDB و Docker Compose.",
+                    result: "همکاری Kanban بلادرنگ",
                 },
             ],
             cta: "مشاهده در GitHub",
@@ -730,7 +728,7 @@ export const translations = {
         contact: {
             title: "تماس",
             heading: "بیایید چیزی سنجیده بسازیم.",
-            body: "آماده همکاری روی اپ‌های AI، ابزارهای اتوماسیون و ساخت فول‌استک جدی. مقیم ایران — پیام بدهید.",
+            body: "آماده نقش‌های فول‌استک و platform engineering و همکاری روی SaaS، محصولات یادگیری و اتوماسیون. مقیم ایران — پیام بدهید.",
             location: "ایران",
             links: [
                 { label: "ایمیل", href: "mailto:info.mahdihabibi@gmail.com" },
@@ -743,7 +741,7 @@ export const translations = {
         systemCards: systemCardsFa,
     },
     es: {
-        siteTitle: "Mahdi Habibi | Ingeniero Full-stack",
+        siteTitle: "Mahdi Habibi | Ingeniero Full-Stack",
         languageLabel: "Idioma",
         navLabel: "Navegación",
         nav: [
@@ -756,20 +754,20 @@ export const translations = {
         ],
         sidebar: {
             summary:
-                "Ingeniero full-stack y responsable técnico web — productos con React, Next.js, Django y NestJS, enfocados en rendimiento, marketing technology y automatización.",
+                "Ingeniero Full-Stack con React, Next.js, Django y NestJS — SaaS multi-tenant, aprendizaje adaptativo y sistemas en tiempo real.",
             cta: "Colaboremos",
         },
         footer: {
             summary:
-                "Ingeniero full-stack en Padideh Shamim Ghaem — productos web, mentoría y sistemas asistidos por IA.",
+                "Ingeniero Full-Stack en Padideh Shamim Ghaem — plataformas web en producción, mentoría y sistemas tipados.",
             navigation: "Navegación",
             contact: "Contacto",
         },
         hero: {
-            kicker: "Ingeniero Full-stack",
-            title: "Mahdi Habibi Nazarlu — Ingeniero full-stack que crea productos web con React y Django.",
+            kicker: "Ingeniero Full-Stack",
+            title: "Mahdi Habibi Nazarlu — Ingeniero Full-Stack que crea plataformas web con React, Next.js, Django y NestJS.",
             subtitle:
-                "Desarrollador Python y JavaScript centrado en rendimiento web, SEO técnico, marketing technology y automatización. Entrego aplicaciones full-stack de extremo a extremo.",
+                "Entrego aplicaciones full-stack de extremo a extremo — de APIs y modelos de datos a interfaces en uso. Enfocado en arquitectura SaaS, productos de aprendizaje y sistemas en tiempo real.",
             primary: "Ver proyectos",
             secondary: "Perfil de GitHub",
             secondaryHref: "https://github.com/Mahdi-Habibi/",
@@ -782,63 +780,63 @@ export const translations = {
         },
         about: {
             titleLabel: "Sobre mí",
-            title: "Sistemas claros, interfaces calmadas, entrega lista para producción.",
-            body: "Diseño y entrego aplicaciones full-stack de extremo a extremo. Actualmente Website Technical Manager en Padideh Shamim Ghaem, estudiante de máster en arquitectura de sistemas en Shahid Beheshti University, abierto a colaborar en apps con IA y builds full-stack serios.",
+            title: "Sistemas claros, interfaces intencionales, entrega lista para producción.",
+            body: "Diseño y entrego aplicaciones full-stack de extremo a extremo. Actualmente Website Technical Manager en Padideh Shamim Ghaem, estudiante de máster en arquitectura de sistemas en Shahid Beheshti University, abierto a roles full-stack / platform engineering.",
             focusAreas: [
                 "Entregar apps TypeScript, React/Next.js, NestJS y Django con APIs seguras y UX intencional.",
                 "Responsabilidad de rendimiento web, SEO técnico, marketing technology y operaciones.",
-                "Construir automatización y flujos asistidos por IA que aguanten en producción.",
+                "Construir sistemas multi-tenant, en tiempo real y de automatización más allá del demo.",
             ],
             toolbeltTitle: "Skills desde repositorios",
             toolbelt: skillsFromRepos,
             recentWinTitle: "Trabajo seleccionado",
             recentWinText:
-                "Pathwise (Kia Academy) — plataforma de aprendizaje adaptativo con Next.js, NestJS y Prisma, demo en vivo en GitHub Pages.",
+                "Kia Academy — plataforma de aprendizaje adaptativo con Next.js, NestJS y Prisma; demo en vivo en GitHub Pages.",
         },
         projects: {
             title: "Proyectos",
             cards: [
                 {
                     ...projectCardsEn[0],
-                    title: "Pathwise (Kia Academy)",
+                    title: "Kia Academy",
                     description:
-                        "Plataforma de aprendizaje adaptativo: OTP por teléfono, evaluación de objetivos, tests de preparación, roadmaps personalizados y reproductor de lecciones. Monorepo Next.js 15, NestJS 11, Prisma y PostgreSQL.",
+                        "Problema: aprendices iraníes necesitan rutas guiadas desde evaluación hasta cursos. Solución: aprendizaje adaptativo con OTP, assessment, tests, roadmaps y reproductor de lecciones en monorepo tipado.",
                     result: "Demo en vivo en GitHub Pages",
                 },
                 {
                     ...projectCardsEn[1],
-                    title: "Pocket Crypto",
+                    title: "SaaS multi-tenant de proyectos",
                     description:
-                        "Bot de Telegram en Python para cotizaciones de divisas y crypto desde CoinMarketCap, con automatizaciones programadas y webhook en Vercel.",
-                    result: "Cotizaciones de mercado bajo demanda",
+                        "Problema: equipos necesitan workspaces aislados con permisos claros. Solución: tenancy, RBAC, invitaciones, proyectos, tareas y activity log con Django REST + JWT y Next.js.",
+                    result: "Workspaces aislados con OpenAPI",
                 },
                 {
                     ...projectCardsEn[2],
-                    title: "SaaS multi-tenant de proyectos",
+                    title: "Pocket Crypto",
                     description:
-                        "MVP con tenancy por workspace, RBAC, invitaciones, proyectos, tareas y activity log. Backend Django REST + JWT y frontend Next.js.",
-                    result: "Workspaces aislados por tenant",
+                        "Problema: datos de mercado sin salir de Telegram. Solución: bot Python con cotizaciones CoinMarketCap, watchlists, alerts, compare/convert y automatizaciones programadas.",
+                    result: "Cotizaciones bajo demanda y actualizaciones programadas",
                 },
                 {
                     ...projectCardsEn[3],
                     title: "Panel IoT Smart Home",
                     description:
-                        "Dashboard MQTT para sensores y control de dispositivos. Backend Node/Express + MongoDB; frontend React + Recharts con JWT.",
-                    result: "Control de dispositivos en tiempo real",
+                        "Problema: visibilidad de sensores y control de dispositivos en vivo. Solución: puente MQTT, APIs Express con JWT y dashboard React + Recharts.",
+                    result: "Monitoreo y control en tiempo real",
                 },
                 {
                     ...projectCardsEn[4],
-                    title: "Plataforma de gestión de tareas",
+                    title: "Essenvian Fragrance Studio",
                     description:
-                        "Kanban full-stack con JWT y actualizaciones Socket.IO. Cliente React + Tailwind, API Express + MongoDB y Docker Compose.",
-                    result: "Colaboración en tiempo real",
+                        "Problema: presencia web B2B clara para un estudio de fragancias. Solución: sitio de marca en inglés con rutas de consulta y plataformas fragrance, personal-care y home-care.",
+                    result: "Sitio en vivo en essenvian.com",
                 },
                 {
                     ...projectCardsEn[5],
-                    title: "Tracker de finanzas personales",
+                    title: "Plataforma de gestión de tareas",
                     description:
-                        "Tracker de presupuestos con auth, transacciones, metas, analytics y forecast de gasto. API Express + Prisma y dashboard React + Chart.js.",
-                    result: "Forecast de gasto incluido",
+                        "Problema: tablero simple en tiempo real para equipos pequeños. Solución: Kanban con JWT y Socket.IO; cliente React + Tailwind, API Express + MongoDB y Docker Compose.",
+                    result: "Colaboración Kanban en tiempo real",
                 },
             ],
             cta: "Ver en GitHub",
@@ -917,7 +915,7 @@ export const translations = {
         contact: {
             title: "Contacto",
             heading: "Construyamos algo intencional.",
-            body: "Abierto a colaborar en apps con IA, automatización y builds full-stack serios. Basado en Irán — escríbeme.",
+            body: "Abierto a roles full-stack y platform engineering, y a colaborar en SaaS, productos de aprendizaje y automatización. Basado en Irán — escríbeme.",
             location: "Irán",
             links: [
                 { label: "Correo", href: "mailto:info.mahdihabibi@gmail.com" },

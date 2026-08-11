@@ -1,8 +1,8 @@
 # Mahdi Habibi — Portfolio
 
-Dark, high-tech multilingual portfolio for **Mahdi Habibi Nazarlu**, full-stack engineer.
+Dark, high-tech multilingual portfolio for **Mahdi Habibi Nazarlu**, Full-Stack Engineer.
 
-**Live site:** [https://mahdihabibi.com](https://mahdihabibi.com) ([GitHub Pages mirror](https://mahdi-habibi.github.io/portfolio/))
+**Live site:** [https://www.mahdihabibi.com](https://www.mahdihabibi.com) ([GitHub Pages mirror](https://mahdi-habibi.github.io/portfolio/))
 
 ## Stack
 
