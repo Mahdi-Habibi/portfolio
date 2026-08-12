@@ -1,11 +1,8 @@
 import { useState } from "react";
-import { Check, Code2, Copy, Link2, Mail, Phone } from "lucide-react";
+import { Check, Code2, Copy, Link2, Phone } from "lucide-react";
 import MotionSection from "../ui/MotionSection";
 
 const iconMap = {
-    Email: Mail,
-    Correo: Mail,
-    "ایمیل": Mail,
     Phone: Phone,
     Teléfono: Phone,
     "تلفن": Phone,
@@ -18,11 +15,10 @@ const iconMap = {
 export default function Contact({ t }) {
     const s = t.sections.contact;
     const [copied, setCopied] = useState(false);
-    const emailLink = t.contact.links.find((l) => l.href.startsWith("mailto:"));
+    const email = t.contact.email;
 
     const copyEmail = async () => {
-        if (!emailLink) return;
-        const email = emailLink.href.replace("mailto:", "");
+        if (!email) return;
         await navigator.clipboard.writeText(email);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
@@ -35,7 +31,7 @@ export default function Contact({ t }) {
                     <p className="eyebrow">{s.eyebrow}</p>
                     <h2 className="section-title">{t.contact.heading}</h2>
                     <p className="section-copy">{t.contact.body}</p>
-                    {emailLink && (
+                    {email && (
                         <button
                             type="button"
                             onClick={copyEmail}
@@ -43,7 +39,7 @@ export default function Contact({ t }) {
                             aria-label={t.sections.ui.copyEmail}
                         >
                             {copied ? <Check size={16} aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}
-                            {copied ? t.sections.ui.copied : emailLink.label}
+                            {copied ? t.sections.ui.copied : t.contact.emailLabel}
                         </button>
                     )}
                     <div className="contact-links">
@@ -55,7 +51,7 @@ export default function Contact({ t }) {
                                     href={link.href}
                                     className="cursor-pointer"
                                     target={link.href.startsWith("http") ? "_blank" : undefined}
-                                    rel="noopener noreferrer"
+                                    rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
                                 >
                                     <Icon size={16} aria-hidden="true" />
                                     {link.label}

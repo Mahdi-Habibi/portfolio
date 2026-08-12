@@ -14,7 +14,16 @@ export default defineConfig({
   ],
   build: {
     outDir: "../backend/dist",
-    emptyOutDir: true
+    emptyOutDir: true,
+    cssMinify: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          motion: ["framer-motion"],
+          lenis: ["lenis"],
+        },
+      },
+    },
   },
   base: "/static/",
 })

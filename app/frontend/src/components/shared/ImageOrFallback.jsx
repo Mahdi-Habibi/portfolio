@@ -6,6 +6,9 @@ export default function ImageOrFallback({
     className = "",
     fallbackText = "MH",
     fallbackClassName = "portrait-fallback",
+    priority = false,
+    width,
+    height,
 }) {
     const [broken, setBroken] = useState(false);
 
@@ -22,9 +25,12 @@ export default function ImageOrFallback({
             src={src}
             alt={alt}
             className={className}
+            width={width}
+            height={height}
             onError={() => setBroken(true)}
-            loading="lazy"
-            decoding="async"
+            loading={priority ? "eager" : "lazy"}
+            fetchPriority={priority ? "high" : "auto"}
+            decoding={priority ? "sync" : "async"}
         />
     );
 }

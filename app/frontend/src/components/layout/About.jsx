@@ -9,7 +9,13 @@ export default function About({ t, profileImage, featuredSkills }) {
             <div className="container-x about-grid">
                 <MotionSection className="about-photo-wrap">
                     <div className="about-photo">
-                        <ImageOrFallback src={profileImage} alt={t.sections.ui.portraitAlt} fallbackText="MH" />
+                        <ImageOrFallback
+                            src={profileImage}
+                            alt={t.sections.ui.portraitAlt}
+                            fallbackText="MH"
+                            width={640}
+                            height={800}
+                        />
                     </div>
                     <div className="about-location-badge">{s.locationBadge}</div>
                 </MotionSection>

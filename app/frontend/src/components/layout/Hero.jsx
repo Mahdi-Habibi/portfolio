@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { splitLocation } from "../../lib/assets";
@@ -9,9 +10,18 @@ import ImageOrFallback from "../shared/ImageOrFallback";
 
 export default function Hero({ t, profileImage }) {
     const reduceMotion = useReducedMotion();
+    const [showOrbitalRings, setShowOrbitalRings] = useState(false);
     const s = t.sections.hero;
     const locationParts = splitLocation(t.hero.location.replace(/\([^)]*\)/, "").trim());
     const heroCred = `${t.hero.stats[0]?.value || "12"} ${s.credRepos} · ${t.hero.stats[1]?.value || "6+"} ${s.credApps} · ${t.hero.stats[2]?.value || "TS / PY"} ${s.credStack}`;
+
+    useEffect(() => {
+        const media = window.matchMedia("(min-width: 1024px)");
+        const sync = () => setShowOrbitalRings(media.matches);
+        sync();
+        media.addEventListener("change", sync);
+        return () => media.removeEventListener("change", sync);
+    }, []);
 
     return (
         <section id="home" className="hero-section">
@@ -80,16 +90,21 @@ export default function Hero({ t, profileImage }) {
                     </FadeIn>
                 </div>
 
-                <FadeIn delay={0.15} className="hero-visual hero-visual--mobile">
-                    <div className="hero-portrait-ring hero-portrait-ring--mobile">
-                        <ImageOrFallback src={profileImage} alt={t.sections.ui.portraitAlt} fallbackText="MH" />
-                    </div>
-                </FadeIn>
-
-                <FadeIn delay={0.15} className="hero-visual hero-visual--desktop">
-                    <OrbitalRings />
+                <FadeIn delay={0.15} className="hero-visual">
+                    {showOrbitalRings && (
+                        <div className="hero-orbital" aria-hidden="true">
+                            <OrbitalRings />
+                        </div>
+                    )}
                     <div className="hero-portrait-ring">
-                        <ImageOrFallback src={profileImage} alt={t.sections.ui.portraitAlt} fallbackText="MH" />
+                        <ImageOrFallback
+                            src={profileImage}
+                            alt={t.sections.ui.portraitAlt}
+                            fallbackText="MH"
+                            priority
+                            width={440}
+                            height={440}
+                        />
                     </div>
                 </FadeIn>
             </div>

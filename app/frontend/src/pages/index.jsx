@@ -91,8 +91,16 @@ export default function IndexPage() {
         if (jsonLd) {
             try {
                 const schema = JSON.parse(jsonLd.textContent);
-                schema.description = description;
-                if (t.sections.meta.jobTitle) schema.jobTitle = t.sections.meta.jobTitle;
+                const nodes = Array.isArray(schema["@graph"]) ? schema["@graph"] : [schema];
+                nodes.forEach((node) => {
+                    if (!node || typeof node !== "object") return;
+                    if (node["@type"] === "WebSite" || node["@type"] === "Person") {
+                        node.description = description;
+                    }
+                    if (node["@type"] === "Person" && t.sections.meta.jobTitle) {
+                        node.jobTitle = t.sections.meta.jobTitle;
+                    }
+                });
                 jsonLd.textContent = JSON.stringify(schema);
             } catch {
                 // Keep static schema if parsing fails.
@@ -227,7 +235,7 @@ export default function IndexPage() {
                 <Contact t={t} />
             </main>
 
-            <Footer t={t} language={language} setLanguage={setLanguage} />
+            <Footer t={t} />
             <ScrollToTop visible={scrollTopVisible} label={t.sections.ui.scrollTop} />
             <CasePreviewPanel preview={casePreview} />
         </div>

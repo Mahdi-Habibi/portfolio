@@ -186,9 +186,6 @@ const sectionsEn = {
     contact: {
         eyebrow: "[ Contact ]",
     },
-    footer: {
-        backToTop: "Back to top",
-    },
     ui: {
         projectOpen: "Open project",
         projectPreview: "Project preview",
@@ -270,7 +267,6 @@ const sectionsFa = {
         cta: "تماس بگیرید",
     },
     contact: { eyebrow: "[ تماس ]" },
-    footer: { backToTop: "بازگشت به بالا" },
     ui: {
         projectOpen: "باز کردن پروژه",
         projectPreview: "پیش‌نمایش پروژه",
@@ -367,7 +363,6 @@ const sectionsEs = {
         cta: "Contáctame",
     },
     contact: { eyebrow: "[ Contacto ]" },
-    footer: { backToTop: "Volver arriba" },
     ui: {
         projectOpen: "Abrir proyecto",
         projectPreview: "Vista previa del proyecto",
@@ -543,8 +538,9 @@ export const translations = {
             heading: "Let's build something deliberate.",
             body: "Open to full-stack and platform engineering roles, plus collaboration on SaaS, learning products, and automation. Based in Iran — say hello anytime.",
             location: "Iran",
+            email: "info.mahdihabibi@gmail.com",
+            emailLabel: "Email",
             links: [
-                { label: "Email", href: "mailto:info.mahdihabibi@gmail.com" },
                 { label: "Phone", href: "tel:+989029216735" },
                 { label: "LinkedIn", href: "https://www.linkedin.com/in/mahdi-habibi-developer/" },
                 { label: "GitHub", href: "https://github.com/Mahdi-Habibi/" },
@@ -730,8 +726,9 @@ export const translations = {
             heading: "بیایید چیزی سنجیده بسازیم.",
             body: "آماده نقش‌های فول‌استک و platform engineering و همکاری روی SaaS، محصولات یادگیری و اتوماسیون. مقیم ایران — پیام بدهید.",
             location: "ایران",
+            email: "info.mahdihabibi@gmail.com",
+            emailLabel: "ایمیل",
             links: [
-                { label: "ایمیل", href: "mailto:info.mahdihabibi@gmail.com" },
                 { label: "تلفن", href: "tel:+989029216735" },
                 { label: "لینکدین", href: "https://www.linkedin.com/in/mahdi-habibi-developer/" },
                 { label: "گیت‌هاب", href: "https://github.com/Mahdi-Habibi/" },
@@ -917,8 +914,9 @@ export const translations = {
             heading: "Construyamos algo intencional.",
             body: "Abierto a roles full-stack y platform engineering, y a colaborar en SaaS, productos de aprendizaje y automatización. Basado en Irán — escríbeme.",
             location: "Irán",
+            email: "info.mahdihabibi@gmail.com",
+            emailLabel: "Correo",
             links: [
-                { label: "Correo", href: "mailto:info.mahdihabibi@gmail.com" },
                 { label: "Teléfono", href: "tel:+989029216735" },
                 { label: "LinkedIn", href: "https://www.linkedin.com/in/mahdi-habibi-developer/" },
                 { label: "GitHub", href: "https://github.com/Mahdi-Habibi/" },

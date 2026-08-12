@@ -68,12 +68,15 @@ jobs:
           if not site:
               raise SystemExit("SITE_URL is empty")
           patterns = (
+              r"https://www\.mahdihabibi\.com",
               r"https://mahdihabibi\.com",
               r"https://mahdi-habibi\.github\.io/portfolio",
               r"https://Mahdi-Habibi\.github\.io/portfolio",
           )
-          for name in ("index.html",):
+          for name in ("index.html", "robots.txt", "sitemap.xml"):
               path = pathlib.Path("dist") / name
+              if not path.exists():
+                  continue
               text = path.read_text(encoding="utf-8")
               for pattern in patterns:
                   text = re.sub(pattern, site, text)
@@ -95,7 +98,7 @@ jobs:
           rm -f vite.svg
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A -- .nojekyll index.html 404.html favicon.svg favicon-32.png apple-touch-icon.png profile.jpg projects assets
+          git add -A -- .nojekyll index.html 404.html robots.txt sitemap.xml favicon.svg favicon-32.png apple-touch-icon.png og-image.png profile.jpg projects assets
           git add -u -- vite.svg || true
           if git diff --cached --quiet; then
             echo "No site changes to publish"
