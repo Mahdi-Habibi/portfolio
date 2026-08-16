@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://Mahdi-Habibi.github.io/portfolio/sitemap.xml
+Sitemap: https://mahdihabibi.com/sitemap.xml
